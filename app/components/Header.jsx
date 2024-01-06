@@ -7,10 +7,10 @@ const dmSerifDisplay = DM_Serif_Display({
 
 function Header() {
   return (
-    <header className="flex px-10 py-8 flex justify-center bg-blue-950">
+    <header className="flex px-10 py-5 flex justify-center">
       <h1
         className={dmSerifDisplay.className}
-        style={{ fontSize: '40px', color: '#f1e4ff', letterSpacing: '3px' }}>
+        style={{ fontSize: '40px', color: '#ff6b6b', letterSpacing: '3px' }}>
         {' '}
         Forever.Luxe
       </h1>
