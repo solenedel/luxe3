@@ -5,13 +5,13 @@ function Header() {
   return (
     <header className=" flex flex-col items-center bg-black pt-5">
       <Image
-        className="opacity-60"
-        src="/images/logo-FL.png"
+        className="opacity-70"
+        src="/images/logo-2.png"
         alt="logo"
-        width="200"
-        height="80"
+        width="180"
+        height="70"
       />
-      <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 relative bottom-16">
+      <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 relative bottom-20">
         {' '}
         FOREVER LUXE
       </h1>
