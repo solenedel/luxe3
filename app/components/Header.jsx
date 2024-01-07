@@ -3,7 +3,7 @@ function Header() {
   const links = ['Collections', 'Sell', 'About', 'Sign in'];
 
   return (
-    <header className=" flex flex-col items-center bg-black pt-5">
+    <header className=" flex flex-col items-center bg-gray-950 pt-5 shadow-lg">
       <Image
         className="opacity-70"
         src="/images/logo-2.png"
@@ -15,7 +15,7 @@ function Header() {
         {' '}
         FOREVER LUXE
       </h1>
-      <nav className="w-full border-t tracking-wide text-white border-b font-semibold border-white flex gap-x-20 text-2xl py-4 justify-center">
+      <nav className="w-full border-t tracking-wide text-white font-semibold  flex gap-x-20 text-2xl py-4 justify-center">
         {links.map((link) => (
           <a
             key={link}
