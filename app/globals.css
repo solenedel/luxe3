@@ -17,7 +17,7 @@
 }
 
 body {
-  background: #082f49;
+  background: hsl(204, 47%, 90%);
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -27,6 +27,7 @@ body {
     rgb(var(--background-start-rgb)); */
 }
 
-header h1 {
+header h1,
+footer h1 {
   font-family: 'DM Serif Display', serif;
 }

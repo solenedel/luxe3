@@ -1,7 +1,9 @@
 function Footer() {
   return (
-    <footer>
-      <h1 className="text-white text-2xl">Footer</h1>
+    <footer className="mt-20 py-8 flex px-10 border-t border-red-400">
+      <h1 className="text-red-400 font-semibold tracking-wider text-2xl">
+        ForeverLuxe
+      </h1>
     </footer>
   );
 }
