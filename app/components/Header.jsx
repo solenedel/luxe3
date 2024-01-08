@@ -13,13 +13,13 @@ function Header() {
       />
       <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 relative bottom-20">
         {' '}
-        FOREVER LUXE
+        <a href="/"> FOREVER LUXE</a>
       </h1>
-      <nav className="w-full border-t tracking-wide text-white font-semibold  flex gap-x-20 text-2xl py-4 justify-center">
+      <nav className="w-full border-t border-blue-100 tracking-wide text-white font-semibold flex gap-x-20 text-2xl py-4 justify-center">
         {links.map((link) => (
           <a
             key={link}
-            href=""
+            href="/collections"
             className="text-pink-100 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-blue-400 hover:to-pink-400 hover:scale-105 ">
             {link}
           </a>

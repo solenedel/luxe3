@@ -20,7 +20,13 @@ export default function Home() {
           </div>
         </section>
         <section className="text-sky-950 pt-20 pl-20">
-          <h2 className="font-semibold text-2xl mb-5">Trending items</h2>
+          <span className="flex items-baseline justify-between">
+            <h2 className="font-semibold text-2xl mb-5">Trending items</h2>
+            <a href="" className="text-lg text-pink-700 hover:translate-x-1">
+              See more ➤
+            </a>
+          </span>
+
           <ul className="flex text-8xl gap-x-5 ">
             <li className="grayscale hover:cursor-pointer hover:grayscale-0">
               👜
@@ -42,7 +48,7 @@ export default function Home() {
             Browse collections
             <div className="border-2 border-black rounded-sm">Search...</div>
           </h2>
-          <button className="text-3xl font-semibold mt-20 bg-gradient-to-br from-blue-400 to-pink-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
+          <button className="text-3xl font-semibold mt-20 border-2 border-gray-900 bg-gradient-to-br from-blue-300 to-pink-300 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
             Sell an item
           </button>
         </section>
