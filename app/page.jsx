@@ -42,7 +42,7 @@ export default function Home() {
             Browse collections
             <div className="border-2 border-black rounded-sm">Search...</div>
           </h2>
-          <button className="text-3xl font-semibold mt-20 bg-pink-900 rounded-sm p-4 shadow-lg text-pink-100">
+          <button className="text-3xl font-semibold mt-20 bg-gradient-to-br from-blue-400 to-pink-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
             Sell an item
           </button>
         </section>

@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <body className={golosText.className}>
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
