@@ -16,18 +16,50 @@ export default function CollectionsPage() {
         {collections.map((collection) => (
           <a
             key="collection"
-            className="bg-black w-fit p-2 font-semibold tracking-wide rounded-md text-gray-50 text-xl hover:bg-pink-800 hover:cursor-pointer hover:translate-y-1">
+            className="bg-black w-fit p-2 font-semibold tracking-wide rounded-md text-blue-50 text-xl hover:bg-sky-700 hover:cursor-pointer hover:translate-y-1">
             {collection}
           </a>
         ))}
       </section>
-      <section>
-        <h1 className="text-3xl font-semibold self-center">
-          Most viewed items
-        </h1>
+      <section className="my-16">
+        <h1 className="text-3xl font-semibold">Most viewed items</h1>
+        <ul className="flex text-8xl gap-x-5 ">
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            👜
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            👑
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            👛
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            💼
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            💍
+          </li>
+        </ul>
       </section>
       <section>
-        <h1 className="text-3xl font-semibold self-center">Recently sold</h1>
+        <h1 className="text-3xl font-semibold">Recently sold</h1>
+        <ul className="flex text-8xl gap-x-5 ">
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            👜
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            👑
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            👛
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            💼
+          </li>
+          <li className="grayscale hover:cursor-pointer hover:grayscale-0">
+            💍
+          </li>
+        </ul>
       </section>
     </main>
   );
