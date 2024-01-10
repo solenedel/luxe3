@@ -1,7 +1,13 @@
 export default function SellPage() {
   return (
     <main className="flex min-h-screen flex-col p-24">
-      <h1 className="text-3xl font-semibold self-center mb-12">Sell an item</h1>
+      <h1 className="text-3xl font-semibold self-center mb-12">
+        Selling on our platform
+      </h1>
+      <aside className=" mb-20 text-xl bg-gradient-to-br from-blue-300 to-pink-300 px-14 py-10 rounded-md shadow-lg">
+        Please read all the information on this page. Once you have read this,
+        you can get started with Step 1 by filling in the Request to Send Form.
+      </aside>
       <section>
         <ul className="text-xl flex flex-col gap-y-8">
           <li>
@@ -69,25 +75,25 @@ export default function SellPage() {
           </li>
         </ul>
       </section>
-      <aside className="mt-12 bg-gradient-to-br from-blue-300 to-pink-300 px-14 py-10 rounded-md shadow-xl">
+      <aside className="mt-28 ">
         <h3 className="text-2xl font-semibold text-gray-900 mb-5">
           Important points
         </h3>
-        <ul className="text-xl flex flex-col gap-y-5">
+        <ul className="text-xl flex flex-col gap-y-5 bg-gradient-to-br from-blue-300 to-pink-300 px-14 py-10 rounded-md shadow-xl">
           <li>
             ▶ The third-party authenticator will suggest a price range at which
             to sell the item. When you agree to sell on our platform, you agree
             that the sale price of the NFT must be within this certain range.
           </li>
           <li>
-            ▶ An NFT listed on our platform will either have the status FOR SALE
-            or NOT FOR SALE. This status can be changed by the seller any time,
-            as long as there is no pending purchase/shipping at that point in
-            time.
+            ▶ An NFT listed on our platform will either have the status FOR
+            SALE, NOT FOR SALE, or ON HOLD. This status can be changed by the
+            seller any time, as long as there is no pending purchase/shipping at
+            that point in time.
           </li>
           <li>
-            ▶ Items listed as NOT FOR SALE are still visible on the platform,
-            and the seller can see how many views the item receives.
+            ▶ Items listed as NOT FOR SALE and ON HOLD are still visible on the
+            platform.
           </li>
           <li>
             ▶ Once in our warehouse, you may have the item returned to you at
