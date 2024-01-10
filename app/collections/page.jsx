@@ -1,13 +1,13 @@
 export default function CollectionsPage() {
-  const collections = [
-    'Dior',
-    'Saint Laurent',
-    'Valentino',
-    'Prada',
-    'Burberry',
-    'Chanel',
-    'Hermès',
-  ];
+  // const collections = [
+  //   'Dior',
+  //   'Saint Laurent',
+  //   'Valentino',
+  //   'Prada',
+  //   'Burberry',
+  //   'Chanel',
+  //   'Hermès',
+  // ];
 
   return (
     <main className="flex min-h-screen flex-col p-24">
