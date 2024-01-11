@@ -6,7 +6,7 @@ import { collectionsList } from '../../../data/collections';
 export default function NFTPage({ params }) {
   return (
     <main className="flex min-h-screen flex-col p-24">
-      PAGE FOR A SINGLE NFT
+      PAGE FOR A SINGLE NFT: {params.id}
     </main>
   );
 }

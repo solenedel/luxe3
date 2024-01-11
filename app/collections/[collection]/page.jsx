@@ -16,7 +16,17 @@ export default function CollectionPage({ params }) {
   // }, [currentCollection]);
 
   const handleClick = (id) => {
-    router.push(`${pathname + '/' + id}`);
+    console.log('--------------', typeof `${router.pathname + '/' + id}`);
+
+    if (typeof router.pathname === 'string') {
+      console.log('KUSDGHLKRUGFLIRUW');
+      router.push({
+        pathname: `${router.pathname.toString() + '/' + id}`,
+        query: { id: id },
+      });
+    } else {
+      console.log('ROUTER PATHNAME NOT STRING');
+    }
   };
 
   return (
@@ -28,7 +38,7 @@ export default function CollectionPage({ params }) {
       <ul className="flex w-full gap-x-24  justify-center">
         {collectionsObject[collection].map((NFT) => (
           <li
-            onClick={handleClick(NFT.id)}
+            onClick={() => handleClick(NFT.id)}
             key={NFT.id}
             className="hover:scale-105 hover:cursor-pointer w-2/3 items-center flex flex-col gap-y-2 shadow-xl border-2 border-gray-900 hover:bg-gray-900 hover:text-pink-50 rounded-md p-5">
             <span className="text-8xl">{NFT.photo}</span>
@@ -43,3 +53,4 @@ export default function CollectionPage({ params }) {
 
 // TODO:
 // separate carousels for 'most viewed', 'most owners', etc
+// BUG: the name of this page should be [page].jsx ?? or [collection]?
