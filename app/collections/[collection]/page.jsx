@@ -15,6 +15,10 @@ export default function CollectionPage({ params }) {
   //   console.log('CURRENT COLLECTION', currentCollection);
   // }, [currentCollection]);
 
+  const handleClick = (id) => {
+    router.push(`${pathname + '/' + id}`);
+  };
+
   return (
     <main className="flex min-h-screen flex-col p-24">
       <h1 className="text-2xl text-center font-semibold mb-20">
@@ -24,8 +28,9 @@ export default function CollectionPage({ params }) {
       <ul className="flex w-full gap-x-24  justify-center">
         {collectionsObject[collection].map((NFT) => (
           <li
+            onClick={handleClick(NFT.id)}
             key={NFT.id}
-            className="hover:scale-105 w-2/3 items-center flex flex-col gap-y-2 shadow-xl border-2 border-gray-900 hover:bg-gray-900 hover:text-pink-50 rounded-md p-5">
+            className="hover:scale-105 hover:cursor-pointer w-2/3 items-center flex flex-col gap-y-2 shadow-xl border-2 border-gray-900 hover:bg-gray-900 hover:text-pink-50 rounded-md p-5">
             <span className="text-8xl">{NFT.photo}</span>
             <span className="text-lg">{NFT.name}</span>
             <span className="font-semibold text-xl">{NFT.price} ETH</span>
