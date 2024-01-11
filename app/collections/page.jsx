@@ -1,13 +1,13 @@
 export default function CollectionsPage() {
-  // const collections = [
-  //   'Dior',
-  //   'Saint Laurent',
-  //   'Valentino',
-  //   'Prada',
-  //   'Burberry',
-  //   'Chanel',
-  //   'Hermès',
-  // ];
+  const collections = [
+    'Dior',
+    'Saint Laurent',
+    'Valentino',
+    'Prada',
+    'Burberry',
+    'Chanel',
+    'Hermès',
+  ];
 
   return (
     <main className="flex min-h-screen flex-col p-24">
@@ -15,6 +15,7 @@ export default function CollectionsPage() {
       <section className="mt-20 flex gap-x-10 mb-20">
         {collections.map((collection) => (
           <a
+            href={`collections/${collection.toLowerCase()}`}
             key="collection"
             className="bg-black w-fit p-2 font-semibold tracking-wide rounded-md text-blue-50 text-xl hover:bg-sky-700 hover:cursor-pointer hover:translate-y-1">
             {collection}

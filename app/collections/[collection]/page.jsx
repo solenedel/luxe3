@@ -15,7 +15,10 @@ export default function CollectionPage({ params }) {
 
   return (
     <main className="flex min-h-screen flex-col p-24">
-      <h2>this is the page for a specific NFT collection: {collection}</h2>
+      <h1 className="text-2xl text-center font-semibold">
+        Collection: {collection}
+      </h1>
+      <section>👜 👑 👛 💼 💍</section>
     </main>
   );
 }
