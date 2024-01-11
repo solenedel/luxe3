@@ -21,9 +21,11 @@ export default function CollectionPage({ params }) {
         Collection: {collection}
       </h1>
       {/* NFT carousel */}
-      <ul className="flex gap-x-16">
+      <ul className="flex w-full gap-x-24  justify-center">
         {collectionsObject[collection].map((NFT) => (
-          <li key={NFT.id} className="flex flex-col">
+          <li
+            key={NFT.id}
+            className="hover:scale-105 w-2/3 items-center flex flex-col gap-y-2 shadow-xl border-2 border-gray-900 hover:bg-gray-900 hover:text-pink-50 rounded-md p-5">
             <span className="text-8xl">{NFT.photo}</span>
             <span className="text-lg">{NFT.name}</span>
             <span className="font-semibold text-xl">{NFT.price} ETH</span>
