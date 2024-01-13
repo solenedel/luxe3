@@ -6,27 +6,22 @@ import { collectionsList } from '../../../data/collections';
 export default function CollectionPage({ params }) {
   const router = useRouter();
   const pathname = usePathname();
-  const currentCollection = pathname.split('/').pop();
+  // const currentCollection = pathname.split('/').pop();
   const collectionsObject = collectionsList;
 
   const [collection, setCollection] = useState(params.collection); // should this be intsantly set to params.collection?
 
-  // useEffect(() => {
-  //   console.log('CURRENT COLLECTION', currentCollection);
-  // }, [currentCollection]);
+  useEffect(() => {
+    console.log('========== PATHNAME!!!!!', typeof pathname);
+    // console.log('========== PATHNAME!!!!!', typeof router.pathname);
+  }, [pathname]);
 
   const handleClick = (id) => {
-    console.log('--------------', typeof `${router.pathname + '/' + id}`);
-
-    if (typeof router.pathname === 'string') {
-      console.log('KUSDGHLKRUGFLIRUW');
-      router.push({
-        pathname: `${router.pathname.toString() + '/' + id}`,
-        query: { id: id },
-      });
-    } else {
-      console.log('ROUTER PATHNAME NOT STRING');
-    }
+    const newPathname = `${pathname + '/' + id}`;
+    router.push({
+      pathname: newPathname,
+      query: { id: id },
+    });
   };
 
   return (
