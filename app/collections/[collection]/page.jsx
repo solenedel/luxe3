@@ -13,14 +13,10 @@ export default function CollectionPage({ params }) {
 
   useEffect(() => {
     console.log('========== PATHNAME!!!!!', typeof pathname);
-    // console.log('========== PATHNAME!!!!!', typeof router.pathname);
   }, [pathname]);
 
-  // ???
   const handleClick = (id) => {
-    console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', pathname + '/' + id);
-    // const newPathname = `${pathname + '/' + id}`;
-    router.push(`/collections/dior/${id}`);
+    router.push(`${pathname + '/' + id}`);
   };
 
   return (
