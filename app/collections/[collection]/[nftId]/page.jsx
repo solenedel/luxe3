@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { collectionsList } from '../../../data/collections';
+import { collectionsList } from '../../../../data/collections';
 
 export default function NFTPage({ params }) {
   return (

@@ -16,12 +16,11 @@ export default function CollectionPage({ params }) {
     // console.log('========== PATHNAME!!!!!', typeof router.pathname);
   }, [pathname]);
 
+  // ???
   const handleClick = (id) => {
-    const newPathname = `${pathname + '/' + id}`;
-    router.push({
-      pathname: newPathname,
-      query: { id: id },
-    });
+    console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', pathname + '/' + id);
+    // const newPathname = `${pathname + '/' + id}`;
+    router.push(`/collections/dior/${id}`);
   };
 
   return (
