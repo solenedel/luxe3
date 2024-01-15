@@ -21,19 +21,20 @@ export default function CollectionPage({ params }) {
         Collection: {collection}
       </h1>
       {/* NFT carousel */}
-      <ul className="flex w-full gap-x-24  justify-center">
+      {/* DEBUG THIS SECTION LATER */}
+      {/* <ul className="flex w-full gap-x-24  justify-center">
         {collectionsObject[collection].map((NFT, i) => (
           <li
             onClick={() => handleClick(NFT[i])}
             key={NFT[i][id]}
             className="hover:scale-105 hover:cursor-pointer w-2/3 items-center flex flex-col gap-y-2 shadow-xl border-2 border-gray-900 hover:bg-gray-900 hover:text-pink-50 rounded-md p-5">
             {console.log('NFT =========', NFT[i])}
-            {/* <span className="text-8xl">{NFT.photo}</span> */}
-            {/* <span className="text-lg">{NFT[name]}</span>
-            <span className="font-semibold text-xl">{NFT[price]} ETH</span> */}
+            <span className="text-8xl">{NFT.photo}</span>
+            <span className="text-lg">{NFT[name]}</span>
+            <span className="font-semibold text-xl">{NFT[price]} ETH</span>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </main>
   );
 }

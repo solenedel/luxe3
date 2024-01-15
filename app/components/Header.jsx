@@ -19,7 +19,7 @@ function Header() {
         {links.map((link) => (
           <a
             key={link}
-            href={`/${link.toLowerCase()}`}
+            href={`/${link.toLowerCase().replace(/\s/g, '')}`}
             className="text-pink-100 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-blue-400 hover:to-pink-400 hover:scale-105 ">
             {link}
           </a>
