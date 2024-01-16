@@ -1,6 +1,6 @@
 import Image from 'next/image';
 function Header() {
-  const links = ['Collections', 'Sell', 'About', 'Sign in'];
+  const links = ['Collections', 'Sell', 'About', 'Profile', 'Sign in'];
 
   return (
     <header className=" flex flex-col items-center bg-gray-950 pt-5 shadow-lg">
