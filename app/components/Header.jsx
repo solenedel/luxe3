@@ -4,16 +4,17 @@ function Header() {
 
   return (
     <header className=" flex flex-col items-center bg-gray-950 pt-5 shadow-lg">
-      <Image
+      {/* <Image
         className="opacity-70"
         src="/images/logo-2.png"
         alt="logo"
         width="180"
         height="70"
-      />
-      <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 relative bottom-20">
+      /> */}
+      {/* <p className="text-blue-600 text-8xl">✰</p> */}
+      <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-sky-500 ">
         {' '}
-        <a href="/"> FOREVER LUXE</a>
+        <a href="/"> FOREVER✩LUXE</a>
       </h1>
       <nav className="w-full border-t border-blue-100 tracking-wide text-white font-semibold flex gap-x-20 text-2xl py-4 justify-center">
         {links.map((link) => (

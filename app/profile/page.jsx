@@ -1,15 +1,22 @@
 function ProfilePage() {
   return (
     <main className="flex flex-col items-center pt-16">
-      <h1 className="text-2xl font-semibold">My Profile</h1>
-      <aside>
-        Pending actions: You have purchased ####. If you have received the
-        physical item, please confirm reception so that the previous owner can
-        receive their payment.
+      <h1 className="text-2xl font-semibold mb-10">My Profile</h1>
+      <aside className="bg-gradient-to-tr from-pink-300 to-sky-300 p-3 w-2/3 rounded-md">
+        <strong className="mr-2"> Pending:</strong>
+        You have purchased ####. If you have received the physical item, please
+        confirm reception so that the previous owner can receive their payment.
+        <button className=" ml-2 text-xl underline font-semibold">
+          Confirm received
+        </button>
       </aside>
-      <section>
-        <h2>My items</h2>
-        <h2>Starred items / wishlist</h2>
+      <section className="mt-14 text-left">
+        <h2 className="text-xl font-semibold mb-5">❏ My items / NFTs</h2>
+        <p>You have not posted any NFTs for yet. </p>
+      </section>
+      <section className="mt-14 text-left">
+        <h2 className="text-xl font-semibold mb-5">♥ My favourites</h2>
+        <p>You have no favourites yet. </p>
       </section>
     </main>
   );
