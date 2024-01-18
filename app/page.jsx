@@ -19,6 +19,7 @@ export default function Home() {
             />
           </div>
         </section>
+
         <section className="text-sky-950 pt-20 pl-20">
           <span className="flex items-baseline justify-between">
             <h2 className="font-semibold text-2xl mb-5">Trending items</h2>

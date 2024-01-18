@@ -1,4 +1,5 @@
 import Image from 'next/image';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
 function Header() {
   const links = ['Collections', 'Sell', 'About', 'Profile', 'Sign in'];
 
@@ -15,6 +16,7 @@ function Header() {
       <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-sky-500 ">
         {' '}
         <a href="/"> FOREVER✩LUXE</a>
+        {/* <ConnectButton /> */}
       </h1>
       <nav className="w-full border-t border-blue-100 tracking-wide text-white font-semibold flex gap-x-20 text-2xl py-4 justify-center">
         {links.map((link) => (
