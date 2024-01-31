@@ -13,9 +13,9 @@ function Header() {
         height="70"
       /> */}
       {/* <p className="text-blue-600 text-8xl">✰</p> */}
-      <h1 className="text-4xl text-white font-bold tracking-wider mb-5 z-10 text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-sky-500 ">
+      <h1 className="text-4xl font-bold tracking-wider mb-5 z-10 text-purple-500 ">
         {' '}
-        <a href="/"> FOREVER✩LUXE</a>
+        <a href="/"> Eternali</a>
         {/* <ConnectButton /> */}
       </h1>
       <nav className="w-full border-t border-blue-100 tracking-wide text-white font-semibold flex gap-x-20 text-2xl py-4 justify-center">
