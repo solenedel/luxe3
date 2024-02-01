@@ -9,11 +9,11 @@ function Header() {
 
   return (
     <header className="flex text-xl items-center justify-between px-20 bg-gray-900 py-8 shadow-lg">
-      <h1 className=" font-bold tracking-wider  z-10 text-purple-500 ">
+      <h1 className=" font-bold tracking-wider text-transparent  z-10 ">
         {' '}
-        <a href="/" className="text-5xl">
+        <a href="/" className="text-5xl text-sky-500">
           {' '}
-          Luxe<sup>2</sup>{' '}
+          Luxe²
         </a>
       </h1>
       <div>

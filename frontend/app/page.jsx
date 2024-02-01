@@ -50,9 +50,15 @@ export default function Home() {
             Browse collections
             <div className="border-2 border-black rounded-sm">Search...</div>
           </h2> */}
-          <button className="text-3xl font-semibold mt-20 border-2 border-gray-900 bg-gradient-to-br from-blue-300 to-pink-300 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
-            Sell an item
-          </button>
+          <div className="flex gap-x-10">
+            {' '}
+            <button className="text-3xl font-semibold mt-20 bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
+              Sell
+            </button>
+            <button className="text-3xl font-semibold mt-20 bg-gradient-to-bl from-orange-400 to-violet-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
+              Buy
+            </button>
+          </div>
         </section>
       </div>
 
