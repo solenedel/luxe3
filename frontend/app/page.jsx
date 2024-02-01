@@ -2,29 +2,30 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen px-12">
+    <main className="flex flex-col min-h-screen px-12 bg-orange-50">
       <div className="w-fit flex items-center justify-center relative mt-10">
-        <section className="w-fit flex items-center justify-center relative">
+        {/* <section className="w-fit flex items-center justify-center relative">
           <h2 className="text-7xl leading-24 self-center z-10 absolute text-left px-20 text-sky-950 font-semibold">
             Your NFT <br /> marketplace for second-hand <br /> luxury.
           </h2>
 
-          <div className="border-2 rounded-sm border-sky-800">
+          <div className=" rounded-sm border-sky-800 ml-20">
             <Image
               className="grayscale opacity-40 "
-              src="/images/hero.png"
+              src="/images/handbag.png"
               alt="hero image"
-              width="500"
-              height="500"
+              width="300"
+              height="300"
             />
           </div>
-        </section>
+        </section> */}
 
         <section className="text-sky-950 pt-20 pl-20">
           <span className="flex items-baseline justify-between">
-            <h2 className="font-semibold text-2xl mb-5">Trending items</h2>
-            <a href="" className="text-lg text-pink-700 hover:translate-x-1">
-              See more ➤
+            <a
+              href=""
+              className="text-gray-900 font-semibold mb-4 text-xl hover:translate-x-2">
+              Trending items ➤
             </a>
           </span>
 
@@ -45,17 +46,17 @@ export default function Home() {
               💍
             </li>
           </ul>
-          <h2 className="font-semibold text-2xl mb-5 mt-20">
+          {/* <h2 className="font-semibold text-2xl mb-5 mt-20">
             Browse collections
             <div className="border-2 border-black rounded-sm">Search...</div>
-          </h2>
+          </h2> */}
           <button className="text-3xl font-semibold mt-20 border-2 border-gray-900 bg-gradient-to-br from-blue-300 to-pink-300 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
             Sell an item
           </button>
         </section>
       </div>
 
-      <section className="mt-20">
+      {/* <section className="mt-20">
         <h2 className="font-semibold text-2xl mb-5"> How does it work?</h2>
         <p>
           With Forever Luxe, you can buy or sell your pre-owned luxury items
@@ -87,7 +88,7 @@ export default function Home() {
           item you received is revealed to be inauthentic, you will be refunded
           in full.
         </p>
-      </section>
+      </section> */}
     </main>
   );
 }

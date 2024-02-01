@@ -16,17 +16,6 @@
   }
 }
 
-body {
-  background: hsl(300, 100%, 98%);
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-}
-
 header h1,
 footer h1 {
   font-family: 'DM Serif Display', serif;

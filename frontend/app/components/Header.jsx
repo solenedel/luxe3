@@ -1,33 +1,36 @@
+'use client';
 import Image from 'next/image';
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
+import { useContext, useEffect } from 'react';
+
 function Header() {
-  const links = ['Collections', 'Sell', 'About', 'Profile', 'Sign in'];
+  const links = ['Buy', 'Sell', 'Profile', 'Sign in'];
 
   return (
-    <header className=" flex flex-col items-center bg-gray-950 pt-5 shadow-lg">
-      {/* <Image
-        className="opacity-70"
-        src="/images/logo-2.png"
-        alt="logo"
-        width="180"
-        height="70"
-      /> */}
-      {/* <p className="text-blue-600 text-8xl">✰</p> */}
-      <h1 className="text-4xl font-bold tracking-wider mb-5 z-10 text-purple-500 ">
+    <header className="flex text-xl items-center justify-between px-20 bg-gray-900 py-8 shadow-lg">
+      <h1 className=" font-bold tracking-wider  z-10 text-purple-500 ">
         {' '}
-        <a href="/"> Eternali</a>
-        {/* <ConnectButton /> */}
+        <a href="/" className="text-5xl">
+          {' '}
+          Luxe<sup>2</sup>{' '}
+        </a>
       </h1>
-      <nav className="w-full border-t border-blue-100 tracking-wide text-white font-semibold flex gap-x-20 text-2xl py-4 justify-center">
+      <div>
+        {' '}
+        <ConnectButton />
+      </div>
+
+      {/* <nav className="w-full  tracking-wide  flex gap-x-20 text-2xl py-4 justify-center bg-violet-950">
         {links.map((link) => (
           <a
             key={link}
             href={`/${link.toLowerCase().replace(/\s/g, '')}`}
-            className="text-pink-100 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-blue-400 hover:to-pink-400 hover:scale-105 ">
+            className="text-orange-200 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-blue-400 hover:to-pink-400 hover:scale-105 ">
             {link}
           </a>
         ))}
-      </nav>
+      </nav> */}
     </header>
   );
 }
