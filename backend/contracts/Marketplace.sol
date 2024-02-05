@@ -20,10 +20,21 @@ contract Marketplace is Ownable {
     
     mapping (address => User) users;
     
+    enum SaleStatus {
+      PaidByBuyer,
+      PendingItemReceipt, 
+      ItemReceived, 
+      FundsUnlocked, 
+      SaleComplete
+    }
 
-    // todo - set price of NFTs onlyOwner
-    // will this happen in the other contract?
-    // c'est bien le user (qui veut acheter le NFT) qui va minter le NFT ou alors c'est le owner?
+    struct Sale {
+      address buyer;
+      address seller;
+      uint256 soldFor; // final price of sale
+      SaleStatus status;
+      // date ??
+    }
     
 
     
@@ -33,7 +44,7 @@ contract Marketplace is Ownable {
     constructor() Ownable(msg.sender) {}
 
 
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ FUNCTION: DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
     /// @param _name is the name of the new NFT collection, ex: "My Collection" and _symbol is the symbol, ex: "MC"
@@ -45,5 +56,24 @@ contract Marketplace is Ownable {
 
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
         
+        // event
     }
+
+      // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MARK AS RECEIVED ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+
+
+    /// @notice A user marks the physical item as being received. 
+    /// @param _tokenId is respective to the NFT that was purchased.
+      function markAsReceived(uint256 _tokenId) private {
+        // set to true
+      }
+
+      // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ UNLOCK FUNDS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+      
+
+    /// @notice The marketplace admin unlocks the payment and the platform takes a cut.
+      function unlockFunds() onlyOwner private {
+        // most of the amount goes to the seller (prev owner) of the NFT
+        // marketplace takes a percentage
+      }
 }
