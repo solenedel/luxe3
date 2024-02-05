@@ -17,10 +17,15 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     uint256 private tokenIdCounter;
 
+    // enum Status {
+    //     ForSale, 
+    //     Pending, // NFT has a new owner but physical item not yet received
+    //     NotForSale
+    //   }
+ 
     
     struct NFT {
-      string status; // options: for sale / not for sale / pending
-      // todo - should this be an enum YES
+      bool isForSale; 
       uint256 currentPrice;
       address currentOwner;
     }
@@ -36,15 +41,15 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
 
     modifier onlyForSale(uint256 _tokenId) {
-        require(nftList[_tokenId-1].status == "for sale", "This NFT is not currently for sale.");
+        require(nftList[_tokenId-1].isForSale == true, "This NFT is not currently for sale.");
         _;
     }
     
     // is it worth having modifiers if you have to pass args to them
-      modifier onlyCurrentOwner() {
-        require(msg.sender, "This NFT is not currently for sale.");
-        _;
-    }
+    //   modifier onlyCurrentOwner() {
+    //     require(msg.sender, "This NFT is not currently for sale.");
+    //     _;
+    // }
  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
@@ -65,8 +70,9 @@ contract NFTCollection is ERC721URIStorage, Ownable {
   /// @param _newPrice is the new price to set.
   /// @param _tokenId is the token ID of the NFT to update.
 
-   function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale(uint256 _tokenId) {
+   function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) {
     // set new price 
+    
     // only the current owner of NFT can do this (not the contract owner)
 
    } 
