@@ -20,6 +20,10 @@ contract Marketplace is Ownable {
     
     mapping (address => User) users;
     
+
+    // todo - set price of NFTs onlyOwner
+    // will this happen in the other contract?
+    // c'est bien le user (qui veut acheter le NFT) qui va minter le NFT ou alors c'est le owner?
     
 
     
@@ -33,13 +37,12 @@ contract Marketplace is Ownable {
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
     /// @param _name is the name of the new NFT collection, ex: "My Collection" and _symbol is the symbol, ex: "MC"
-
     function deployNewNFTCollection(string memory _name, string memory _symbol) public {   
        
       require(users[msg.sender].hasCollection == false, "You have already created an NFT collection.");
 
       NFTCollection newCollection = new NFTCollection(_name, _symbol);
-      
+
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
         
     }
