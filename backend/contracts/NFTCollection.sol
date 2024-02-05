@@ -15,23 +15,21 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract NFTCollection is ERC721URIStorage, Ownable {
 
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-    uint256 private tokenIdCounter;
+    uint256 private tokenIdCounter; // maybe not needed, can just use length of array
 
-    // enum Status {
-    //     ForSale, 
-    //     Pending, // NFT has a new owner but physical item not yet received
-    //     NotForSale
-    //   }
- 
-    
+    // for iteration purposes 
+    uint256[] public tokenIdList; // tokenId = i+1
+
     struct NFT {
       bool isForSale; 
       uint256 currentPrice;
       address currentOwner;
     }
 
-    NFT[] public nftList; // tokenId = i+1
+    // use for looking up data
+    mapping (uint256 => NFT) nftData;
 
+    
 
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     constructor(string memory _name, string memory _symbol)
@@ -41,15 +39,14 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
 
     modifier onlyForSale(uint256 _tokenId) {
-        require(nftList[_tokenId-1].isForSale == true, "This NFT is not currently for sale.");
+        require(nftData[_tokenId-1].isForSale == true, "This NFT is not currently for sale.");
         _;
     }
     
-    // is it worth having modifiers if you have to pass args to them
-    //   modifier onlyCurrentOwner() {
-    //     require(msg.sender, "This NFT is not currently for sale.");
-    //     _;
-    // }
+    modifier onlyCurrentOwner(uint256 _tokenId) {
+        require(nftData[_tokenId-1].currentOwner == msg.sender, "You are not the current owner of this NFT.");
+        _;
+    }
  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
@@ -70,11 +67,13 @@ contract NFTCollection is ERC721URIStorage, Ownable {
   /// @param _newPrice is the new price to set.
   /// @param _tokenId is the token ID of the NFT to update.
 
-   function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) {
-    // set new price 
-    
-    // only the current owner of NFT can do this (not the contract owner)
+   function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) onlyCurrentOwner(_tokenId) {
 
+    require(nftData[_tokenId].currentPrice != _newPrice, "The new price must be different from the current price.");
+
+    nftData[_tokenId].currentPrice = _newPrice; // updates the price
+    
+    // event for price updated
    } 
 
 
@@ -82,7 +81,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
   function buyNFT(string calldata _status, uint256 _tokenId) external {
 
-
+    // should this function be in the other contract?
     // check if status of the NFT is correct 
       // check if enough funds
       // 
