@@ -19,7 +19,7 @@ export const deployNewNFTCollection = async (_name, _symbol) => {
     const data = await waitForTransaction({
       hash: hash,
     });
-    console.log('DEPLOY NEW CONTRACT 🔥🔥🔥🔥🔥🔥🔥', data);
+    // console.log('DEPLOY NEW CONTRACT 🔥🔥🔥🔥🔥🔥🔥', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in deployNewNFTCollection: ', err.message);

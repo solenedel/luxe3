@@ -111,7 +111,7 @@ contract Marketplace is Ownable {
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
         
         // emit event
-        emit NFTCollectionCreated(address(newCollection), _name, _symbol);
+      emit NFTCollectionCreated(address(newCollection), _name, _symbol);
     }
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SET NEW PRICE ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
