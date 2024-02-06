@@ -48,12 +48,13 @@ contract Marketplace is Ownable {
     mapping (uint256 => NFT) nftData;
 
 
-        // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+      // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
       event NFTCollectionCreated(address _creatorAddress, string _name, string _symbol); 
       event SaleStatusChange(SaleStatus prevStatus, SaleStatus newStatus); 
       event SaleInitiated(SaleInfo saleInfo);
       event NFTPriceChanged(uint256 oldPrice, uint256 newPrice);
+      // event NewNFTMinted(); IN OTHER CONTRACT
 
 
     
@@ -64,8 +65,8 @@ contract Marketplace is Ownable {
         _;
     }
 
-       
-    modifier onlyCurrentOwner(uint256 _tokenId) {
+    /// @notice note the distinction between the below modifier and the generic onlyOwner  
+    modifier onlyCurrentNFTOwner(uint256 _tokenId) {
         require(nftData[_tokenId-1].currentOwner == msg.sender, "You are not the current owner of this NFT.");
         _;
     }
@@ -91,7 +92,8 @@ contract Marketplace is Ownable {
 
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
         
-        // event
+        // emit event
+        emit NFTCollectionCreated(msg.sender, _name, _symbol);
     }
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SET NEW PRICE ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
@@ -100,14 +102,26 @@ contract Marketplace is Ownable {
   /// @param _newPrice is the new price to set.
   /// @param _tokenId is the token ID of the NFT to update.
 
-   function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) onlyCurrentOwner(_tokenId) {
-
-    require(nftData[_tokenId].currentPrice != _newPrice, "The new price must be different from the current price.");
+   function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) onlyCurrentNFTOwner(_tokenId) {
+    uint256 _oldPrice = nftData[_tokenId].currentPrice;
+    require(_oldPrice != _newPrice, "The new price must be different from the current price.");
 
     nftData[_tokenId].currentPrice = _newPrice; // updates the price
     
-    // event for price updated
+     // emit event
+        emit NFTPriceChanged(_oldPrice, _newPrice); // add addr to this?
    } 
+
+   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ BUY NFT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+
+  // function buyNFT(string calldata _status, uint256 _tokenId) external {
+
+  //   // should this function be in the other contract?
+  //   // check if status of the NFT is correct 
+  //     // check if enough funds
+  //     // 
+  //   }
+
 
       // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MARK AS RECEIVED ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 

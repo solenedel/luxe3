@@ -61,18 +61,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         // todo - at what point is the initial price set for the nft?
     }
 
- 
-
-
- // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ BUY NFT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-
-  // function buyNFT(string calldata _status, uint256 _tokenId) external {
-
-  //   // should this function be in the other contract?
-  //   // check if status of the NFT is correct 
-  //     // check if enough funds
-  //     // 
-  //   }
 
 
 }
