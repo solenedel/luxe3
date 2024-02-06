@@ -74,7 +74,7 @@ contract Marketplace is Ownable {
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     
-    /// @notice Owner corresponds to the admin of the marketplace. 
+    /// @notice Owner corresponds to the admin of the marketplace, not of an NFT or collection. 
     constructor() Ownable(msg.sender) {}
 
 
@@ -103,6 +103,7 @@ contract Marketplace is Ownable {
   /// @param _tokenId is the token ID of the NFT to update.
 
    function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) onlyCurrentNFTOwner(_tokenId) {
+   
     uint256 _oldPrice = nftData[_tokenId].currentPrice;
     require(_oldPrice != _newPrice, "The new price must be different from the current price.");
 
