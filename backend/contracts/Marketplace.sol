@@ -51,6 +51,8 @@ contract Marketplace is Ownable {
     function deployNewNFTCollection(string memory _name, string memory _symbol) public {   
        
       require(users[msg.sender].hasCollection == false, "You have already created an NFT collection.");
+      require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Name cannot be empty.");
+      require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Symbol cannot be empty.");
 
       NFTCollection newCollection = new NFTCollection(_name, _symbol);
 
