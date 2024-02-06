@@ -30,6 +30,15 @@ contract Marketplace is Ownable {
 
     SaleStatus public saleStatus;
 
+    struct Collection {
+        address contractAddress;
+        string name;
+        string symbol;
+    }
+
+    // Mapping to keep track of all ERC721 contracts (collections) created with the marketplace
+    mapping(address => Collection) private allCollections;
+
     struct SaleInfo {
       address buyer;
       address seller;
@@ -50,7 +59,8 @@ contract Marketplace is Ownable {
 
       // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-      event NFTCollectionCreated(address _creatorAddress, string _name, string _symbol); 
+
+      event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
       event SaleStatusChange(SaleStatus prevStatus, SaleStatus newStatus); 
       event SaleInitiated(SaleInfo saleInfo);
       event NFTPriceChanged(uint256 oldPrice, uint256 newPrice);
@@ -90,10 +100,18 @@ contract Marketplace is Ownable {
 
       NFTCollection newCollection = new NFTCollection(_name, _symbol);
 
+       // store new collection's contract address and other details
+        allCollections[address(newCollection)] = Collection({
+            contractAddress: address(newCollection),
+            name: _name,
+            symbol: _symbol
+        });
+
+
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
         
         // emit event
-        emit NFTCollectionCreated(msg.sender, _name, _symbol);
+        emit NFTCollectionCreated(address(newCollection), _name, _symbol);
     }
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SET NEW PRICE ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
