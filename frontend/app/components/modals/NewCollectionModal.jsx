@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 
 function Modal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
@@ -8,9 +9,11 @@ function Modal({ showModal, setShowModal }) {
   //   console.log('NAME INPUT', nameInput, 'SYMBOL', symbolInput);
   // }, [nameInput, symbolInput]);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     // call func from contract
+    const data = await deployNewNFTCollection(nameInput, symbolInput);
+    console.log('DATA ON FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   return (
