@@ -7,6 +7,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { hardhat, sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { UserContextProvider } from '@/context/User.context';
 
 const inter = Inter({ subsets: ['latin'] });
 const dmSerifDisplay = DM_Serif_Display({
@@ -46,9 +47,11 @@ export default function RootLayout({ children }) {
       <body className={golosText.className}>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains}>
-            <Header />
-            {children}
-            {/* <Footer /> */}
+            <UserContextProvider>
+              <Header />
+              {children}
+              {/* <Footer /> */}
+            </UserContextProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </body>

@@ -15,14 +15,17 @@ export const UserContextProvider = ({ children }) => {
 
   fetchMarketplaceOwner();
 
-  const userIsMarketplaceOwner = () => {
-    console.log('USER IS OWNER???', marketplaceOwner === user);
-    return marketplaceOwner === user;
+  const userIsMarketplaceOwner = (_user, _admin) => {
+    if (_user !== '' && _user === _admin) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
     <UserContext.Provider
-      value={{ marketplaceOwner, user, setUser, userIsMarketplaceOwner }}>
+      value={{ user, setUser, marketplaceOwner, userIsMarketplaceOwner }}>
       {children}
     </UserContext.Provider>
   );

@@ -8,7 +8,6 @@ export const getMarketplaceOwner = async () => {
       abi: ABI,
       functionName: 'owner',
     });
-    console.log('MARKETPLACE OWNER: ', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in getMarketplaceOwner: ', err.message);
