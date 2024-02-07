@@ -16,6 +16,11 @@
   }
 }
 
+body {
+  background-image: url('/images/marble-bg-img.png');
+  background-size: cover;
+}
+
 header h1,
 footer h1 {
   font-family: 'DM Serif Display', serif;

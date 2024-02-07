@@ -17,12 +17,11 @@ function Header() {
   // const links = ['Buy', 'Sell', 'Profile', 'Sign in'];
 
   return (
-    <header className="flex text-xl items-center justify-between px-20 bg-gray-900 py-8 shadow-lg">
+    <header className="flex text-xl items-center justify-between px-20 backdrop-blur-sm py-8 shadow-lg">
       <h1 className=" font-bold tracking-wider text-transparent  z-10 ">
         {' '}
-        <a href="/" className="text-5xl text-sky-500">
-          {console.log(userIsMarketplaceOwner(user, marketplaceOwner))} Luxe²
-          {console.log(user, marketplaceOwner)}
+        <a href="/" className="text-5xl text-black">
+          Luxe²
         </a>
       </h1>
       <div>
