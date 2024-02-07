@@ -1,9 +1,15 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Modal from '../components/modals/NewCollectionModal';
+import { getAllCollections } from '@/utils/getters/getAllCollections';
 
 function ProfilePage() {
   const [showModal, setShowModal] = useState(false);
+
+  const testGetCollections = async () => {
+    const data = await getAllCollections();
+    console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+  };
 
   return (
     <main className="flex flex-col items-center pt-16">
@@ -29,6 +35,11 @@ function ProfilePage() {
             type="submit"
             className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
             ✏ Edit collection
+          </button>
+          <button
+            onClick={testGetCollections}
+            className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
+            GetAllCollections
           </button>
         </p>
         <span className="flex gap-x-10">
