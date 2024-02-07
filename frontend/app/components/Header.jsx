@@ -2,35 +2,52 @@
 import Image from 'next/image';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 // import { useAccount } from 'wagmi';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@/context/User.context';
 import { WalletContext } from '@/context/Wallet.context';
 
 function Header() {
   const { marketplaceOwner, userIsMarketplaceOwner } = useContext(UserContext);
-  const { account, connected } = useContext(WalletContext);
+  const { address, isConnected, user, setUser } = useContext(WalletContext);
 
-  // useEffect(() => {
-  //   setUser(address);
-  // }, []);
+  useEffect(() => {
+    setUser(address);
+  }, [address, isConnected]);
 
-  // const links = ['Buy', 'Sell', 'Profile', 'Sign in'];
+  const links = ['collections', 'profile'];
 
   return (
-    <header className="flex text-xl items-center justify-between px-20 py-8">
-      <h1 className=" font-bold tracking-wider text-transparent  z-10 ">
+    <header className="flex text-xl items-center justify-between px-20 py-4 pt-6 backdrop-blur-sm">
+      <h1 className=" font-bold tracking-wider text-transparent z-10 ">
         {' '}
         <a href="/" className="text-5xl text-black">
           Luxe²
         </a>
-        {console.log(account)}
+        {/* {console.log(address, isConnected, user)} */}
       </h1>
-      <div>
+      <span className="flex self-center justify-between gap-x-20 text-xl text-gray-900 ">
         {' '}
+        <a
+          href={`/collections`}
+          className=" font-semibold hover:scale-105 hover:text-rose-800 ">
+          Collections
+        </a>
+        <a
+          href={`/profile`}
+          className=" font-semibold hover:scale-105 hover:text-rose-800 ">
+          Profile
+        </a>
+        <a
+          href={`/about`}
+          className=" font-semibold hover:scale-105 hover:text-rose-800 ">
+          About
+        </a>
+      </span>
+      <div>
         <ConnectButton />
       </div>
-
-      {/* <nav className="w-full  tracking-wide  flex gap-x-20 text-2xl py-4 justify-center bg-violet-950">
+      {/* 
+      <nav className="w-full  tracking-wide  flex gap-x-20 text-2xl ">
         {links.map((link) => (
           <a
             key={link}

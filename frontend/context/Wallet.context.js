@@ -4,19 +4,19 @@ import { useAccount } from 'wagmi';
 export const WalletContext = createContext();
 
 export function WalletContextProvider({ children }) {
-  const [connected, setConnected] = useState(false);
-  const { account } = useAccount();
+  const [user, setUser] = useState('');
+  const { address, isConnected } = useAccount();
 
   useEffect(() => {
-    if (account) {
-      setConnected(true);
-    } else {
-      setConnected(false);
-    }
-  }, [account]);
+    setUser(address);
+  }, [address, isConnected]);
+
+  // useEffect(() => {
+  //   setUser(address);
+  // }, []);
 
   return (
-    <WalletContext.Provider value={{ connected, account }}>
+    <WalletContext.Provider value={{ address, isConnected, user, setUser }}>
       {children}
     </WalletContext.Provider>
   );

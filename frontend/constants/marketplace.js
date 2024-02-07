@@ -32,21 +32,21 @@ export const ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'address',
-        name: '_creatorAddress',
+        name: 'contractAddress',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'string',
-        name: '_name',
+        name: 'name',
         type: 'string',
       },
       {
         indexed: false,
         internalType: 'string',
-        name: '_symbol',
+        name: 'symbol',
         type: 'string',
       },
     ],
@@ -144,6 +144,35 @@ export const ABI = [
     ],
     name: 'SaleStatusChange',
     type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'allCollections',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'contractAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: 'name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'symbol',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [

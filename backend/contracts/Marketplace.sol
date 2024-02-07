@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: MIT
 
+//QUESTIONS
+// how to deal with arrays? is it not goot to write a getter for an array because of gas?
+// in that case, can we mirror the state in the react app so that we don't need to get it in the smart contract
+// but in that case need to store it in a DB 
 
 pragma solidity ^0.8.20;
 
@@ -37,7 +41,10 @@ contract Marketplace is Ownable {
     }
 
     // Mapping to keep track of all ERC721 contracts (collections) created with the marketplace
-    mapping(address => Collection) private allCollections;
+    mapping(address => Collection) public allCollections;
+
+    // for iteration purposes
+    Collection[] public collectionsArray;
 
     struct SaleInfo {
       address buyer;
@@ -88,6 +95,13 @@ contract Marketplace is Ownable {
     constructor() Ownable(msg.sender) {}
 
 
+
+    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+
+
+  function getAllCollections() public view returns (Collection[] memory) {
+    return collectionsArray;
+  }
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.

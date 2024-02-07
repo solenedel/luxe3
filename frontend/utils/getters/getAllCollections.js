@@ -6,7 +6,7 @@ export const getAllCollections = async () => {
     const data = await readContract({
       address: contractAddress,
       abi: ABI,
-      functionName: 'allCollections',
+      functionName: 'getAllCollections',
     });
     console.log('COLLECTIONS🔥🔥🔥🔥🔥🔥🔥🔥 ', data);
     return data;
