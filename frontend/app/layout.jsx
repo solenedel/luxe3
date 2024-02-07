@@ -8,6 +8,7 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { hardhat, sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { UserContextProvider } from '@/context/User.context';
+import Footer from './components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 const dmSerifDisplay = DM_Serif_Display({
@@ -50,7 +51,7 @@ export default function RootLayout({ children }) {
             <UserContextProvider>
               <Header />
               {children}
-              {/* <Footer /> */}
+              <Footer />
             </UserContextProvider>
           </RainbowKitProvider>
         </WagmiConfig>
