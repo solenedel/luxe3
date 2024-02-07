@@ -9,6 +9,7 @@ import { hardhat, sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { UserContextProvider } from '@/context/User.context';
 import Footer from './components/Footer';
+import { WalletContextProvider } from '@/context/Wallet.context';
 
 const inter = Inter({ subsets: ['latin'] });
 const dmSerifDisplay = DM_Serif_Display({
@@ -48,11 +49,13 @@ export default function RootLayout({ children }) {
       <body className={golosText.className}>
         <WagmiConfig config={wagmiConfig}>
           <RainbowKitProvider chains={chains}>
-            <UserContextProvider>
-              <Header />
-              {children}
-              <Footer />
-            </UserContextProvider>
+            <WalletContextProvider>
+              <UserContextProvider>
+                <Header />
+                {children}
+                <Footer />
+              </UserContextProvider>
+            </WalletContextProvider>
           </RainbowKitProvider>
         </WagmiConfig>
       </body>

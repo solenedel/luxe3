@@ -1,18 +1,18 @@
 'use client';
 import Image from 'next/image';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount } from 'wagmi';
+// import { useAccount } from 'wagmi';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '@/context/User.context';
+import { WalletContext } from '@/context/Wallet.context';
 
 function Header() {
-  const { address, isConnected } = useAccount();
-  const { user, setUser, marketplaceOwner, userIsMarketplaceOwner } =
-    useContext(UserContext);
+  const { marketplaceOwner, userIsMarketplaceOwner } = useContext(UserContext);
+  const { account, connected } = useContext(WalletContext);
 
-  useEffect(() => {
-    setUser(isConnected ? address : '');
-  }, [address, isConnected]);
+  // useEffect(() => {
+  //   setUser(address);
+  // }, []);
 
   // const links = ['Buy', 'Sell', 'Profile', 'Sign in'];
 
@@ -23,6 +23,7 @@ function Header() {
         <a href="/" className="text-5xl text-black">
           Luxe²
         </a>
+        {console.log(account)}
       </h1>
       <div>
         {' '}
