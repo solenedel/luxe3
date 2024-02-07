@@ -1,7 +1,7 @@
 import { readContract } from '@wagmi/core';
 import { contractAddress, ABI } from '@/constants/marketplace';
 
-export const getContractOwner = async () => {
+export const getMarketplaceOwner = async () => {
   try {
     const data = await readContract({
       address: contractAddress,
