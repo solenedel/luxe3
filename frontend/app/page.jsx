@@ -2,26 +2,31 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen px-12 ">
+    <main className="flex flex-col pt-16 items-center min-h-screen px-12 ">
+      <div className="bg-white w-fit h-fit border-4 border-gray-950 rounded-sm">
+        <h2 className="text-2xl tracking-wider py-2 text-center text-light italic text-rose-300 bg-gray-900">
+          Your NFT marketplace for second-hand luxury.
+        </h2>
+        <Image
+          src="/images/Hero_img.png"
+          width="700"
+          height="300"
+          className="grayscale opacity-50"
+        />
+      </div>
+
+      <div className="relative flex gap-x-16 z-50 bottom-80">
+        <button className="text-3xl shadow-lg border-emerald-900 font-semibold mt-20 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-4 shadow-lg text-gray-950 hover:translate-y-1">
+          Sell
+        </button>
+        <button className="text-3xl shadow-lg border-emerald-900 font-semibold mt-20 bg-gradient-to-bl from-emerald-800 to-emerald-500 rounded-lg p-4 shadow-lg text-gray-950 hover:translate-y-1">
+          Browse
+        </button>
+      </div>
+
       <div className="w-fit flex items-center justify-center relative mt-10">
-        {/* <section className="w-fit flex items-center justify-center relative">
-          <h2 className="text-7xl leading-24 self-center z-10 absolute text-left px-20 text-sky-950 font-semibold">
-            Your NFT <br /> marketplace for second-hand <br /> luxury.
-          </h2>
-
-          <div className=" rounded-sm border-sky-800 ml-20">
-            <Image
-              className="grayscale opacity-40 "
-              src="/images/handbag.png"
-              alt="hero image"
-              width="300"
-              height="300"
-            />
-          </div>
-        </section> */}
-
-        <section className="text-sky-950 pt-20 pl-20">
-          <span className="flex items-baseline justify-between">
+        {/* <section className="text-sky-950 pt-20 pl-20"> */}
+        {/* <span className="flex items-baseline justify-between">
             <a
               href=""
               className="text-gray-900 font-semibold mb-4 text-xl hover:translate-x-2">
@@ -45,21 +50,16 @@ export default function Home() {
             <li className="grayscale hover:cursor-pointer hover:grayscale-0">
               💍
             </li>
-          </ul>
-          {/* <h2 className="font-semibold text-2xl mb-5 mt-20">
+          </ul> */}
+        {/* <h2 className="font-semibold text-2xl mb-5 mt-20">
             Browse collections
             <div className="border-2 border-black rounded-sm">Search...</div>
           </h2> */}
-          <div className="flex gap-x-10">
+        {/* <div className="flex gap-x-10">
             {' '}
-            <button className="text-3xl font-semibold mt-20 bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
-              Sell
-            </button>
-            <button className="text-3xl font-semibold mt-20 bg-gradient-to-bl from-orange-400 to-violet-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
-              Buy
-            </button>
-          </div>
-        </section>
+           
+          </div> */}
+        {/* </section> */}
       </div>
 
       {/* <section className="mt-20">

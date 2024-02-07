@@ -17,7 +17,7 @@ function Header() {
   // const links = ['Buy', 'Sell', 'Profile', 'Sign in'];
 
   return (
-    <header className="flex text-xl items-center justify-between px-20 backdrop-blur-sm py-8 shadow-lg">
+    <header className="flex text-xl items-center justify-between px-20 py-8">
       <h1 className=" font-bold tracking-wider text-transparent  z-10 ">
         {' '}
         <a href="/" className="text-5xl text-black">
