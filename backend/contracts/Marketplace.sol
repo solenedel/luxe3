@@ -1,10 +1,4 @@
 // SPDX-License-Identifier: MIT
-
-//QUESTIONS
-// how to deal with arrays? is it not goot to write a getter for an array because of gas?
-// in that case, can we mirror the state in the react app so that we don't need to get it in the smart contract
-// but in that case need to store it in a DB 
-
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -41,6 +35,7 @@ contract Marketplace is Ownable {
     }
 
     // Mapping to keep track of all ERC721 contracts (collections) created with the marketplace
+    // note that the address acting as the key to each collection is that of the collection creator, not the collection contract address itself
     mapping(address => Collection) public allCollections;
 
     // for iteration purposes
@@ -99,9 +94,18 @@ contract Marketplace is Ownable {
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
+    /// @notice Gets all collections created by the Marketplace contract.
+    /// @return An array of all the collections created. 
   function getAllCollections() public view returns (Collection[] memory) {
     return collectionsArray;
   }
+
+    /// @notice Gets one collection, indexed by the creator (owner) of that collection.
+    /// @return The single collection owned by the address provided.
+  function getCollection(address _address) public view returns (Collection memory) {
+    return allCollections[_address];
+  }
+
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
@@ -114,13 +118,16 @@ contract Marketplace is Ownable {
 
       NFTCollection newCollection = new NFTCollection(_name, _symbol);
 
-       // store new collection's contract address and other details
-        allCollections[address(newCollection)] = Collection({
+      Collection memory _newCollection = Collection({
             contractAddress: address(newCollection),
             name: _name,
             symbol: _symbol
         });
 
+       // store new collection's contract address and other details
+       allCollections[msg.sender] = _newCollection;
+
+      collectionsArray.push(_newCollection);
 
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
         
