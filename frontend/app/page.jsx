@@ -16,10 +16,10 @@ export default function Home() {
       </div>
       <div className="relative flex gap-x-24 z-50 bottom-64 text-2xl ">
         <button className="border-2 rounded-sm px-4 py-2 border-gray-900 bg-rose-200 hover:translate-y-1">
-          Sell
+          <a href="/profile"> Sell</a>
         </button>
         <button className="border-2 rounded-sm px-4 py-2 border-gray-900 bg-rose-200 hover:translate-y-1">
-          Browse
+          <a href="/collections">Browse</a>
         </button>
         {/* <button className="text-3xl shadow-lg border-emerald-900 font-semibold mt-20 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-4 shadow-lg text-gray-950 hover:translate-y-1">
           Sell
@@ -27,44 +27,6 @@ export default function Home() {
         <button className="text-3xl shadow-lg border-emerald-900 font-semibold mt-20 bg-gradient-to-bl from-emerald-800 to-emerald-500 rounded-lg p-4 shadow-lg text-gray-950 hover:translate-y-1">
           Browse
         </button> */}
-      </div>
-
-      <div className="w-fit flex items-center justify-center relative mt-10">
-        {/* <section className="text-sky-950 pt-20 pl-20"> */}
-        {/* <span className="flex items-baseline justify-between">
-            <a
-              href=""
-              className="text-gray-900 font-semibold mb-4 text-xl hover:translate-x-2">
-              Trending items ➤
-            </a>
-          </span>
-
-          <ul className="flex text-8xl gap-x-5 ">
-            <li className="grayscale hover:cursor-pointer hover:grayscale-0">
-              👜
-            </li>
-            <li className="grayscale hover:cursor-pointer hover:grayscale-0">
-              👑
-            </li>
-            <li className="grayscale hover:cursor-pointer hover:grayscale-0">
-              👛
-            </li>
-            <li className="grayscale hover:cursor-pointer hover:grayscale-0">
-              💼
-            </li>
-            <li className="grayscale hover:cursor-pointer hover:grayscale-0">
-              💍
-            </li>
-          </ul> */}
-        {/* <h2 className="font-semibold text-2xl mb-5 mt-20">
-            Browse collections
-            <div className="border-2 border-black rounded-sm">Search...</div>
-          </h2> */}
-        {/* <div className="flex gap-x-10">
-            {' '}
-           
-          </div> */}
-        {/* </section> */}
       </div>
 
       {/* <section className="mt-20">
