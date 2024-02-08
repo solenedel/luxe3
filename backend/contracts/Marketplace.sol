@@ -41,13 +41,16 @@ contract Marketplace is Ownable {
     // for iteration purposes
     Collection[] public collectionsArray;
 
-    struct SaleInfo {
-      address buyer;
-      address seller;
-      uint256 soldFor; // final price of sale
-      SaleStatus status;
-      // date ??
+     struct SaleInfo {
+        uint256 tokenId;
+        address payable seller;
+        // address buyer;
+        uint256 price;
+        bool isForSale;
+        // SaleStatus status;
     }
+
+    mapping(uint256 => SaleInfo) public sales;
 
      struct NFT {
       bool isForSale; 
@@ -59,7 +62,7 @@ contract Marketplace is Ownable {
     mapping (uint256 => NFT) nftData;
 
 
-      // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
       event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
@@ -152,15 +155,30 @@ contract Marketplace is Ownable {
         emit NFTPriceChanged(_oldPrice, _newPrice); // add addr to this?
    } 
 
-   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ BUY NFT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ LIST FOR SALE ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+
+    /// @notice Current owner of the NFT lists it as for sale.
+    /// @param _tokenId is the token ID of the NFT to listfor sale.
+    /// @param _price is the price to list at.
+    
+    function listForSale(uint256 _tokenId, uint256 _price) public {
+
+        IERC721 nftContract = IERC721(msg.sender);
+        require(nftContract.ownerOf(_tokenId) == msg.sender, "You are not the owner.");
+        require(!sales[_tokenId].isForSale, "Already listed for sale.");
+
+        sales[_tokenId] = SaleInfo({
+            tokenId: _tokenId,
+            seller: payable(msg.sender),
+            price: _price,
+            isForSale: true 
+           });
+    }
+
+
+
 
   // function buyNFT(string calldata _status, uint256 _tokenId) external {
-
-  //   // should this function be in the other contract?
-  //   // check if status of the NFT is correct 
-  //     // check if enough funds
-  //     // 
-  //   }
 
 
       // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MARK AS RECEIVED ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️

@@ -58,7 +58,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         _safeMint(_to, tokenIdCounter);
         _setTokenURI(tokenIdCounter, _URI);
         //todo- should the safemint not take a _to param at all?
-        // todo - at what point is the initial price set for the nft?
     }
 
 
