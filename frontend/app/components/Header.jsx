@@ -17,7 +17,7 @@ function Header() {
   const links = ['collections', 'profile'];
 
   return (
-    <header className="flex text-xl items-center justify-between px-20 py-4 pt-6 backdrop-blur-sm">
+    <header className="flex text-xl items-end justify-between px-20 py-4 pt-6 backdrop-blur-sm">
       <h1 className=" font-bold tracking-wider text-transparent z-10 ">
         {' '}
         <a href="/" className="text-5xl text-black">
