@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./NFTCollection.sol";
 
@@ -10,6 +11,8 @@ import "./NFTCollection.sol";
 /// @notice 
 
 contract Marketplace is Ownable {
+
+   using Address for address payable;
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     struct User {
@@ -69,6 +72,7 @@ contract Marketplace is Ownable {
       event SaleStatusChange(SaleStatus prevStatus, SaleStatus newStatus); 
       event SaleInitiated(SaleInfo saleInfo);
       event NFTPriceChanged(uint256 oldPrice, uint256 newPrice);
+      event NFTPurchased(uint256 indexed tokenId, address indexed buyer, uint256 price);
       // event NewNFTMinted(); IN OTHER CONTRACT
 
 
@@ -92,7 +96,7 @@ contract Marketplace is Ownable {
     /// @notice Owner corresponds to the admin of the marketplace, not of an NFT or collection. 
     constructor() Ownable(msg.sender) {}
 
-
+ 
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
@@ -176,9 +180,35 @@ contract Marketplace is Ownable {
     }
 
 
+    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ BUY NFT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+
+    // Function to buy an NFT
+    function buyNFT(uint256 _tokenId) public payable {
+        SaleInfo memory sale = sales[_tokenId];
+        require(sale.isForSale, "This NFT is not for sale.");
+        require(msg.value >= sale.price, "Not enough Ether sent.");
+
+        IERC721 nftContract = IERC721(sale.seller);
+        nftContract.transferFrom(sale.seller, msg.sender, _tokenId);
+
+        // Refund any excess Ether
+        uint256 _excess = msg.value - sale.price;
+        if (_excess >  0) {
+            payable(msg.sender).sendValue(_excess);
+        }
+
+        // Transfer the funds to the seller
+        sale.seller.transfer(sale.price); // not yet
+
+        // Deactivate the sale
+        sale.isForSale = false;
+
+        // Emit an event for the successful purchase
+        emit NFTPurchased(_tokenId, msg.sender, sale.price);
+    }
 
 
-  // function buyNFT(string calldata _status, uint256 _tokenId) external {
+
 
 
       // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MARK AS RECEIVED ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
