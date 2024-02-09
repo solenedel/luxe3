@@ -7,12 +7,13 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "./NFTCollection.sol";
 
 
-// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ USE NFT COLLECTION CONTRACT  ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼◼️◼️
+// // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ USE NFT COLLECTION CONTRACT  ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼◼️◼️
 interface INFTCollection {
     function ownerOf(uint256 _tokenId) external view returns (address _collectionOwner);
     function transferFrom(address _from, address _to, uint256 _tokenId) external;
   // add more funcs
 }
+
 
 /// @title this contract handles marketplace actions, such as: creating a new collection (one per user), marking items as received, and more.
 /// @author Solene D.
@@ -22,25 +23,19 @@ contract Marketplace is Ownable {
 
    using Address for address payable;
 
+  INFTCollection public nftCollectionInterface;
+
 
     // contract addresses of the NFT collections
-    address[] public nftCollectionAddressesArray;
+    // address[] public nftCollectionAddressesArray;
 
      // Instantiate NFT collection contracts
-    mapping(address => INFTCollection) public nftCollectionInterfaces;
+    // mapping(address => INFTCollection) public nftCollectionInterfaces;
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     
     /// @notice Owner corresponds to the admin of the marketplace, not of an NFT or collection. 
-    constructor(address[] memory _nftCollectionAddressesArray) Ownable(msg.sender){
-       
-       // Set the addresses of the deployed NFT collection contracts
-        nftCollectionAddressesArray = _nftCollectionAddressesArray;
-        for (uint i =  0; i < _nftCollectionAddressesArray.length; i++) {
-            nftCollectionInterfaces[_nftCollectionAddressesArray[i]] = INFTCollection(_nftCollectionAddressesArray[i]);
-        }
-
-    }
+    constructor() Ownable(msg.sender){}
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
