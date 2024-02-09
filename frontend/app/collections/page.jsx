@@ -9,8 +9,16 @@ export default function CollectionsPage() {
         with buying and selling on the marketplace.
       </aside>
       <section className="my-16 bg-gray-100/[0.5] text-gray-900 px-10 py-12 rounded-md">
-        <h2 className="text-2xl mb-5 font-semibold">Most viewed 🔥</h2>
-        <ul className="flex text-8xl w-full justify-evenly">
+        <h2 className="text-2xl mb-5 font-semibold">Your collection 🔥</h2>
+        <ul className="flex text-8xl w-full justify-start gap-x-14">
+          <li className=" hover:cursor-pointer hover:grayscale-0">👠</li>
+          <li className=" hover:cursor-pointer hover:grayscale-0">💍</li>
+          <li className=" hover:cursor-pointer hover:grayscale-0">🥿</li>
+        </ul>
+      </section>
+      <section className="my-16 bg-gray-100/[0.5] text-gray-900 px-10 py-12 rounded-md">
+        <h2 className="text-2xl mb-5 font-semibold">Most viewed items 🔥</h2>
+        <ul className="flex text-8xl w-full justify-start gap-x-14">
           <li className=" hover:cursor-pointer hover:grayscale-0">💼</li>
           <li className=" hover:cursor-pointer hover:grayscale-0">👠</li>
           <li className=" hover:cursor-pointer hover:grayscale-0">💍</li>
