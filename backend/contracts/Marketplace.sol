@@ -6,6 +6,14 @@ import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./NFTCollection.sol";
 
+
+// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ USE NFT COLLECTION CONTRACT  ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼◼️◼️
+interface INFTCollection {
+    function ownerOf(uint256 _tokenId) external view returns (address _collectionOwner);
+    function transferFrom(address _from, address _to, uint256 _tokenId) external;
+  // add more funcs
+}
+
 /// @title this contract handles marketplace actions, such as: creating a new collection (one per user), marking items as received, and more.
 /// @author Solene D.
 /// @notice 
@@ -14,7 +22,28 @@ contract Marketplace is Ownable {
 
    using Address for address payable;
 
+
+    // contract addresses of the NFT collections
+    address[] public nftCollectionAddressesArray;
+
+     // Instantiate NFT collection contracts
+    mapping(address => INFTCollection) public nftCollectionInterfaces;
+
+    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+    
+    /// @notice Owner corresponds to the admin of the marketplace, not of an NFT or collection. 
+    constructor(address[] memory _nftCollectionAddressesArray) Ownable(msg.sender){
+       
+       // Set the addresses of the deployed NFT collection contracts
+        nftCollectionAddressesArray = _nftCollectionAddressesArray;
+        for (uint i =  0; i < _nftCollectionAddressesArray.length; i++) {
+            nftCollectionInterfaces[_nftCollectionAddressesArray[i]] = INFTCollection(_nftCollectionAddressesArray[i]);
+        }
+
+    }
+
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+
     struct User {
       bool hasCollection; 
     }
@@ -90,11 +119,6 @@ contract Marketplace is Ownable {
         _;
     }
     
-
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-    
-    /// @notice Owner corresponds to the admin of the marketplace, not of an NFT or collection. 
-    constructor() Ownable(msg.sender) {}
 
  
 
@@ -189,7 +213,7 @@ contract Marketplace is Ownable {
         require(msg.value >= sale.price, "Not enough Ether sent.");
 
         IERC721 nftContract = IERC721(sale.seller);
-        nftContract.transferFrom(sale.seller, msg.sender, _tokenId);
+        nftContract.safeTransferFrom(sale.seller, msg.sender, _tokenId);
 
         // Refund any excess Ether
         uint256 _excess = msg.value - sale.price;
@@ -198,7 +222,7 @@ contract Marketplace is Ownable {
         }
 
         // Transfer the funds to the seller
-        sale.seller.transfer(sale.price); // not yet
+        sale.seller.transfer(sale.price); // todo - move this to a later stage
 
         // Deactivate the sale
         sale.isForSale = false;
@@ -206,9 +230,6 @@ contract Marketplace is Ownable {
         // Emit an event for the successful purchase
         emit NFTPurchased(_tokenId, msg.sender, sale.price);
     }
-
-
-
 
 
       // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MARK AS RECEIVED ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
