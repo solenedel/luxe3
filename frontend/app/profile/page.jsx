@@ -13,15 +13,20 @@ function ProfilePage() {
 
   return (
     <main className="flex flex-col items-center pt-16">
-      <h1 className="text-2xl font-semibold mb-10">Connected as: [ADDRESS]</h1>
+      <h1 className="text-3xl font-semibold mb-10 backdrop-blur-sm">
+        Your dashboard
+      </h1>
 
-      <section>
-        <aside>You have not created your NFT collection yet. </aside>
+      <section className="flex items-baseline gap-x-10">
+        <aside className="text-xl backdrop-blur-sm">
+          You have not created your NFT collection yet.{' '}
+        </aside>
         <button
           onClick={() => setShowModal(!showModal)}
-          className="text-xl font-semibold mt-8 bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
+          className="text-2xl shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
           Start collection
         </button>
+
         {showModal ? (
           <Modal showModal={showModal} setShowModal={setShowModal} />
         ) : (
@@ -30,27 +35,27 @@ function ProfilePage() {
       </section>
       <section className="mt-12 text-xl">
         <p>
-          You have created your collection.{' '}
+          Your collection: [COLLECTION NAME]
           <button
             type="submit"
             className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
-            ✏ Edit collection
+            ✏ Edit
           </button>
-          <button
+          {/* <button
             onClick={testGetCollections}
             className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
             GetAllCollections
-          </button>
+          </button> */}
         </p>
         <span className="flex gap-x-10">
           <button
             type="submit"
-            className="mt-6 text-xl h-fit font-semibold bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-2 shadow-lg text-gray-900 hover:translate-y-1">
+            className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
             Add NFT
           </button>
           <button
             type="submit"
-            className="mt-6 text-xl h-fit font-semibold bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-2 shadow-lg text-gray-900 hover:translate-y-1">
+            className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
             Edit NFTs
           </button>
         </span>

@@ -185,7 +185,7 @@ contract Marketplace is Ownable {
     /// @param _price is the price to list at.
     
     function listForSale(uint256 _tokenId, uint256 _price) public {
-
+        // use the custom interface??
         IERC721 nftContract = IERC721(msg.sender);
         require(nftContract.ownerOf(_tokenId) == msg.sender, "You are not the owner.");
         require(!sales[_tokenId].isForSale, "Already listed for sale.");
@@ -208,7 +208,7 @@ contract Marketplace is Ownable {
         require(msg.value >= sale.price, "Not enough Ether sent.");
 
         IERC721 nftContract = IERC721(sale.seller);
-        nftContract.safeTransferFrom(sale.seller, msg.sender, _tokenId);
+        nftContract.transferFrom(sale.seller, msg.sender, _tokenId);
 
         // Refund any excess Ether
         uint256 _excess = msg.value - sale.price;
