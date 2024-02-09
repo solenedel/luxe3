@@ -11,8 +11,8 @@ import "./NFTCollection.sol";
 interface INFTCollection {
     function ownerOf(uint256 _tokenId) external view returns (address _collectionOwner);
     function transferFrom(address _from, address _to, uint256 _tokenId) external;
-  // add more funcs
-}
+    // does the safeMint func need to be here?
+  }
 
 
 /// @title this contract handles marketplace actions, such as: creating a new collection (one per user), marking items as received, and more.
