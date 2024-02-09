@@ -1,10 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Modal from '../components/modals/NewCollectionModal';
+import NewCollectionModal from '../components/modals/NewCollectionModal';
+import AddNFTModal from '../components/modals/AddNFTModal';
 import { getAllCollections } from '@/utils/getters/getAllCollections';
 
 function ProfilePage() {
   const [showModal, setShowModal] = useState(false);
+  const [showModalB, setShowModalB] = useState(false);
 
   const testGetCollections = async () => {
     const data = await getAllCollections();
@@ -12,8 +14,8 @@ function ProfilePage() {
   };
 
   return (
-    <main className="flex flex-col items-center pt-16">
-      <h1 className="text-3xl font-semibold mb-10 backdrop-blur-sm">
+    <main className="flex flex-col items-center pt-10">
+      <h1 className="text-3xl w-full text-center tracking-wider py-3 text-pink-100 bg-gray-900/[0.7] font-semibold mb-10">
         Your dashboard
       </h1>
 
@@ -28,7 +30,15 @@ function ProfilePage() {
         </button>
 
         {showModal ? (
-          <Modal showModal={showModal} setShowModal={setShowModal} />
+          <NewCollectionModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+        ) : (
+          ''
+        )}
+        {showModalB ? (
+          <AddNFTModal showModalB={showModalB} setShowModalB={setShowModalB} />
         ) : (
           ''
         )}
@@ -49,6 +59,7 @@ function ProfilePage() {
         </p>
         <span className="flex gap-x-10">
           <button
+            onClick={() => setShowModalB(!showModalB)}
             type="submit"
             className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
             Add NFT

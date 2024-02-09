@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 
-function NewCollectionModal({ showModal, setShowModal }) {
+function AddNFTModal({ showModalB, setShowModalB }) {
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
 
@@ -12,34 +12,31 @@ function NewCollectionModal({ showModal, setShowModal }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // call func from contract
-    const data = await deployNewNFTCollection(nameInput, symbolInput);
-    console.log('DATA ON FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+    // const data = await deployNewNFTCollection(nameInput, symbolInput);
+    // console.log('DATA ON FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   return (
     <section className="flex flex-col items-center justify-center fixed inset-0 z-50 bg-black/[0.8] text-white w-full h-full overflow-auto">
-      <div className=" rounded-sm  flex flex-col items-center bg-yellow-50 text-gray-900 p-12 w-3/5">
+      <div className=" rounded-sm  flex flex-col items-center bg-gray-50 text-gray-900 p-12 w-3/5">
         {' '}
         <header className="flex w-full px-10 justify-between">
           <h3 className="font-semibold self-center text-2xl">
-            Create your NFT collection
+            Add an NFT to your collection
           </h3>{' '}
-          <button className="text-3xl" onClick={() => setShowModal(!showModal)}>
+          <button
+            className="text-3xl"
+            onClick={() => setShowModalB(!showModalB)}>
             ⓧ
           </button>
         </header>
-        <aside className="my-5 mt-8 text-sky-500">
-          Note: there is a limit of one collection per user. All your NFTs will
-          be posted in this collection. After clicking on "create", you can
-          start adding NFTs.
-        </aside>
         <form
           action="submit"
-          className="mt-10 text-xl flex items-end"
+          className="mt-10 text-xl w-full"
           onSubmit={handleFormSubmit}>
-          <div>
+          <div className="flex flex-col gap-y-2">
             <label htmlFor="name" className="font-semibold tracking-wide">
-              Name{' '}
+              Title
             </label>
             <input
               id="name"
@@ -47,13 +44,13 @@ function NewCollectionModal({ showModal, setShowModal }) {
               onChange={(e) => setNameInput(e.target.value)}
               type="text"
               placeholder="ex. Alice Collection"
-              className="mt-2 p-2 bg-sky-100 rounded-sm border-2 border-sky-300"
+              className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
           </div>
 
-          <div>
+          <div className="flex flex-col gap-y-2">
             <label htmlFor="symbol" className="font-semibold tracking-wide">
-              Symbol{' '}
+              Price
             </label>
             <input
               id="symbol"
@@ -61,15 +58,20 @@ function NewCollectionModal({ showModal, setShowModal }) {
               onChange={(e) => setSymbolInput(e.target.value)}
               type="text"
               placeholder="ex. ALICE"
-              className="mt-2 p-2 bg-sky-100 rounded-sm border-2 border-sky-300"
+              className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
           </div>
-
           <button
             onClick={handleFormSubmit}
             type="submit"
-            className="text-xl h-fit font-semibold bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-2 shadow-lg text-gray-900 hover:translate-y-1">
-            Create
+            className="text-xl text-pink-600 hover:underline mr-10">
+            Upload NFT image
+          </button>
+          <button
+            onClick={handleFormSubmit}
+            type="submit"
+            className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-700 to-emerald-400 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+            Mint
           </button>
         </form>
       </div>
@@ -77,4 +79,4 @@ function NewCollectionModal({ showModal, setShowModal }) {
   );
 }
 
-export default NewCollectionModal;
+export default AddNFTModal;
