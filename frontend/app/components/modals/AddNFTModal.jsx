@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 import { NFTStorage } from 'nft.storage';
 
-const client = new NFTStorage({ token: process.env.NFT_STORAGE_TOKEN });
+const client = new NFTStorage({
+  token: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
+});
 
 function AddNFTModal({ showModalB, setShowModalB }) {
-  const [nameInput, setNameInput] = useState('');
-  const [symbolInput, setSymbolInput] = useState('');
+  const [titleInput, setTitleInput] = useState('');
+  const [priceInput, setPriceInput] = useState('');
+  const [descriptionInput, setDescriptionInput] = useState('');
 
   // useEffect(() => {
   //   console.log('NAME INPUT', nameInput, 'SYMBOL', symbolInput);
@@ -14,16 +16,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // call func from contract
-    // const data = await deployNewNFTCollection(nameInput, symbolInput);
-    // console.log('DATA ON FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const metadata = await client.store({
-      name: file.name,
+      name: { titleInput }, //file.name
       description: 'Description of my NFT',
       image: file,
     });
@@ -49,30 +48,45 @@ function AddNFTModal({ showModalB, setShowModalB }) {
           className="mt-10 text-xl w-full"
           onSubmit={handleFormSubmit}>
           <div className="flex flex-col gap-y-2">
-            <label htmlFor="name" className="font-semibold tracking-wide">
+            <label htmlFor="title" className="font-semibold tracking-wide">
               Title
             </label>
             <input
-              id="name"
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
+              id="title"
+              value={titleInput}
+              onChange={(e) => setTitleInput(e.target.value)}
               type="text"
-              placeholder="ex. Alice Collection"
+              placeholder="A red bag"
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <label htmlFor="symbol" className="font-semibold tracking-wide">
+            <label htmlFor="price" className="font-semibold tracking-wide">
               Price
             </label>
             <input
-              id="symbol"
-              value={symbolInput}
-              onChange={(e) => setSymbolInput(e.target.value)}
+              id="price"
+              value={priceInput}
+              onChange={(e) => setPriceInput(e.target.value)}
               type="text"
-              placeholder="ex. ALICE"
+              placeholder="0.005 ETH"
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
+            />
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <label
+              htmlFor="description"
+              className="font-semibold tracking-wide">
+              Description
+            </label>
+            <input
+              id="description"
+              value={descriptionInput}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+              type="text"
+              placeholder="Black genuine leather crossbody bag"
+              className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-4/5"
             />
           </div>
           {/* <button
