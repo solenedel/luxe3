@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
+import { NFTStorage } from 'nft.storage';
+
+const client = new NFTStorage({ token: process.env.NFT_STORAGE_TOKEN });
 
 function AddNFTModal({ showModalB, setShowModalB }) {
   const [nameInput, setNameInput] = useState('');
@@ -14,6 +17,17 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     // call func from contract
     // const data = await deployNewNFTCollection(nameInput, symbolInput);
     // console.log('DATA ON FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const metadata = await client.store({
+      name: file.name,
+      description: 'Description of my NFT',
+      image: file,
+    });
+    console.log('IPFS hash:', metadata.url);
   };
 
   return (
@@ -61,12 +75,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
           </div>
-          <button
+          {/* <button
             onClick={handleFormSubmit}
             type="submit"
             className="text-xl text-pink-600 hover:underline mr-10">
             Upload NFT image
-          </button>
+          </button> */}
+          <input type="file" onChange={handleFileUpload} />
           <button
             onClick={handleFormSubmit}
             type="submit"
