@@ -14,7 +14,7 @@ function ProfilePage() {
   };
 
   return (
-    <main className="flex flex-col items-center pt-10">
+    <main className="flex flex-col items-center pt-10  min-h-screen">
       <h1 className="text-3xl w-full text-center tracking-wider py-3 text-pink-100 bg-gray-900/[0.7] font-semibold mb-10">
         Your dashboard
       </h1>

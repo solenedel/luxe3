@@ -18,14 +18,14 @@ function AddNFTModal({ showModalB, setShowModalB }) {
 
   return (
     <section className="flex flex-col items-center justify-center fixed inset-0 z-50 bg-black/[0.8] text-white w-full h-full overflow-auto">
-      <div className=" rounded-sm  flex flex-col items-center bg-gray-50 text-gray-900 p-12 w-3/5">
+      <div className=" rounded-sm  flex flex-col items-center bg-gray-100 text-gray-900 p-12 w-3/5">
         {' '}
         <header className="flex w-full px-10 justify-between">
           <h3 className="font-semibold self-center text-2xl">
             Add an NFT to your collection
           </h3>{' '}
           <button
-            className="text-3xl"
+            className="text-3xl hover:text-emerald-700 hover:scale-110"
             onClick={() => setShowModalB(!showModalB)}>
             ⓧ
           </button>
