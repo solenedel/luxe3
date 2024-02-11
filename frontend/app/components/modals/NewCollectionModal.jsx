@@ -1,13 +1,28 @@
 import { useState, useEffect } from 'react';
 import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
+import { useContractEvent } from 'wagmi';
+import { contractAddress, ABI } from '@/constants/marketplace';
 
 function NewCollectionModal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
 
-  // useEffect(() => {
-  //   console.log('NAME INPUT', nameInput, 'SYMBOL', symbolInput);
-  // }, [nameInput, symbolInput]);
+  const eventName = 'NFTCollectionCreated';
+
+  // event listener function
+  const handleEvent = ({ args: _contractAddress, _name, _symbol }) => {
+    // const { _contractAddress, _name, _symbol } = args;
+    const eventMsg = `🔵 ${eventName} event received. New collection ${_name}, ${_symbol} was deployed to contract address: ${_contractAddress}`;
+    console.log(eventMsg);
+  };
+
+  // Use the hook to listen for the event
+  useContractEvent({
+    address: contractAddress,
+    abi: ABI,
+    eventName,
+    listener: handleEvent,
+  });
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
