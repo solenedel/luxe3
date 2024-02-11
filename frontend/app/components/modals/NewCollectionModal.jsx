@@ -9,26 +9,24 @@ function NewCollectionModal({ showModal, setShowModal }) {
 
   const eventName = 'NFTCollectionCreated';
 
-  // event listener function
-  const handleEvent = ({ args: _contractAddress, _name, _symbol }) => {
-    // const { _contractAddress, _name, _symbol } = args;
-    const eventMsg = `🔵 ${eventName} event received. New collection ${_name}, ${_symbol} was deployed to contract address: ${_contractAddress}`;
-    console.log(eventMsg);
-  };
-
-  // Use the hook to listen for the event
+  // Listen for NFTCollection contract deployment event
   useContractEvent({
     address: contractAddress,
     abi: ABI,
     eventName,
-    listener: handleEvent,
+    listener(log) {
+      console.log('🔵 Event log:', log[0].args);
+      const { contractAddress, name, symbol } = log[0].args;
+      console.log(
+        `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
+      );
+    },
   });
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // call func from contract
     const data = await deployNewNFTCollection(nameInput, symbolInput);
-    console.log('NEW COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   return (
