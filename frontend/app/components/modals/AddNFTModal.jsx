@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NFTStorage } from 'nft.storage';
+import { mintNFT } from '@/utils/mintNFT';
+import { useAccount } from 'wagmi';
 
 const client = new NFTStorage({
   token: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
@@ -9,13 +11,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [titleInput, setTitleInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
-
-  // useEffect(() => {
-  //   console.log('NAME INPUT', nameInput, 'SYMBOL', symbolInput);
-  // }, [nameInput, symbolInput]);
+  const { address, isConnected } = useAccount();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log('address=====', address);
+    // const data = await mintNFT(address, );
+    // set the price of the NFT (+ mark as for sale)
   };
 
   const handleFileUpload = async (e) => {
