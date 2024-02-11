@@ -13,7 +13,7 @@ function NewCollectionModal({ showModal, setShowModal }) {
     e.preventDefault();
     // call func from contract
     const data = await deployNewNFTCollection(nameInput, symbolInput);
-    console.log('DATA ON FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+    console.log('NEW COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   return (

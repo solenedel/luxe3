@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 // This contract handles each new collection of NFTs
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";

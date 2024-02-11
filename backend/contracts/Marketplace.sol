@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
@@ -136,7 +136,7 @@ contract Marketplace is Ownable {
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
     /// @param _name is the name of the new NFT collection, ex: "My Collection" and _symbol is the symbol, ex: "MC"
-    function deployNewNFTCollection(string memory _name, string memory _symbol) public {   
+    function deployNewNFTCollection(string memory _name, string memory _symbol) public returns(Collection memory _newCollection) {   
        
       require(users[msg.sender].hasCollection == false, "You have already created an NFT collection.");
       require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Name cannot be empty.");
@@ -144,7 +144,7 @@ contract Marketplace is Ownable {
 
       NFTCollection newCollection = new NFTCollection(_name, _symbol);
 
-      Collection memory _newCollection = Collection({
+      _newCollection = Collection({
             contractAddress: address(newCollection),
             name: _name,
             symbol: _symbol
@@ -156,7 +156,7 @@ contract Marketplace is Ownable {
       collectionsArray.push(_newCollection);
 
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
-        
+      
         // emit event
       emit NFTCollectionCreated(address(newCollection), _name, _symbol);
     }
