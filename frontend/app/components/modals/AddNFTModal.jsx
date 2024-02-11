@@ -12,11 +12,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [priceInput, setPriceInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const { address, isConnected } = useAccount();
+  const [URI, setURI] = useState('');
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    // prevent submit if file not uploaded
     console.log('address=====', address);
-    // const data = await mintNFT(address, );
+    const data = await mintNFT(address, URI);
     // set the price of the NFT (+ mark as for sale)
   };
 
@@ -24,11 +26,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     const file = e.target.files[0];
     if (!file) return;
     const metadata = await client.store({
-      name: { titleInput }, //file.name
-      description: 'Description of my NFT',
+      name: file.name,
+      description: 'description',
       image: file,
     });
-    console.log('IPFS hash:', metadata.url);
+    // console.log('IPFS hash (URI):', metadata.url);
+    setURI(metadata.url);
+    // console.log('METADATA ====:', metadata);
   };
 
   return (
@@ -63,7 +67,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
             />
           </div>
 
-          <div className="flex flex-col gap-y-2">
+          {/* <div className="flex flex-col gap-y-2">
             <label htmlFor="price" className="font-semibold tracking-wide">
               Price
             </label>
@@ -75,7 +79,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
               placeholder="0.005 ETH"
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
-          </div>
+          </div> */}
           <div className="flex flex-col gap-y-2">
             <label
               htmlFor="description"
