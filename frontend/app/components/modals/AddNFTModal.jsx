@@ -20,10 +20,10 @@ function AddNFTModal({ showModalB, setShowModalB }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // prevent submit if file not uploaded
+    // todo- prevent submit if file not uploaded
     const data = await mintNFT(address, URI, collectionAddr);
-    console.log('DATA+++++++', data);
-    // set the price of the NFT (+ mark as for sale)
+
+    // set the price of the NFT (+ mark as for sale) LATER
   };
 
   const handleFileUpload = async (e) => {
@@ -34,9 +34,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
       description: 'description',
       image: file,
     });
-    // console.log('IPFS hash (URI):', metadata.url);
     setURI(metadata.url);
-    // console.log('METADATA ====:', metadata);
   };
 
   return (

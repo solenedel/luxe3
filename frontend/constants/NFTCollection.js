@@ -11,6 +11,11 @@ export const ABI = [
         name: '_symbol',
         type: 'string',
       },
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
