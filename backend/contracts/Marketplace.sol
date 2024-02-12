@@ -156,6 +156,8 @@ contract Marketplace is Ownable {
       collectionsArray.push(_newCollection);
 
       users[msg.sender].hasCollection = true; //todo - reentrancy here?
+
+      // todo- remove return value here, not doing anything
       
         // emit event
       emit NFTCollectionCreated(address(newCollection), _name, _symbol);

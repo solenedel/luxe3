@@ -41,6 +41,9 @@ function ProfilePage() {
           ) : (
             ''
           )}
+        </section>
+      ) : (
+        <section className="mt-12 text-xl">
           {showModalB ? (
             <AddNFTModal
               showModalB={showModalB}
@@ -49,9 +52,6 @@ function ProfilePage() {
           ) : (
             ''
           )}
-        </section>
-      ) : (
-        <section className="mt-12 text-xl">
           <p>
             Your collection addr: {collectionAddr}
             <button

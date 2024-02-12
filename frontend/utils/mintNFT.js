@@ -4,14 +4,19 @@ import {
   waitForTransaction,
 } from '@wagmi/core';
 import { ABI } from '@/constants/NFTCollection';
-// how to get the actual contract address?
-export const mintNFT = async (_to, _URI) => {
+import { getAddress } from 'viem';
+export const mintNFT = async (_to, _URI, _contractAddr) => {
+  // convert to ETH address
+  let _ethAddrTo = getAddress(_to);
+  let _ethContradctAddr = getAddress(_contractAddr);
+
+  // console.log('???????', _to, _ethAddrTo);
   try {
     const { request } = await prepareWriteContract({
-      address: contractAddress, // get contract addr from context!!
+      address: _ethContradctAddr,
       abi: ABI,
       functionName: 'safeMint',
-      args: [_to, _URI],
+      args: [_ethAddrTo, _URI],
     });
 
     const { hash } = await writeContract(request);
