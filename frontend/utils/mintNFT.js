@@ -23,7 +23,7 @@ export const mintNFT = async (_to, _URI, _contractAddr) => {
     const data = await waitForTransaction({
       hash: hash,
     });
-    console.log('MINT NFT 🔥🔥🔥🔥🔥🔥🔥', data);
+    // console.log('MINT NFT 🔥🔥🔥🔥🔥🔥🔥', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in mintNFT: ', err.message);
