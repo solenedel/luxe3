@@ -5,7 +5,7 @@ import AddNFTModal from '../components/modals/AddNFTModal';
 import { getAllCollections } from '@/utils/getters/getAllCollections';
 import { UserCollectionContext } from '@/context/UserCollection.context';
 import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
-import { useAccount } from 'wagmi';
+import { useAccount, useContractEvent } from 'wagmi';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr } = useContext(
@@ -19,9 +19,10 @@ function ProfilePage() {
   //   const data = await getAllCollections();
   //   // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
   // };
+
   const getCollection = async () => {
     const data = await getCollectionNFTs(address);
-    console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
+    // console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   return (

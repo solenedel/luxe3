@@ -233,6 +233,31 @@ export const ABI = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'collectionAddress',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'URI',
+        type: 'string',
+      },
+    ],
+    name: 'MintedNFT',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'previousOwner',
         type: 'address',
       },
@@ -330,6 +355,19 @@ export const ABI = [
   {
     inputs: [],
     name: 'getLatestTokenNumber',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '_tokenIdCounter',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getNFTs',
     outputs: [
       {
         internalType: 'uint256',

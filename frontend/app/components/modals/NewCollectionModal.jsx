@@ -13,9 +13,9 @@ function NewCollectionModal({ showModal, setShowModal }) {
 
   const eventName = 'NFTCollectionCreated';
 
-  useEffect(() => {
-    console.log('COLLECTION ADDR =====', collectionAddr);
-  }, [collectionAddr]);
+  // useEffect(() => {
+  //   console.log('COLLECTION ADDR =====', collectionAddr);
+  // }, [collectionAddr]);
 
   // Listen for NFTCollection contract deployment event
   // todo - this contract address shouldbe associated with the user struct
