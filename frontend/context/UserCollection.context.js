@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 import { getCollection } from '@/utils/getters/getCollection';
 import { useAccount } from 'wagmi';
@@ -18,19 +18,19 @@ export function UserCollectionContextProvider({ children }) {
     return _owner;
   }
 
-  if (isConnected && collectionAddr !== '') {
-    fetchCollectionOwner(); // persist in state
-  }
-
   // fetch user's collection
   async function getUserCollection() {
     const _collectionInfo = await getCollection(address);
     setCollectionInfo(_collectionInfo);
   }
 
-  if (isConnected && address !== '') {
-    // getUserCollection();
-  }
+  useEffect(() => {
+    if (isConnected) {
+      // also check for hasCollection
+      fetchCollectionOwner(); // todo- persist in state
+      getUserCollection();
+    }
+  }, [isConnected, address]);
 
   return (
     <UserCollectionContext.Provider
@@ -39,6 +39,8 @@ export function UserCollectionContextProvider({ children }) {
         setCollectionAddr,
         collectionOwner,
         setCollectionOwner,
+        collectionInfo,
+        setCollectionInfo,
       }}>
       {children}
     </UserCollectionContext.Provider>

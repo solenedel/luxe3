@@ -8,7 +8,7 @@ import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
 import { useAccount, useContractEvent } from 'wagmi';
 
 function ProfilePage() {
-  const { collectionAddr, setCollectionAddr } = useContext(
+  const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
     UserCollectionContext
   );
   const { address, isConnected } = useAccount();
@@ -30,7 +30,7 @@ function ProfilePage() {
       <h1 className="text-3xl w-full text-center tracking-wider py-3 text-pink-100 bg-gray-900/[0.7] font-semibold mb-10">
         Your dashboard
       </h1>
-      {collectionAddr === '' ? (
+      {collectionAddr == '' ? (
         <section className="flex items-baseline gap-x-10">
           <aside className="text-xl backdrop-blur-sm">
             You have not created your NFT collection yet.{' '}
@@ -60,24 +60,14 @@ function ProfilePage() {
           ) : (
             ''
           )}
-          <p>
-            Your collection addr: {collectionAddr}
-            <button
-              type="submit"
-              className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
-              ✏ Edit
-            </button>
-            {/* <button
-            onClick={testGetCollections}
-            className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
-            GetAllCollections
-          </button> */}
-            <button
-              onClick={getCollection}
-              className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
-              GetCollection
-            </button>
-          </p>
+
+          <div>
+            <h2 className="text-xl font-semibold">
+              Your collection: {collectionInfo.name} ({collectionInfo.symbol}){' '}
+            </h2>
+            <p>Collection address: {collectionInfo.contractAddress}</p>
+          </div>
+
           <span className="flex gap-x-10">
             <button
               onClick={() => setShowModalB(!showModalB)}
