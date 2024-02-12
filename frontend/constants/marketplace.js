@@ -367,6 +367,32 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_addr',
+        type: 'address',
+      },
+    ],
+    name: 'getUser',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'bool',
+            name: 'hasCollection',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct Marketplace.User',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
         name: '_tokenId',
         type: 'uint256',

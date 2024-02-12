@@ -3,6 +3,8 @@ import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 import { useContractEvent } from 'wagmi';
 import { contractAddress, ABI } from '@/constants/marketplace';
 import { UserCollectionContext } from '@/context/UserCollection.context';
+import { UserContext } from '@/context/User.context';
+// import { useAccount } from 'wagmi';
 
 function NewCollectionModal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
@@ -10,6 +12,8 @@ function NewCollectionModal({ showModal, setShowModal }) {
   const { collectionAddr, setCollectionAddr } = useContext(
     UserCollectionContext
   );
+  const { userInfo, fetchUserInfo } = useContext(UserContext);
+  // const { account, isConnected } = useAccount();
 
   const eventName = 'NFTCollectionCreated';
 
@@ -26,6 +30,7 @@ function NewCollectionModal({ showModal, setShowModal }) {
     listener(log) {
       const { contractAddress, name, symbol } = log[0].args;
       setCollectionAddr(contractAddress);
+      fetchUserInfo();
       console.log(
         `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
       );

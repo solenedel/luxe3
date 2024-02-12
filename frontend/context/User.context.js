@@ -1,19 +1,28 @@
 import { createContext, useState, useEffect } from 'react';
 import { getMarketplaceOwner } from '@/utils/getMarketplaceOwner';
-// import { useAccount } from 'wagmi';
+import { useAccount } from 'wagmi';
+import { getUser } from '@/utils/getters/getUser';
 
 // this context handles the states for the current logged in user and the marketplace admin/owner
 export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  // const { address, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
+  const [userInfo, setUserInfo] = useState('');
   const [marketplaceOwner, setMarketplaceOwner] = useState(''); // NOTE - maybe owner doesn't need to be a state var? should it be a constant?
   //const [user, setUser] = useState(''); // current logged in user of the app
 
-  // useEffect(() => {
-  //   console.log('ADDRESS: ', address);
-  //   setUser(isConnected ? address : '');
-  // }, [address, isConnected]);
+  async function fetchUserInfo() {
+    const _userInfo = await getUser(address);
+    setUserInfo(_userInfo);
+    // console.log('USER INFO =======', _userInfo);
+  }
+
+  useEffect(() => {
+    if (address) {
+      fetchUserInfo();
+    }
+  }, [address, isConnected]);
 
   async function fetchMarketplaceOwner() {
     const _owner = await getMarketplaceOwner();
@@ -35,7 +44,9 @@ export const UserContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         marketplaceOwner,
+        fetchUserInfo,
         // IsMarketplaceOwner,
+        userInfo,
       }}>
       {children}
     </UserContext.Provider>

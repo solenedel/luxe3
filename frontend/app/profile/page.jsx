@@ -6,11 +6,13 @@ import { getAllCollections } from '@/utils/getters/getAllCollections';
 import { UserCollectionContext } from '@/context/UserCollection.context';
 import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
 import { useAccount, useContractEvent } from 'wagmi';
+import { UserContext } from '@/context/User.context';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
     UserCollectionContext
   );
+  const { userInfo } = useContext(UserContext);
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
@@ -30,7 +32,7 @@ function ProfilePage() {
       <h1 className="text-3xl w-full text-center tracking-wider py-3 text-pink-100 bg-gray-900/[0.7] font-semibold mb-10">
         Your dashboard
       </h1>
-      {collectionAddr == '' ? (
+      {userInfo.hasCollection == false ? (
         <section className="flex items-baseline gap-x-10">
           <aside className="text-xl backdrop-blur-sm">
             You have not created your NFT collection yet.{' '}
