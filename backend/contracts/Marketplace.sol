@@ -132,6 +132,9 @@ contract Marketplace is Ownable {
     return allCollections[_address];
   }
 
+  function getUser(address _addr) public view returns (User memory) {
+    return(users[_addr]);
+  }
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
