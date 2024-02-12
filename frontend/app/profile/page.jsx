@@ -21,7 +21,7 @@ function ProfilePage() {
   // };
   const getCollection = async () => {
     const data = await getCollectionNFTs(address);
-    // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+    console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
   return (
