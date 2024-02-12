@@ -151,7 +151,7 @@ contract Marketplace is Ownable {
         });
 
        // store new collection's contract address and other details
-       allCollections[msg.sender] = _newCollection;
+      allCollections[msg.sender] = _newCollection;
 
       collectionsArray.push(_newCollection);
 

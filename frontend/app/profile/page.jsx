@@ -4,16 +4,23 @@ import NewCollectionModal from '../components/modals/NewCollectionModal';
 import AddNFTModal from '../components/modals/AddNFTModal';
 import { getAllCollections } from '@/utils/getters/getAllCollections';
 import { UserCollectionContext } from '@/context/UserCollection.context';
+import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
+import { useAccount } from 'wagmi';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr } = useContext(
     UserCollectionContext
   );
+  const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
 
-  const testGetCollections = async () => {
-    const data = await getAllCollections();
+  // const testGetCollections = async () => {
+  //   const data = await getAllCollections();
+  //   // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+  // };
+  const getCollection = async () => {
+    const data = await getCollectionNFTs(address);
     // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
@@ -64,6 +71,11 @@ function ProfilePage() {
             className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
             GetAllCollections
           </button> */}
+            <button
+              onClick={getCollection}
+              className="text-xl text-gray-900 hover:underline ml-20 hover:text-violet-500">
+              GetCollection
+            </button>
           </p>
           <span className="flex gap-x-10">
             <button
