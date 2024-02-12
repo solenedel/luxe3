@@ -8,7 +8,7 @@ export function UserCollectionContextProvider({ children }) {
   const [collectionOwner, setCollectionOwner] = useState('');
 
   async function fetchCollectionOwner() {
-    const _owner = await getCollectionOwner();
+    const _owner = await getCollectionOwner(collectionAddr);
     setCollectionOwner(_owner);
     console.log('COLLECTION OWNER: ', collectionOwner, _owner);
     return _owner;

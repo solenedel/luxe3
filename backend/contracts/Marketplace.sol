@@ -142,7 +142,7 @@ contract Marketplace is Ownable {
       require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Name cannot be empty.");
       require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Symbol cannot be empty.");
 
-      NFTCollection newCollection = new NFTCollection(_name, _symbol);
+      NFTCollection newCollection = new NFTCollection(_name, _symbol, msg.sender);
 
       _newCollection = Collection({
             contractAddress: address(newCollection),
