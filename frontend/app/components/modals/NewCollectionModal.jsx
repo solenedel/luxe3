@@ -1,22 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 import { useContractEvent } from 'wagmi';
 import { contractAddress, ABI } from '@/constants/marketplace';
+import { UserCollectionContext } from '@/context/UserCollection.context';
 
 function NewCollectionModal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
+  const { collectionAddr, setCollectionAddr } = useContext(
+    UserCollectionContext
+  );
 
   const eventName = 'NFTCollectionCreated';
 
+  useEffect(() => {
+    console.log('COLLECTION ADDR =====', collectionAddr);
+  }, [collectionAddr]);
+
   // Listen for NFTCollection contract deployment event
+  // todo - this contract address shouldbe associated with the user struct
   useContractEvent({
     address: contractAddress,
     abi: ABI,
     eventName,
     listener(log) {
-      console.log('🔵 Event log:', log[0].args);
       const { contractAddress, name, symbol } = log[0].args;
+      setCollectionAddr(contractAddress);
       console.log(
         `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
       );

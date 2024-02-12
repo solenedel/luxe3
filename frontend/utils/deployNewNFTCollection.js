@@ -6,7 +6,6 @@ import {
 import { contractAddress, ABI } from '@/constants/marketplace';
 
 export const deployNewNFTCollection = async (_name, _symbol) => {
-  //let _ethAddress = getAddress(_addr); // convert string to Eth address format
   try {
     const { request } = await prepareWriteContract({
       address: contractAddress,

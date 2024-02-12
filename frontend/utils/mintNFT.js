@@ -3,13 +3,13 @@ import {
   writeContract,
   waitForTransaction,
 } from '@wagmi/core';
-import { contractAddress, ABI } from '@/constants/NFTCollection';
+import { ABI } from '@/constants/NFTCollection';
 // how to get the actual contract address?
 export const mintNFT = async (_to, _URI) => {
   try {
     const { request } = await prepareWriteContract({
-      address: contractAddress,
-      abi: ABI, // how to get the correct ABI? and contract address
+      address: contractAddress, // get contract addr from context!!
+      abi: ABI,
       functionName: 'safeMint',
       args: [_to, _URI],
     });
