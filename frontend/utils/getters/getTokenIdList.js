@@ -7,7 +7,6 @@ export const getTokenIdList = async (_collectionAddr) => {
       abi: ABI,
       functionName: 'getTokenIdList',
     });
-    console.log('🔥🔥🔥🔥🔥🔥🔥🔥 get token Id list:  ', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in getTokenIdList: ', err.message);

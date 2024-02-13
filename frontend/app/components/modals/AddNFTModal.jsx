@@ -19,7 +19,8 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const { collectionAddr, setCollectionAddr } = useContext(
     UserCollectionContext
   );
-  const { tokenIdArray, setTokenIdArray } = useContext(TokenListContext);
+  const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
+    useContext(TokenListContext);
 
   const eventName = 'MintedNFT';
 
@@ -29,8 +30,6 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     eventName,
     listener(log) {
       const { collectionAddress, to, URI } = log[0].args;
-      // setCollectionAddr(contractAddress);
-      fetchTokenIdList();
       console.log(log[0].args);
       console.log(
         `🔵 ${eventName} event received. New NFT minted by ${to} to collection: ${collectionAddress}. NFT URI: ${URI}`
@@ -41,8 +40,9 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-    const data = await mintNFT(address, URIState, collectionAddr);
 
+    const data = await mintNFT(address, URIState, collectionAddr);
+    console.log('DATA: ', data);
     // set the price of the NFT (+ mark as for sale) LATER
   };
 

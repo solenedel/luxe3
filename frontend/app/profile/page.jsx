@@ -10,6 +10,7 @@ import { UserContext } from '@/context/User.context';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 import { getMetadata } from '@/utils/getMetadata';
 import { getTokenIdList } from '@/utils/getters/getTokenIdList';
+import { TokenListContext } from '@/context/TokenList.context';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
@@ -22,6 +23,8 @@ function ProfilePage() {
   // const [latestTokenNumber, setLatestTokenNumber] = useState(0);
 
   const [metadataArray, setMetadataArray] = useState([]);
+  const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
+    useContext(TokenListContext);
 
   // const getCollection = async () => {
   //   const data = await getCollectionNFTs(address);
@@ -34,35 +37,37 @@ function ProfilePage() {
   // };
 
   const fetchMetadata = async (_tokenID) => {
-    const metadata = await getMetadata(_tokenID);
-    // console.log('metadata: ', metadata);
+    const metadata = await getMetadata(
+      collectionInfo.contractAddress,
+      _tokenID
+    );
+    console.log('metadata: ', metadata);
     return metadata;
   };
 
-  // const fetchTokenIdList = async () => {
-  //   const data = await getTokenIdList();
-  //   setTokenIdArray(data);
-  // };
-
-  // useEffect(() => {
-  //   if (isConnected) {
-  //     fetchTokenIdList();
-  //     console.log(tokenIdArray);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isConnected) {
+      fetchTokenIdList();
+    }
+  }, []);
 
   // useEffect(() => {
   //   console.log('METADATA ARRAY=====', metadataArray);
   // }, [metadataArray]);
 
-  const getTokenNumber = async () => {
-    const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
-    setLatestTokenNumber(_number); // this should be set in useEffect
-    let _tokenIdArray = [];
-    for (let i = 0; i < _number; i++) {
-      _tokenIdArray.push(i + 1);
-    }
-    setTokenIdArray(_tokenIdArray);
+  // const getTokenNumber = async () => {
+  //   const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
+  //   setLatestTokenNumber(_number); // this should be set in useEffect
+  //   let _tokenIdArray = [];
+  //   for (let i = 0; i < _number; i++) {
+  //     _tokenIdArray.push(i + 1);
+  //   }
+  //   setTokenIdArray(_tokenIdArray);
+  // };
+
+  const buttonHandler = async () => {
+    const data = await fetchTokenIdList(collectionInfo.contractAddress);
+    setTokenIdArray(data);
   };
 
   if (isConnected) {
@@ -130,14 +135,15 @@ function ProfilePage() {
             </span>
             <div className="mt-8 flex gap-x-5 font-semibold">
               <h3>NFTs in my collection:</h3>
-              {/* {tokenIdArray.map((tokenId) => (
+              <button onClick={buttonHandler}>get token id list</button>
+              {tokenIdArray.map((id) => (
                 <p
                   className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
-                  key={tokenId}>
-                  {tokenId}
-                  {fetchMetadata(tokenId).image}
+                  key={id}>
+                  {id}
+                  {/* {fetchMetadata(id).image} */}
                 </p>
-              ))} */}
+              ))}
             </div>
           </section>
         )}

@@ -11,7 +11,7 @@ export const getUser = async (_addr) => {
       functionName: 'getUser',
       args: [_ethAddr], // collection owner
     });
-    console.log('🔥🔥🔥🔥🔥🔥🔥🔥 get user:  ', data);
+    // console.log('🔥🔥🔥🔥🔥🔥🔥🔥 get user:  ', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in getUser: ', err.message);

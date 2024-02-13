@@ -10,20 +10,24 @@ export function TokenListContextProvider({ children }) {
   const [tokenIdArray, setTokenIdArray] = useState([]);
   const { address, isConnected } = useAccount();
 
-  const fetchTokenIdList = async () => {
-    const data = await getTokenIdList();
-    setTokenIdArray(data);
+  const fetchTokenIdList = async (_collectionAddr) => {
+    const data = await getTokenIdList(_collectionAddr);
+
+    // turn bigint array in to regular number array
+    const numberArray = Array.from(data, (n) => Number(n));
+    setTokenIdArray(numberArray);
+    return numberArray;
   };
 
-  useEffect(() => {
-    if (isConnected) {
-      fetchTokenIdList();
-      console.log('TOKEN ID ARRAY ====', tokenIdArray);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     // fetchTokenIdList();
+  //     // console.log('TOKEN ID ARRAY ====', tokenIdArray);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    console.log('TOKEN ID ARRAY ====', tokenIdArray);
+    console.log('TOKEN ID ARRAY:', tokenIdArray);
   }, [tokenIdArray]);
 
   return (

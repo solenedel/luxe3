@@ -9,7 +9,7 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
       address: _contractAddr,
       abi: ABI,
       functionName: 'tokenURI',
-      args: [_tokenID], // problem is here
+      args: [_tokenID],
     });
     console.log('33333333');
     // Extract CID from the URI

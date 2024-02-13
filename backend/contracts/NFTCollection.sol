@@ -60,11 +60,10 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     function safeMint(address _to, string memory _URI) public onlyOwner {
         
         tokenIdCounter++;
-        tokenIdList.push(tokenIdCounter);
         _safeMint(_to, tokenIdCounter);
         _setTokenURI(tokenIdCounter, _URI);
         //todo- should the safemint not take a _to param at all?
-
+         tokenIdList.push(tokenIdCounter);
         emit MintedNFT(address(this), msg.sender, _URI); 
 
     }
