@@ -8,6 +8,7 @@ import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
 import { useAccount, useContractEvent } from 'wagmi';
 import { UserContext } from '@/context/User.context';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
+import { getTokenURI } from '@/utils/getTokenURI';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
@@ -29,9 +30,14 @@ function ProfilePage() {
     // console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
   };
 
+  const getTokenURIData = async (_tokenID) => {
+    const data = await getTokenURI(collectionInfo.contractAddress, _tokenID);
+    return data;
+  };
+
   const getTokenNumber = async () => {
     const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
-    setLatestTokenNumber(_number);
+    setLatestTokenNumber(_number); // this should be set in useEffect
     let _tokenIdArray = [];
     for (let i = 0; i < _number; i++) {
       _tokenIdArray.push(i + 1);
@@ -108,11 +114,14 @@ function ProfilePage() {
                 Edit NFTs
               </button> */}
             </span>
-            <div className="mt-8 flex gap-x-5">
+            <div className="mt-8 flex gap-x-5 font-semibold">
               <h3>NFTs in my collection:</h3>
-              {tokenIdArray.map((token) => (
-                <p className="text-xl " key={token}>
-                  {token}
+              {tokenIdArray.map((tokenId) => (
+                <p
+                  className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
+                  key={tokenId}
+                  onClick={() => getTokenURIData(tokenId)}>
+                  {tokenId}
                 </p>
               ))}
             </div>

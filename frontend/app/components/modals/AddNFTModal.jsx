@@ -26,12 +26,12 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     abi: ABI,
     eventName,
     listener(log) {
-      const { contractAddress, NFTOwner, URI } = log[0].args;
+      const { collectionAddress, to, URI } = log[0].args;
       // setCollectionAddr(contractAddress);
       console.log(log[0].args);
-      // console.log(
-      //   `🔵 ${eventName} event received. New NFT minted by ${NFTOwner} to collection: ${contractAddress}. NFT URI: ${URI}`
-      // );
+      console.log(
+        `🔵 ${eventName} event received. New NFT minted by ${to} to collection: ${collectionAddress}. NFT URI: ${URI}`
+      );
     },
   });
 
