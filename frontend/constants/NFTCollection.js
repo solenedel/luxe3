@@ -358,24 +358,11 @@ export const ABI = [
     outputs: [
       {
         internalType: 'uint256',
-        name: '_tokenIdCounter',
+        name: '',
         type: 'uint256',
       },
     ],
-    stateMutability: 'pure',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getNFTs',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '_tokenIdCounter',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {

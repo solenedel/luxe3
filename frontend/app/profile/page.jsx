@@ -17,7 +17,8 @@ function ProfilePage() {
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
-
+  const [latestTokenNumber, setLatestTokenNumber] = useState(0);
+  const [tokenIdArray, setTokenIdArray] = useState([]);
   // const testGetCollections = async () => {
   //   const data = await getAllCollections();
   //   // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
@@ -26,6 +27,22 @@ function ProfilePage() {
   const getCollection = async () => {
     const data = await getCollectionNFTs(address);
     // console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
+  };
+
+  const getTokenNumber = async () => {
+    const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
+    setLatestTokenNumber(_number);
+    let _tokenIdArray = [];
+    for (let i = 0; i < _number; i++) {
+      _tokenIdArray.push(i + 1);
+    }
+    setTokenIdArray(_tokenIdArray);
+    console.log(
+      'TOKEN I ARRAY =====',
+      tokenIdArray,
+      'latest token num',
+      latestTokenNumber
+    );
   };
 
   if (isConnected) {
@@ -80,9 +97,7 @@ function ProfilePage() {
                 Add NFT
               </button>
               <button
-                onClick={() =>
-                  getLatestTokenNumber(collectionInfo.contractAddress)
-                }
+                onClick={getTokenNumber}
                 type="submit"
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 list NFTs in my collection
@@ -93,6 +108,14 @@ function ProfilePage() {
                 Edit NFTs
               </button> */}
             </span>
+            <div className="mt-8 flex gap-x-5">
+              <h3>NFTs in my collection:</h3>
+              {tokenIdArray.map((token) => (
+                <p className="text-xl " key={token}>
+                  {token}
+                </p>
+              ))}
+            </div>
           </section>
         )}
       </main>
