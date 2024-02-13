@@ -21,24 +21,16 @@ function ProfilePage() {
   const [latestTokenNumber, setLatestTokenNumber] = useState(0);
   const [tokenIdArray, setTokenIdArray] = useState([]);
   const [metadataArray, setMetadataArray] = useState([]);
-  // const testGetCollections = async () => {
-  //   const data = await getAllCollections();
-  //   // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
+
+  // const getCollection = async () => {
+  //   const data = await getCollectionNFTs(address);
+  //   // console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
   // };
 
-  const getCollection = async () => {
-    const data = await getCollectionNFTs(address);
-    // console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
-  };
-
-  const getTokenURIData = async (_tokenID) => {
-    const data = await getTokenURI(collectionInfo.contractAddress, _tokenID);
-    return data;
-  };
-
-  // useEffect(() => {
-  //   generateMetadataList();
-  // }, []);
+  // const getTokenURIData = async (_tokenID) => {
+  //   const data = await getTokenURI(collectionInfo.contractAddress, _tokenID);
+  //   return data;
+  // };
 
   const fetchMetadata = async (_tokenID) => {
     const metadata = await getMetadata(_tokenID);
@@ -46,20 +38,13 @@ function ProfilePage() {
     return metadata;
   };
 
-  // const generateMetadataList = () => {
-  //   tokenIdArray.forEach((tokenId) => {
-  //     let data = getMetadata(tokenId);
-  //     setMetadataArray((prev) => [...prev, data]);
-  //   });
-  // };
+  // useEffect(() => {
+  //   console.log(tokenIdArray);
+  // }, [tokenIdArray]);
 
-  useEffect(() => {
-    console.log(tokenIdArray);
-  }, [tokenIdArray]);
-
-  useEffect(() => {
-    console.log('METADATA ARRAY=====', metadataArray);
-  }, [metadataArray]);
+  // useEffect(() => {
+  //   console.log('METADATA ARRAY=====', metadataArray);
+  // }, [metadataArray]);
 
   const getTokenNumber = async () => {
     const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
@@ -69,12 +54,6 @@ function ProfilePage() {
       _tokenIdArray.push(i + 1);
     }
     setTokenIdArray(_tokenIdArray);
-    // console.log(
-    //   'TOKEN I ARRAY =====',
-    //   tokenIdArray,
-    //   'latest token num',
-    //   latestTokenNumber
-    // );
   };
 
   if (isConnected) {

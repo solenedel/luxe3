@@ -49,9 +49,9 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         return(tokenIdCounter);
     }
 
-    //  function getNFTs() public pure returns(uint256 _tokenIdCounter) {
-    //     return(_tokenIdCounter);
-    // }
+     function getTokenIdList() public view returns(uint256[] memory) {
+        return(tokenIdList);
+    }
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
@@ -60,6 +60,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     function safeMint(address _to, string memory _URI) public onlyOwner {
         
         tokenIdCounter++;
+        tokenIdList.push(tokenIdCounter);
         _safeMint(_to, tokenIdCounter);
         _setTokenURI(tokenIdCounter, _URI);
         //todo- should the safemint not take a _to param at all?
