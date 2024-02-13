@@ -7,6 +7,7 @@ import { UserCollectionContext } from '@/context/UserCollection.context';
 import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
 import { useAccount, useContractEvent } from 'wagmi';
 import { UserContext } from '@/context/User.context';
+import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
@@ -79,10 +80,18 @@ function ProfilePage() {
                 Add NFT
               </button>
               <button
+                onClick={() =>
+                  getLatestTokenNumber(collectionInfo.contractAddress)
+                }
+                type="submit"
+                className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+                list NFTs in my collection
+              </button>
+              {/* <button
                 type="submit"
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 Edit NFTs
-              </button>
+              </button> */}
             </span>
           </section>
         )}

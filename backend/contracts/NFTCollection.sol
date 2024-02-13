@@ -43,15 +43,15 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice Returns the latest token number (the total number of NFTs in the collection)
-    /// @return _tokenIdCounter A number that corresponds to the total number of NFTs in the collection.
+    /// @return tokenIdCounter A number that corresponds to the total number of NFTs in the collection.
 
-    function getLatestTokenNumber() public pure returns(uint256 _tokenIdCounter) {
-        return(_tokenIdCounter);
+    function getLatestTokenNumber() public view returns(uint256) {
+        return(tokenIdCounter);
     }
 
-     function getNFTs() public pure returns(uint256 _tokenIdCounter) {
-        return(_tokenIdCounter);
-    }
+    //  function getNFTs() public pure returns(uint256 _tokenIdCounter) {
+    //     return(_tokenIdCounter);
+    // }
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
