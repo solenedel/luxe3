@@ -32,20 +32,11 @@ export const UserContextProvider = ({ children }) => {
 
   fetchMarketplaceOwner();
 
-  // const userIsMarketplaceOwner = (_user, _admin) => {
-  //   if (_user !== '' && _user === _admin) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
   return (
     <UserContext.Provider
       value={{
         marketplaceOwner,
         fetchUserInfo,
-        // IsMarketplaceOwner,
         userInfo,
       }}>
       {children}

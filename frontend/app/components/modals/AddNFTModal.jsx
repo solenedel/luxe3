@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
-import { NFTStorage } from 'nft.storage';
+import { NFTStorage, Token } from 'nft.storage';
 import { mintNFT } from '@/utils/mintNFT';
 import { useAccount, useContractEvent } from 'wagmi';
 import { UserCollectionContext } from '@/context/UserCollection.context';
 import { ABI } from '@/constants/NFTCollection';
+import { TokenListContext } from '@/context/TokenList.context';
 
 const client = new NFTStorage({
   token: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
@@ -18,6 +19,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const { collectionAddr, setCollectionAddr } = useContext(
     UserCollectionContext
   );
+  const { tokenIdArray, setTokenIdArray } = useContext(TokenListContext);
 
   const eventName = 'MintedNFT';
 
@@ -28,6 +30,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     listener(log) {
       const { collectionAddress, to, URI } = log[0].args;
       // setCollectionAddr(contractAddress);
+      fetchTokenIdList();
       console.log(log[0].args);
       console.log(
         `🔵 ${eventName} event received. New NFT minted by ${to} to collection: ${collectionAddress}. NFT URI: ${URI}`

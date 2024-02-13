@@ -1,7 +1,8 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 import { getCollection } from '@/utils/getters/getCollection';
 import { useAccount } from 'wagmi';
+import { UserContext } from './User.context';
 
 export const UserCollectionContext = createContext();
 
@@ -10,6 +11,7 @@ export function UserCollectionContextProvider({ children }) {
   const [collectionOwner, setCollectionOwner] = useState('');
   const { address, isConnected } = useAccount();
   const [collectionInfo, setCollectionInfo] = useState('');
+  const { userInfo } = useContext(UserContext);
 
   async function fetchCollectionOwner() {
     const _owner = await getCollectionOwner(collectionAddr);
@@ -20,17 +22,19 @@ export function UserCollectionContextProvider({ children }) {
 
   // fetch user's collection
   async function getUserCollection() {
-    const _collectionInfo = await getCollection(address);
-    setCollectionInfo(_collectionInfo);
+    if (isConnected && userInfo.hasCollection) {
+      const _collectionInfo = await getCollection(address);
+      setCollectionInfo(_collectionInfo);
+    }
   }
 
   useEffect(() => {
-    if (isConnected) {
-      // also check for hasCollection
-      fetchCollectionOwner(); // todo- persist in state
+    if (isConnected && userInfo.hasCollection) {
       getUserCollection();
+      // also check for hasCollection
+      // fetchCollectionOwner(); // todo- persist in statecheck
     }
-  }, [isConnected, address]);
+  }, [isConnected, address, userInfo.hasCollection]);
 
   return (
     <UserCollectionContext.Provider

@@ -11,7 +11,7 @@ import { UserContextProvider } from '@/context/User.context';
 import Footer from './components/Footer';
 import { WalletContextProvider } from '@/context/Wallet.context';
 import { UserCollectionContextProvider } from '@/context/UserCollection.context';
-
+import { TokenListContextProvider } from '@/context/TokenList.context';
 const inter = Inter({ subsets: ['latin'] });
 const dmSerifDisplay = DM_Serif_Display({
   subsets: ['latin'],
@@ -53,9 +53,11 @@ export default function RootLayout({ children }) {
             <WalletContextProvider>
               <UserContextProvider>
                 <UserCollectionContextProvider>
-                  <Header />
-                  {children}
-                  <Footer />
+                  <TokenListContextProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                  </TokenListContextProvider>
                 </UserCollectionContextProvider>
               </UserContextProvider>
             </WalletContextProvider>

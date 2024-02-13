@@ -9,6 +9,7 @@ import { useAccount, useContractEvent } from 'wagmi';
 import { UserContext } from '@/context/User.context';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 import { getMetadata } from '@/utils/getMetadata';
+import { getTokenIdList } from '@/utils/getters/getTokenIdList';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
@@ -18,8 +19,8 @@ function ProfilePage() {
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
-  const [latestTokenNumber, setLatestTokenNumber] = useState(0);
-  const [tokenIdArray, setTokenIdArray] = useState([]);
+  // const [latestTokenNumber, setLatestTokenNumber] = useState(0);
+
   const [metadataArray, setMetadataArray] = useState([]);
 
   // const getCollection = async () => {
@@ -38,9 +39,17 @@ function ProfilePage() {
     return metadata;
   };
 
+  // const fetchTokenIdList = async () => {
+  //   const data = await getTokenIdList();
+  //   setTokenIdArray(data);
+  // };
+
   // useEffect(() => {
-  //   console.log(tokenIdArray);
-  // }, [tokenIdArray]);
+  //   if (isConnected) {
+  //     fetchTokenIdList();
+  //     console.log(tokenIdArray);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   console.log('METADATA ARRAY=====', metadataArray);
@@ -107,12 +116,12 @@ function ProfilePage() {
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 Add NFT
               </button>
-              <button
+              {/* <button
                 onClick={getTokenNumber}
                 type="submit"
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 list NFTs in my collection
-              </button>
+              </button> */}
               {/* <button
                 type="submit"
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
@@ -121,14 +130,14 @@ function ProfilePage() {
             </span>
             <div className="mt-8 flex gap-x-5 font-semibold">
               <h3>NFTs in my collection:</h3>
-              {tokenIdArray.map((tokenId) => (
+              {/* {tokenIdArray.map((tokenId) => (
                 <p
                   className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
                   key={tokenId}>
                   {tokenId}
                   {fetchMetadata(tokenId).image}
                 </p>
-              ))}
+              ))} */}
             </div>
           </section>
         )}
