@@ -3,12 +3,12 @@ import { ABI } from '@/constants/NFTCollection';
 
 // gets URI for a token in a collection
 export const getTokenURI = async (_contractAddr, _tokenID) => {
-  console.log(
-    '🔥🔥🔥 CONTRACT ADDR: ',
-    _contractAddr,
-    '🔥🔥🔥 TOKEN ID: ',
-    _tokenID
-  );
+  // console.log(
+  //   '🔥🔥🔥 CONTRACT ADDR: ',
+  //   _contractAddr,
+  //   '🔥🔥🔥 TOKEN ID: ',
+  //   _tokenID
+  // );
   try {
     const data = await readContract({
       address: _contractAddr,

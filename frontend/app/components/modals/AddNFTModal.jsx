@@ -14,7 +14,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [priceInput, setPriceInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const { address, isConnected } = useAccount();
-  // const [URI, setURI] = useState('');
+  const [URIState, setURIState] = useState('');
   const { collectionAddr, setCollectionAddr } = useContext(
     UserCollectionContext
   );
@@ -38,7 +38,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-    const data = await mintNFT(address, URI, collectionAddr);
+    const data = await mintNFT(address, URIState, collectionAddr);
 
     // set the price of the NFT (+ mark as for sale) LATER
   };
@@ -51,7 +51,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
       description: 'description',
       image: file,
     });
-    // setURI(metadata.url);
+    setURIState(metadata.url);
   };
 
   return (
