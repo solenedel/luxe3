@@ -14,7 +14,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [priceInput, setPriceInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const { address, isConnected } = useAccount();
-  const [URI, setURI] = useState('');
+  // const [URI, setURI] = useState('');
   const { collectionAddr, setCollectionAddr } = useContext(
     UserCollectionContext
   );
@@ -51,7 +51,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
       description: 'description',
       image: file,
     });
-    setURI(metadata.url);
+    // setURI(metadata.url);
   };
 
   return (

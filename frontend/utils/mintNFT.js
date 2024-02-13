@@ -8,12 +8,12 @@ import { getAddress } from 'viem';
 export const mintNFT = async (_to, _URI, _contractAddr) => {
   // convert to ETH address
   let _ethAddrTo = getAddress(_to);
-  let _ethContradctAddr = getAddress(_contractAddr);
+  // let _ethContradctAddr = getAddress(_contractAddr);
 
   // console.log('???????', _to, _ethAddrTo);
   try {
     const { request } = await prepareWriteContract({
-      address: _ethContradctAddr,
+      address: _contractAddr,
       abi: ABI,
       functionName: 'safeMint',
       args: [_ethAddrTo, _URI],
