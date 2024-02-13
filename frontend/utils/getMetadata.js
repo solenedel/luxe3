@@ -3,8 +3,8 @@ import { ABI } from '@/constants/NFTCollection';
 import { fetchMetadata } from './IPFS/fetchMetadata';
 import axios from 'axios';
 
-// gets URI for a token in a collection
-export const getTokenURI = async (_contractAddr, _tokenID) => {
+// gets metadata for a token in a collection
+export const getMetadata = async (_contractAddr, _tokenID) => {
   try {
     const data = await readContract({
       address: _contractAddr,
@@ -19,7 +19,8 @@ export const getTokenURI = async (_contractAddr, _tokenID) => {
     const IPFSurl = `https://ipfs.io/ipfs/${CID}`;
 
     const response = await axios.get(IPFSurl);
-    console.log('GET METADATA🔥🔥🔥 ', response.data);
+    const metadata = response.data;
+    return metadata;
   } catch (err) {
     console.log('🔴 Error in getTokenURI: ', err.message);
   }

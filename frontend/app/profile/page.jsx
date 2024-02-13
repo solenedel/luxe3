@@ -8,7 +8,7 @@ import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
 import { useAccount, useContractEvent } from 'wagmi';
 import { UserContext } from '@/context/User.context';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
-import { getTokenURI } from '@/utils/getTokenURI';
+import { getMetadata } from '@/utils/getMetadata';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
@@ -20,6 +20,7 @@ function ProfilePage() {
   const [showModalB, setShowModalB] = useState(false);
   const [latestTokenNumber, setLatestTokenNumber] = useState(0);
   const [tokenIdArray, setTokenIdArray] = useState([]);
+  const [metadataArray, setMetadataArray] = useState([]);
   // const testGetCollections = async () => {
   //   const data = await getAllCollections();
   //   // console.log('GET ALL CO FRONT END🔥🔥🔥🔥🔥🔥🔥', data);
@@ -35,6 +36,31 @@ function ProfilePage() {
     return data;
   };
 
+  useEffect(() => {
+    generateMetadataList();
+  }, []);
+
+  const getMetadata = async (_tokenID) => {
+    const metadata = await getMetadata(_tokenID);
+    console.log('metadata ', metadata);
+    return metadata;
+  };
+
+  const generateMetadataList = () => {
+    tokenIdArray.forEach((tokenId) => {
+      let data = getMetadata(tokenId);
+      setMetadataArray((prev) => [...prev, data]);
+    });
+  };
+
+  useEffect(() => {
+    console.log(tokenIdArray);
+  }, [tokenIdArray]);
+
+  useEffect(() => {
+    console.log('METADATA ARRAY=====', metadataArray);
+  }, [metadataArray]);
+
   const getTokenNumber = async () => {
     const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
     setLatestTokenNumber(_number); // this should be set in useEffect
@@ -43,12 +69,12 @@ function ProfilePage() {
       _tokenIdArray.push(i + 1);
     }
     setTokenIdArray(_tokenIdArray);
-    console.log(
-      'TOKEN I ARRAY =====',
-      tokenIdArray,
-      'latest token num',
-      latestTokenNumber
-    );
+    // console.log(
+    //   'TOKEN I ARRAY =====',
+    //   tokenIdArray,
+    //   'latest token num',
+    //   latestTokenNumber
+    // );
   };
 
   if (isConnected) {
@@ -120,7 +146,7 @@ function ProfilePage() {
                 <p
                   className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
                   key={tokenId}
-                  onClick={() => getTokenURIData(tokenId)}>
+                  onClick={() => getMetadata(tokenId)}>
                   {tokenId}
                 </p>
               ))}
@@ -139,29 +165,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-{
-  /* <section>
-        <h2>Your collection</h2>
-        <button className="text-xl font-semibold mt-8 bg-gradient-to-br from-orange-400 to-violet-400 rounded-sm p-4 shadow-lg text-gray-900 hover:translate-y-1">
-          Add item
-        </button>
-      </section> */
-}
-{
-  /* <aside className="bg-sky-200 border-2 border-sky-300 p-3 w-2/3 rounded-md">
-        <strong className="mr-2"> Pending:</strong>
-        You have purchased ####. If you have received the physical item, please
-        confirm reception so that the previous owner can receive their payment.
-        <button className=" ml-2 text-xl underline font-semibold">
-          Confirm received
-        </button>
-      </aside>
-      <section className="mt-14 text-left">
-        <h2 className="text-xl font-semibold mb-5">❏ My items / NFTs</h2>
-        <p>You have not posted any NFTs for yet. </p>
-      </section>
-      <section className="mt-14 text-left">
-        <h2 className="text-xl font-semibold mb-5">♥ My favourites</h2>
-        <p>You have no favourites yet. </p>
-      </section> */
-}
