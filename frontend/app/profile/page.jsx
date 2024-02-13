@@ -36,22 +36,22 @@ function ProfilePage() {
     return data;
   };
 
-  useEffect(() => {
-    generateMetadataList();
-  }, []);
+  // useEffect(() => {
+  //   generateMetadataList();
+  // }, []);
 
-  const getMetadata = async (_tokenID) => {
+  const fetchMetadata = async (_tokenID) => {
     const metadata = await getMetadata(_tokenID);
-    console.log('metadata ', metadata);
+    // console.log('metadata: ', metadata);
     return metadata;
   };
 
-  const generateMetadataList = () => {
-    tokenIdArray.forEach((tokenId) => {
-      let data = getMetadata(tokenId);
-      setMetadataArray((prev) => [...prev, data]);
-    });
-  };
+  // const generateMetadataList = () => {
+  //   tokenIdArray.forEach((tokenId) => {
+  //     let data = getMetadata(tokenId);
+  //     setMetadataArray((prev) => [...prev, data]);
+  //   });
+  // };
 
   useEffect(() => {
     console.log(tokenIdArray);
@@ -145,9 +145,9 @@ function ProfilePage() {
               {tokenIdArray.map((tokenId) => (
                 <p
                   className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
-                  key={tokenId}
-                  onClick={() => getMetadata(tokenId)}>
+                  key={tokenId}>
                   {tokenId}
+                  {fetchMetadata(tokenId).image}
                 </p>
               ))}
             </div>
