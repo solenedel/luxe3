@@ -17,25 +17,45 @@ describe('Setup: Contract initialisation', function () {
 
 // :::::::::: MARKETPLACE CONTRACT TESTS :::::::::::
 
-// describe('🔵 [NFT Collection] Mint NFT', function () {
-//   beforeEach(async function () {
-//     [admin, user1] = await ethers.getSigners();
-//     const contract = await ethers.getContractFactory('NFTCollection');
-//     NFTCollection = await contract.deploy();
-//   });
+describe('🔵 [NFT Collection] Mint NFT', function () {
+  beforeEach(async function () {
+    [owner, user1] = await ethers.getSigners();
+    const contract = await ethers.getContractFactory('NFTCollection');
+    NFTCollection = await contract.deploy('NAME', 'SYMBOL', owner.address);
+  });
 
-//   it('Should emit MintedNFT event when user mints an NFT', async () => {
-//     expect(
-//       await NFTCollection.connect(user1).safeMint(
-//         user1.address,
-//         'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
-//       )
-//     )
-//       .to.emit('MintedNFT')
-//       .withArgs(
-//         NFTCollection.address,
-//         user1.address,
-//         'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
-//       );
-//   });
-// });
+  it('Should only allow the owner of the collection to mint an NFT', async function () {
+    await expect(
+      NFTCollection.connect(user1).safeMint(
+        user1.address,
+        'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
+      )
+    ).to.be.revertedWithCustomError(
+      NFTCollection,
+      'OwnableUnauthorizedAccount'
+    );
+  });
+
+  it('Should emit MintedNFT event when owner mints an NFT', async () => {
+    expect(
+      await NFTCollection.safeMint(
+        owner.address,
+        'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
+      )
+    )
+      .to.emit('MintedNFT')
+      .withArgs(
+        NFTCollection.address,
+        owner.address,
+        'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
+      );
+  });
+
+  it('Should allow the owner to mint several NFTs', async () => {
+    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    await NFTCollection.safeMint(owner.address, 'ipfs://test2');
+    expect(await NFTCollection.safeMint(owner.address, 'ipfs://test3'))
+      .to.emit('MintedNFT')
+      .withArgs(NFTCollection.address, owner.address, 'ipfs://test3');
+  });
+});
