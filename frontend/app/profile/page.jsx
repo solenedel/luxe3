@@ -143,7 +143,7 @@ function ProfilePage() {
                   {id}
                 </p>
               ))}
-              {metadataArray.length ? (
+              {/* {metadataArray.length ? (
                 <div>
                   {metadataArray.map((nft) => (
                     <div className="text-xl font-semibold h" key={nft.name}>
@@ -154,7 +154,7 @@ function ProfilePage() {
                 </div>
               ) : (
                 ''
-              )}
+              )} */}
             </div>
           </section>
         )}

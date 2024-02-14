@@ -6,10 +6,6 @@ import { UserCollectionContext } from '@/context/UserCollection.context';
 import { ABI } from '@/constants/NFTCollection';
 import { TokenListContext } from '@/context/TokenList.context';
 
-const client = new NFTStorage({
-  token: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
-});
-
 function AddNFTModal({ showModalB, setShowModalB }) {
   const [titleInput, setTitleInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
@@ -21,6 +17,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   );
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
+
+  const clientStatusFunc = async () => {
+    const status = await client.status(
+      'zdj7Wn9FQAURCP6MbwcWuzi7u65kAsXCdjNTkhbJcoaXBusq9'
+    );
+    console.log('Status ====', status);
+  };
 
   const eventName = 'MintedNFT';
 
@@ -37,10 +40,13 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     },
   });
 
+  const client = new NFTStorage({
+    token: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
+  });
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-    console.log('==== URI STATE before mint ====', URIState);
     const data = await mintNFT(address, URIState, collectionAddr);
 
     // set the price of the NFT (+ mark as for sale) LATER
@@ -92,7 +98,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
           </div>
-
+          <button onClick={clientStatusFunc}>check status</button>
           {/* <div className="flex flex-col gap-y-2">
             <label htmlFor="price" className="font-semibold tracking-wide">
               Price
@@ -124,7 +130,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
           <input
             type="file"
             onChange={handleFileUpload}
-            classNme="text-green-400"
+            className="text-green-400"
           />
           <button
             onClick={handleFormSubmit}

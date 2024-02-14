@@ -13,11 +13,13 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
     });
 
     // Extract CID from the URI
-    const CID = data.split('ipfs://')[1];
+    const CID = data.split('ipfs://')[1].slice(0, -14);
+    console.log('CID', CID);
     // Construct full IPFS gateway URL
-    const IPFSurl = `https://nftstorage.link/${CID}`;
+    const IPFSurl = `https://api.nft.storage/${CID}`;
     // const IPFSurlBackup = `https://cloudflare-ipfs.com/ipfs/${CID}`;
 
+    console.log('URL: ====', IPFSurl);
     try {
       const response = await axios.get(IPFSurl);
       const metadata = await response.data;
