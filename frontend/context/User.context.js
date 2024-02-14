@@ -15,7 +15,6 @@ export const UserContextProvider = ({ children }) => {
   async function fetchUserInfo() {
     const _userInfo = await getUser(address);
     setUserInfo(_userInfo);
-    // console.log('USER INFO =======', _userInfo);
   }
 
   useEffect(() => {

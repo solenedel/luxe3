@@ -12,21 +12,10 @@ async function main() {
   // deploy Admin's collection
   const collectionName = 'Admin Collection';
   const collectionSymbol = 'ADMIN';
-  const tx = await Marketplace.deployNewNFTCollection(
-    collectionName,
-    collectionSymbol
-  );
-
-  //const receipt = await tx.wait(); // Wait for transaction to be mined
-  // console.log('event', receipt.logs);
-
-  // Print events emitted by the transaction
-  // for (const event of receipt.logs || []) {
-  //   console.log(`Event: ${event.log}, Args: ${JSON.stringify(event.args)}`);
-  // }
+  await Marketplace.deployNewNFTCollection(collectionName, collectionSymbol);
 
   console.log(
-    `New NFT collection "${collectionName}" (${collectionSymbol}) was deployed by .`
+    `New NFT collection "${collectionName}" (${collectionSymbol}) was deployed by ${adminAddr}.`
   );
 }
 
