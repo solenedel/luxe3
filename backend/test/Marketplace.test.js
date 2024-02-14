@@ -1,8 +1,6 @@
 const { ethers } = require('hardhat');
 const { expect, assert } = require('chai');
 
-// todo - maybe all tests should go in this file?
-
 // CONTRACT DEPLOYMENT
 
 describe('Setup: Contract initialisation', function () {
@@ -30,6 +28,16 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
     expect(
       await marketplace.deployNewNFTCollection('MyCollection', 'MC')
     ).to.emit('NFTCollectionCreated');
+  });
+
+  it('Should emit NFTCollectionCreated event when user creates a collection with args', async () => {
+    const tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
+    const receipt = await tx.wait();
+    const newCollectionAddress = await receipt.to;
+
+    expect(tx)
+      .to.emit('NFTCollectionCreated')
+      .withArgs(newCollectionAddress, 'MyCollection', 'MC');
   });
 
   it('Should have hasCollection = false for a user that has not created a collection.', async () => {
