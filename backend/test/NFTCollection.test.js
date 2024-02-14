@@ -58,4 +58,23 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
       .to.emit('MintedNFT')
       .withArgs(NFTCollection.address, owner.address, 'ipfs://test3');
   });
+
+  it('Should have tokenIdCounter = 0 before any NFTs have been minted', async function () {
+    expect(await NFTCollection.getLatestTokenNumber()).to.equal(0);
+    expect(await NFTCollection.getTokenIdList()).to.deep.equal([]);
+  });
+
+  it('Should have tokenIdCounter = 1 when one NFT has been minted', async function () {
+    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    expect(await NFTCollection.getLatestTokenNumber()).to.equal(1);
+  });
+
+  it('Should have tokenIdCounter = 3 when 3 NFTs have been minted', async function () {
+    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    await NFTCollection.safeMint(owner.address, 'ipfs://test2');
+    await NFTCollection.safeMint(owner.address, 'ipfs://test3');
+
+    expect(await NFTCollection.getLatestTokenNumber()).to.equal(3);
+    expect(await NFTCollection.getTokenIdList()).to.deep.equal([1, 2, 3]);
+  });
 });
