@@ -27,10 +27,17 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
     marketplace = await contract.deploy();
   });
 
+  it('Should emit NFTCollectionCreated event when user creates a collection', async () => {
+    expect(
+      await marketplace.deployNewNFTCollection('MyCollection', 'MC')
+    ).to.emit('NFTCollectionCreated');
+  });
+
   it('Should have hasCollection = false for a user that has not created a collection.', async () => {
     let user = await marketplace.getUser(user1.address);
     expect(user.hasCollection).to.equal(false);
   });
+
   it('Should have hasCollection = true for a user that has created a collection.', async () => {
     await marketplace
       .connect(user1)

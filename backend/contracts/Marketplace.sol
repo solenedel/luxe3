@@ -115,8 +115,6 @@ contract Marketplace is Ownable {
     }
     
 
- 
-
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
@@ -231,22 +229,4 @@ contract Marketplace is Ownable {
         emit NFTPurchased(_tokenId, msg.sender, sale.price);
     }
 
-
-      // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MARK AS RECEIVED ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-
-
-    /// @notice A user marks the physical item as being received. 
-    /// @param _tokenId is respective to the NFT that was purchased.
-      // function markAsReceived(uint256 _tokenId) private {
-      //   // set to true
-      // }
-
-      // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ UNLOCK FUNDS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-      
-
-    /// @notice The marketplace admin unlocks the payment and the platform takes a cut.
-      // function unlockFunds() onlyOwner private {
-      //   // most of the amount goes to the seller (prev owner) of the NFT
-      //   // marketplace takes a percentage
-      // }
 }
