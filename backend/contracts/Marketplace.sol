@@ -177,7 +177,7 @@ contract Marketplace is Ownable {
     nftData[_tokenId].currentPrice = _newPrice; // updates the price
     
      // emit event
-        emit NFTPriceChanged(_oldPrice, _newPrice); // add addr to this?
+        //emit NFTPriceChanged(_oldPrice, _newPrice); // add addr to this?
    } 
 
    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ LIST FOR SALE ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️

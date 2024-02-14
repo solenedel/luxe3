@@ -15,7 +15,7 @@ describe('Setup: Contract initialisation', function () {
   });
 });
 
-// :::::::::: MARKETPLACE CONTRACT TESTS :::::::::::
+// :::::::::: NFT COLLECTION CONTRACT TESTS :::::::::::
 
 describe('🔵 [NFT Collection] Mint NFT', function () {
   beforeEach(async function () {
@@ -76,5 +76,25 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
 
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(3);
     expect(await NFTCollection.getTokenIdList()).to.deep.equal([1, 2, 3]);
+  });
+});
+
+describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
+  beforeEach(async function () {
+    [owner, user1] = await ethers.getSigners();
+    const contract = await ethers.getContractFactory('NFTCollection');
+    NFTCollection = await contract.deploy('NAME', 'SYMBOL', owner.address);
+  });
+
+  it('owner should be able to transfer ownership to user1', async function () {
+    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    const tx = await NFTCollection.transferOwnership(
+      owner.address,
+      user1.address,
+      1
+    );
+    expect(tx)
+      .to.emit(NFTOwnershipTransferred)
+      .withArgs(owner.address, user1.address, 1);
   });
 });
