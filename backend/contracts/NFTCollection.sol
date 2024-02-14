@@ -21,17 +21,19 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     // for iteration purposes 
     uint256[] public tokenIdList; // tokenId = i+1
 
-    // struct NFT {
+
+    struct NFT {
     //   bool isForSale; 
-    //   uint256 currentPrice;
-    //   address currentOwner;
-    // }
+      uint256 currentPrice;
+      address currentOwner;
+    }
 
     // // use for looking up data
-    // mapping (uint256 => NFT) nftData;
+    mapping (uint256 => NFT) NFTData;
 
     
     event MintedNFT(address indexed collectionAddress, address indexed to, string URI); 
+    event NFTOwnershipTransferred(address indexed from, address indexed to, uint256 tokenId);
 
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
@@ -49,6 +51,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         return(tokenIdCounter);
     }
 
+
      function getTokenIdList() public view returns(uint256[] memory) {
         return(tokenIdList);
     }
@@ -57,7 +60,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
   /// @notice Collection owner mints (posts) a new NFT to the collection.
   /// @param _to is the address of the owner of the collection/contract, _URI is the metadata. 
 
-        //todo- should the safemint not take a _to param at all?
+ //todo- should the safemint not take a _to param at all?
 
     function safeMint(address _to, string memory _URI) public onlyOwner {
         
@@ -69,12 +72,21 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
     }
 
-    
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ TRANSFER NFT OWNERSHIP ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-    // function transferNFT()
-    // use the generic transferFrom ??
+    /// @notice Current owner of an NFT transfers ownership to a new owner.
+    /// @param _from: address of the current owner
+    /// @param _from: address of the new owner
+    /// @param _tokenId: token ID of the token to transfer
+    function transferOwnership(address _from, address _to, uint256 _tokenId) public {
+        require(NFTData[_tokenId].currentOwner == msg.sender, "Caller is not the owner");
+
+        NFTData[_tokenId].currentOwner = _to;
+        _transfer(_from, _to, _tokenId);
+
+        emit NFTOwnershipTransferred(_from, _to, _tokenId);
+    }
 
 
 }

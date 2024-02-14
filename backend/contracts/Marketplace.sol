@@ -93,11 +93,10 @@ contract Marketplace is Ownable {
 
 
       event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-      event SaleStatusChange(SaleStatus prevStatus, SaleStatus newStatus); 
-      event SaleInitiated(SaleInfo saleInfo);
-      event NFTPriceChanged(uint256 oldPrice, uint256 newPrice);
+      // event SaleStatusChange(SaleStatus prevStatus, SaleStatus newStatus); 
+      // event SaleInitiated(SaleInfo saleInfo);
+      // event NFTPriceChanged(uint256 oldPrice, uint256 newPrice);
       event NFTPurchased(uint256 indexed tokenId, address indexed buyer, uint256 price);
-      // event NewNFTMinted(); IN OTHER CONTRACT
 
 
     
