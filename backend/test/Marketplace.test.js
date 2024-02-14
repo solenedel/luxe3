@@ -28,21 +28,16 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
   });
 
   describe('🔵 Deploy new NFT collection', function () {
-    it('Should successfully create a new NFT collection', async () => {
-      const tx = await marketplace.deployNewNFTCollection(
-        'TestCollection',
-        'TC'
-      );
-      await expect(tx).to.emit(marketplace, 'NFTCollectionCreated');
-      const logs = await tx.wait();
-      const event = logs.events?.find(
-        (e) => e.event === 'NFTCollectionCreated'
-      );
-      expect(event).to.exist;
-      expect(event.args)
-        .to.have.property('_name')
-        .that.equals('TestCollection');
-      expect(event.args).to.have.property('_symbol').that.equals('TC');
+    it('Should have hasCollection = false for a user that has not created a collection.', async () => {
+      let user = await marketplace.getUser(user1.address);
+      expect(user.hasCollection).to.equal(false);
+    });
+    it('Should have hasCollection = true for a user that has created a collection.', async () => {
+      await marketplace
+        .connect(user1)
+        .deployNewNFTCollection('MyCollection', 'MC');
+      let user = await marketplace.getUser(user1.address);
+      expect(user.hasCollection).to.equal(true);
     });
 
     it("Should revert with 'Name cannot be empty.' when name is empty", async () => {
@@ -63,26 +58,5 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
         marketplace.deployNewNFTCollection('SecondCollection', 'SC')
       ).to.be.revertedWith('You have already created an NFT collection.');
     });
-
-    // it('Should not let a user create more than one collection', async function () {
-    //   await marketplace
-    //     .connect(user1.address)
-    //     .deployNewNFTCollection("User1's collection", 'U1C');
-    //   await expect(
-    //     marketplace
-    //       .connect(user1.address)
-    //       .deployNewNFTCollection("User1's collection 2", 'U1C2')
-    //       .to.be.revertedWith('You have already created an NFT collection.')
-    //   );
-    // });
-    // it('Should allow a user to create an NFT collection', async function () {
-    //   await expect(
-    //     marketplace
-    //       .connect(user1.address)
-    //       .deployNewNFTCollection("User1's collection", 'U1C')
-    //   )
-    //     .to.emit('NFTCollectionCreated')
-    //     .withArgs("User1's collection", 'U1C');
-    // });
   });
 });
