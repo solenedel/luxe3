@@ -11,6 +11,7 @@ import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 import { getMetadata } from '@/utils/getMetadata';
 import { getTokenIdList } from '@/utils/getters/getTokenIdList';
 import { TokenListContext } from '@/context/TokenList.context';
+import Image from 'next/image';
 
 function ProfilePage() {
   const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
@@ -20,9 +21,8 @@ function ProfilePage() {
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
-  // const [latestTokenNumber, setLatestTokenNumber] = useState(0);
-
   const [metadataArray, setMetadataArray] = useState([]);
+
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
 
@@ -42,6 +42,7 @@ function ProfilePage() {
       _tokenID
     );
     console.log('metadata: ', metadata);
+    setMetadataArray((prev) => [...prev, metadata]);
     return metadata;
   };
 
@@ -51,19 +52,17 @@ function ProfilePage() {
     }
   }, []);
 
+  useEffect(() => {
+    console.log('METADTA ARRAY', metadataArray);
+  }, [metadataArray]);
+
+  useEffect(() => {
+    console.log('HAS COLLECTINO', userInfo.hasCollection);
+  }, [userInfo.hasCollection]);
+
   // useEffect(() => {
   //   console.log('METADATA ARRAY=====', metadataArray);
   // }, [metadataArray]);
-
-  // const getTokenNumber = async () => {
-  //   const _number = await getLatestTokenNumber(collectionInfo.contractAddress);
-  //   setLatestTokenNumber(_number); // this should be set in useEffect
-  //   let _tokenIdArray = [];
-  //   for (let i = 0; i < _number; i++) {
-  //     _tokenIdArray.push(i + 1);
-  //   }
-  //   setTokenIdArray(_tokenIdArray);
-  // };
 
   const buttonHandler = async () => {
     const data = await fetchTokenIdList(collectionInfo.contractAddress);
@@ -138,12 +137,24 @@ function ProfilePage() {
               <button onClick={buttonHandler}>get token id list</button>
               {tokenIdArray.map((id) => (
                 <p
+                  onClick={() => fetchMetadata(id)}
                   className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
                   key={id}>
                   {id}
-                  {/* {fetchMetadata(id).image} */}
                 </p>
               ))}
+              {metadataArray.length ? (
+                <div>
+                  {metadataArray.map((nft) => (
+                    <div className="text-xl font-semibold h" key={nft.name}>
+                      <img src={nft.image} />
+                      <p>{nft.description}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           </section>
         )}

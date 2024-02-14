@@ -11,16 +11,23 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
       functionName: 'tokenURI',
       args: [_tokenID],
     });
-    console.log('33333333');
+
     // Extract CID from the URI
     const CID = data.split('ipfs://')[1];
     // Construct full IPFS gateway URL
-    const IPFSurl = `https://ipfs.io/ipfs/${CID}`;
+    const IPFSurl = `https://nftstorage.link/${CID}`;
+    // const IPFSurlBackup = `https://cloudflare-ipfs.com/ipfs/${CID}`;
 
-    const response = await axios.get(IPFSurl);
-    const metadata = response.data;
-
-    return metadata;
+    try {
+      const response = await axios.get(IPFSurl);
+      const metadata = await response.data;
+      console.log('RESP ===', response);
+      return metadata;
+    } catch (err) {
+      console.log('ERROR ===', err);
+    }
+    // this is failing
+    // console.log('FETCHING METADATA', response);
   } catch (err) {
     console.log('🔴 Error in getMetadata: ', err.message);
   }

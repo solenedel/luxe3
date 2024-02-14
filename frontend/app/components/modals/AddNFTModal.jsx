@@ -32,7 +32,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
       const { collectionAddress, to, URI } = log[0].args;
       console.log(log[0].args);
       console.log(
-        `🔵 ${eventName} event received. New NFT minted by ${to} to collection: ${collectionAddress}. NFT URI: ${URI}`
+        `🔵 ${eventName} event received. New NFT minted by ${to} in ${collectionAddress}. NFT URI: ${URI}`
       );
     },
   });
@@ -40,11 +40,15 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-
+    console.log('==== URI STATE before mint ====', URIState);
     const data = await mintNFT(address, URIState, collectionAddr);
-    console.log('DATA: ', data);
+
     // set the price of the NFT (+ mark as for sale) LATER
   };
+
+  useEffect(() => {
+    console.log('==== URI STATE in usefet ====', URIState);
+  }, [URIState]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -117,13 +121,11 @@ function AddNFTModal({ showModalB, setShowModalB }) {
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-4/5"
             />
           </div>
-          {/* <button
-            onClick={handleFormSubmit}
-            type="submit"
-            className="text-xl text-pink-600 hover:underline mr-10">
-            Upload NFT image
-          </button> */}
-          <input type="file" onChange={handleFileUpload} />
+          <input
+            type="file"
+            onChange={handleFileUpload}
+            classNme="text-green-400"
+          />
           <button
             onClick={handleFormSubmit}
             type="submit"
