@@ -17,8 +17,7 @@ describe('Setup: Contract initialisation', function () {
   });
 });
 
-// :::::::::: DEPLOY NEW NFT COLLECTION :::::::::::
-// CONTRACT DEPLOYMENT
+// :::::::::: MARKETPLACE CONTRACT TESTS :::::::::::
 
 describe('🔵 [Marketplace] Deploy new NFT collection', function () {
   beforeEach(async function () {
