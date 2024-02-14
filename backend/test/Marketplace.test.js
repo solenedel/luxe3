@@ -27,36 +27,50 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
     marketplace = await contract.deploy();
   });
 
-  describe('🔵 Deploy new NFT collection', function () {
-    it('Should have hasCollection = false for a user that has not created a collection.', async () => {
-      let user = await marketplace.getUser(user1.address);
-      expect(user.hasCollection).to.equal(false);
-    });
-    it('Should have hasCollection = true for a user that has created a collection.', async () => {
-      await marketplace
-        .connect(user1)
-        .deployNewNFTCollection('MyCollection', 'MC');
-      let user = await marketplace.getUser(user1.address);
-      expect(user.hasCollection).to.equal(true);
-    });
+  it('Should have hasCollection = false for a user that has not created a collection.', async () => {
+    let user = await marketplace.getUser(user1.address);
+    expect(user.hasCollection).to.equal(false);
+  });
+  it('Should have hasCollection = true for a user that has created a collection.', async () => {
+    await marketplace
+      .connect(user1)
+      .deployNewNFTCollection('MyCollection', 'MC');
+    let user = await marketplace.getUser(user1.address);
+    expect(user.hasCollection).to.equal(true);
+  });
 
-    it("Should revert with 'Name cannot be empty.' when name is empty", async () => {
-      await expect(
-        marketplace.deployNewNFTCollection('', 'TC')
-      ).to.be.revertedWith('Name cannot be empty.');
-    });
+  it("Should revert with 'Name cannot be empty.' when name is empty", async () => {
+    await expect(
+      marketplace.deployNewNFTCollection('', 'TC')
+    ).to.be.revertedWith('Name cannot be empty.');
+  });
 
-    it("Should revert with 'Symbol cannot be empty.' when symbol is empty", async () => {
-      await expect(
-        marketplace.deployNewNFTCollection('TestCollection', '')
-      ).to.be.revertedWith('Symbol cannot be empty.');
-    });
+  it("Should revert with 'Symbol cannot be empty.' when symbol is empty", async () => {
+    await expect(
+      marketplace.deployNewNFTCollection('TestCollection', '')
+    ).to.be.revertedWith('Symbol cannot be empty.');
+  });
 
-    it("Should revert with 'You have already created an NFT collection.' when trying to create a second collection", async () => {
-      await marketplace.deployNewNFTCollection('FirstCollection', 'FC');
-      await expect(
-        marketplace.deployNewNFTCollection('SecondCollection', 'SC')
-      ).to.be.revertedWith('You have already created an NFT collection.');
-    });
+  it("Should revert with 'You have already created an NFT collection.' when trying to create a second collection", async () => {
+    await marketplace.deployNewNFTCollection('FirstCollection', 'FC');
+    await expect(
+      marketplace.deployNewNFTCollection('SecondCollection', 'SC')
+    ).to.be.revertedWith('You have already created an NFT collection.');
+  });
+
+  it('Should return correct collection info after creating a new collection', async () => {
+    await marketplace
+      .connect(user1)
+      .deployNewNFTCollection('MyCollection', 'MC');
+
+    const collection = await marketplace.getCollection(user1.address);
+    expect(collection.name).to.equal('MyCollection');
+    expect(collection.symbol).to.equal('MC');
+  });
+
+  it('Should return blank correct collection info for a user that has not created a collection', async () => {
+    const collection = await marketplace.getCollection(user1.address);
+    expect(collection.name).to.equal('');
+    expect(collection.symbol).to.equal('');
   });
 });
