@@ -23,9 +23,10 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
 
     struct NFT {
+     address currentOwner;
     //   bool isForSale; 
       uint256 currentPrice;
-      address currentOwner;
+    
     }
 
     // // use for looking up data
@@ -55,6 +56,10 @@ contract NFTCollection is ERC721URIStorage, Ownable {
      function getTokenIdList() public view returns(uint256[] memory) {
         return(tokenIdList);
     }
+
+    function getNFTInfo(uint256 _tokenId) public view returns(NFT memory) {
+        return(NFTData[_tokenId]);
+    }
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
@@ -66,10 +71,10 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         
         tokenIdCounter++;
         _safeMint(_to, tokenIdCounter);
-        NFTData[tokenIdCounter].currentOwner = _to;
         _setTokenURI(tokenIdCounter, _URI);
          tokenIdList.push(tokenIdCounter);
-         
+        NFTData[tokenIdCounter].currentOwner = _to;
+
         emit MintedNFT(address(this), msg.sender, _URI); 
 
     }

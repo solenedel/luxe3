@@ -59,6 +59,14 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
       .withArgs(NFTCollection.address, owner.address, 'ipfs://test3');
   });
 
+  it('Should set the correct NFT owner when minted', async function () {
+    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+
+    const tx = await NFTCollection.getNFTInfo(1);
+    const currentOwner = tx[0];
+    expect(await currentOwner).to.equal(owner.address);
+  });
+
   it('Should have tokenIdCounter = 0 before any NFTs have been minted', async function () {
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(0);
     expect(await NFTCollection.getTokenIdList()).to.deep.equal([]);
@@ -81,13 +89,13 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
 
 describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
   beforeEach(async function () {
-    [owner, user1] = await ethers.getSigners();
+    [owner, user1, user2] = await ethers.getSigners();
     const contract = await ethers.getContractFactory('NFTCollection');
     NFTCollection = await contract.deploy('NAME', 'SYMBOL', owner.address);
+    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
   });
 
-  it('owner should be able to transfer ownership to user1', async function () {
-    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+  it('should let the owner transfer ownership to user1', async function () {
     const tx = await NFTCollection.transferOwnership(
       owner.address,
       user1.address,
@@ -96,5 +104,17 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
     expect(tx)
       .to.emit('NFTOwnershipTransferred')
       .withArgs(owner.address, user1.address, 1);
+  });
+
+  it('should only let the owner transfer ownership', async function () {
+    const tx = await NFTCollection.connect(user1).transferOwnership(
+      user1.address,
+      user2.address,
+      1
+    );
+
+    // const tx2 = await NFTCollection.getNFTInfo(1);
+    // const currentOwner = tx2[0];
+    expect(tx).to.be.revertedWith('Caller is not the owner');
   });
 });
