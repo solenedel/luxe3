@@ -107,14 +107,17 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
   });
 
   it('should only let the owner transfer ownership', async function () {
-    const tx = await NFTCollection.connect(user1).transferOwnership(
-      user1.address,
-      user2.address,
-      1
-    );
+    await expect(
+      NFTCollection.connect(user1).transferOwnership(
+        user1.address,
+        user2.address,
+        1
+      )
+    ).to.be.revertedWith('Caller is not the owner');
 
     // const tx2 = await NFTCollection.getNFTInfo(1);
     // const currentOwner = tx2[0];
-    expect(tx).to.be.revertedWith('Caller is not the owner');
+    // console.log('CURRENT OWNER=====', currentOwner);
+    // expect(tx).
   });
 });
