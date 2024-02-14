@@ -94,7 +94,7 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
       1
     );
     expect(tx)
-      .to.emit(NFTOwnershipTransferred)
+      .to.emit('NFTOwnershipTransferred')
       .withArgs(owner.address, user1.address, 1);
   });
 });

@@ -66,8 +66,10 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         
         tokenIdCounter++;
         _safeMint(_to, tokenIdCounter);
+        NFTData[tokenIdCounter].currentOwner = _to;
         _setTokenURI(tokenIdCounter, _URI);
          tokenIdList.push(tokenIdCounter);
+         
         emit MintedNFT(address(this), msg.sender, _URI); 
 
     }
