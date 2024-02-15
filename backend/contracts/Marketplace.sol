@@ -7,22 +7,6 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "./NFTCollection.sol";
 
 
-// // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ USE NFT COLLECTION CONTRACT  ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼◼️◼️
-
-
-  struct NFT {
-     address currentOwner;
-     uint256 price;
-    }
-interface INFTCollection {
-
-
-    function ownerOf(uint256 _tokenId) external view returns (address _collectionOwner);
-    function transferFrom(address _from, address _to, uint256 _tokenId) external;
-    function getNFTInfo(uint256 tokenId) external view returns (NFT memory);
-    // does the safeMint func need to be here? and transfer ownership
-  }
-
 
 /// @title this contract handles marketplace actions, such as: creating a new collection (one per user), marking items as received, and more.
 /// @author Solene D.
@@ -31,16 +15,6 @@ interface INFTCollection {
 contract Marketplace is Ownable {
 
    using Address for address payable;
-
-  // define interface to interact with NFT collection contract instances
-  INFTCollection public nftCollectionInterface;
-
-
-    // contract addresses of the NFT collections
-    // address[] public nftCollectionAddressesArray;
-
-     // Instantiate NFT collection contracts
-    // mapping(address => INFTCollection) public nftCollectionInterfaces;
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     
@@ -53,16 +27,12 @@ contract Marketplace is Ownable {
       bool hasCollection; 
     }
 
-  uint256 public NFTprice; // use same price for all NFTs
-
-  // struct NFT {
-  //    address currentOwner;
-  //    uint256 currentPrice;
-  //    uint256 price;
-  //   }
-
-
     mapping (address => User) users;
+
+  // uint256 public NFTprice; // use same price for all NFTs
+
+
+
 
     struct Collection {
         address contractAddress;
@@ -70,7 +40,6 @@ contract Marketplace is Ownable {
         string symbol;
     }
 
- 
     // Mapping to keep track of all ERC721 contracts (collections) created with the marketplace
     // note that the address acting as the key to each collection is that of the collection creator, not the collection contract address itself
     mapping(address => Collection) public allCollections;
@@ -78,30 +47,15 @@ contract Marketplace is Ownable {
     // for iteration purposes
     Collection[] public collectionsArray; 
 
-     struct SaleInfo {
-        uint256 tokenId;
-        address payable seller;
-        // address buyer;
-        uint256 price;
-        bool isForSale;
-        // SaleStatus status;
-    }
-
-    mapping(uint256 => SaleInfo) public sales;
-
-
-
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
-      event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-
-
+  event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
     
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MODIFIERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
  
     
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
     /// @notice Gets all collections created by the Marketplace contract.
@@ -120,10 +74,6 @@ contract Marketplace is Ownable {
     return(users[_addr]);
   }
 
-  // function getNFTDataFromCollection(address _collectionAddr, uint256 _tokenId) public view returns (NFT memory) {
-  //   // require(collectionsArray[_collectionAddr] != "", "Invalid NFT Collection address.");
-  //    INFTCollection collection = INFTCollection(_collectionAddr);
-  //   return collection.getNFTInfo(_tokenId);
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
