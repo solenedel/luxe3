@@ -33,16 +33,21 @@ function ProfilePage() {
   //   return data;
   // };
 
-  useEffect(() => {
-    console.log('COLLECTION INFO🔥🔥🔥🔥🔥🔥🔥', collectionInfo);
-  }, [collectionInfo]);
+  // useEffect(() => {
+  //   console.log('COLLECTION INFO🔥🔥🔥🔥🔥🔥🔥', collectionInfo);
+  // }, [collectionInfo]);
 
   const fetchMetadata = async (_tokenID) => {
+    console.log(
+      'PARAMS=====🔥🔥🔥🔥🔥🔥🔥 ',
+      collectionInfo.contractAddress,
+      _tokenID
+    );
     const metadata = await getMetadata(
       collectionInfo.contractAddress,
       _tokenID
     );
-    console.log('metadata: ', metadata);
+
     setMetadataArray((prev) => [...prev, metadata]);
     return metadata;
   };

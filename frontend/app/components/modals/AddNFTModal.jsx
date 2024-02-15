@@ -85,7 +85,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
           action="submit"
           className="mt-10 text-xl w-full"
           onSubmit={handleFormSubmit}>
-          <div className="flex flex-col gap-y-2">
+          {/* <div className="flex flex-col gap-y-2">
             <label htmlFor="title" className="font-semibold tracking-wide">
               Title
             </label>
@@ -113,7 +113,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
               placeholder="Black genuine leather crossbody bag"
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-4/5"
             />
-          </div>
+          </div> */}
           <input
             type="file"
             onChange={handleFileUpload}
