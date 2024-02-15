@@ -22,6 +22,10 @@ export const UserContextProvider = ({ children }) => {
     return _userInfo;
   }
 
+  if (address) {
+    fetchUserInfo();
+  }
+
   async function ownerIsUser(_owner, _user) {
     if (_owner == _user) {
       return true;
@@ -39,7 +43,9 @@ export const UserContextProvider = ({ children }) => {
   // fetch user's collection
   async function getUserCollection() {
     if (isConnected && userInfo.hasCollection) {
+      console.log('addresso: ', address);
       const _collectionInfo = await getCollection(address);
+      console.log('collection info: ', _collectionInfo);
       setCollectionInfo(_collectionInfo);
     }
   }
@@ -63,14 +69,40 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchMarketplaceOwner(); // get marketplace owner
-    if (address && fetchUserInfo().hasCollection == true) {
+    // console.log('user info!!!', userInfo);
+    if (userInfo) {
+      // console.log('TEST2');
+      // console.log('get user collection');
       getUserCollection(); // should trigger for admin too
     }
 
-    if (ownerIsUser(marketplaceOwner, address)) {
-      console.log(' YOU ARE LOGGED IN AS THE MARKETPLACE ADMIN');
-    }
+    // if (ownerIsUser(marketplaceOwner, address)) {
+    //   // console.log(' YOU ARE LOGGED IN AS THE MARKETPLACE ADMIN');
+    // }
   }, [address, isConnected, userInfo.hasCollection]);
+
+  // useEffect(async () => {
+  //   const temp = await fetchUserInfo();
+  //   console.log(' USER INFO +++++', temp);
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchMarketplaceOwner(); // get marketplace owner
+  //   // console.log('user info!!!', userInfo);
+  //   if (userInfo) {
+  //     // console.log('TEST2');
+  //     // console.log('get user collection');
+  //     getUserCollection(); // should trigger for admin too
+  //   }
+
+  //   if (ownerIsUser(marketplaceOwner, address)) {
+  //     console.log(' YOU ARE LOGGED IN AS THE MARKETPLACE ADMIN');
+  //   }
+  // }, [address, isConnected, userInfo.hasCollection]);
+
+  useEffect(() => {
+    // console.log(' collection info', collectionInfo);
+  }, [collectionInfo]);
 
   return (
     <UserContext.Provider

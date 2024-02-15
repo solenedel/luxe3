@@ -13,11 +13,28 @@ import { TokenListContext } from '@/context/TokenList.context';
 import Image from 'next/image';
 
 function ProfilePage() {
-  const { userInfo } = useContext(UserContext);
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
   const [metadataArray, setMetadataArray] = useState([]);
+  const {
+    marketplaceOwner,
+    setMarketplaceOwner,
+    userInfo,
+    setUserInfo,
+    collectionAddr,
+    setCollectionAddr,
+    collectionOwner,
+    setCollectionOwner,
+    collectionInfo,
+    setCollectionInfo,
+    fetchUserInfo,
+    ownerIsUser,
+    fetchMarketplaceOwner,
+    getUserCollection,
+    fetchCollectionOwner,
+    isCollectionOwner,
+  } = useContext(UserContext);
 
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
@@ -43,22 +60,21 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    if (isConnected) {
-      fetchTokenIdList();
-    }
-  }, []);
+    console.log('USER INFO: ', userInfo);
+    console.log('collection INFO: ', collectionInfo);
+  }, [address]);
+
+  useEffect(() => {
+    console.log('collection INFO: ', collectionInfo);
+  }, [collectionInfo]);
 
   useEffect(() => {
     console.log('METADTA ARRAY', metadataArray);
   }, [metadataArray]);
 
-  useEffect(() => {
-    console.log('HAS COLLECTINO', userInfo.hasCollection);
-  }, [userInfo.hasCollection]);
-
   // useEffect(() => {
-  //   console.log('METADATA ARRAY=====', metadataArray);
-  // }, [metadataArray]);
+  //   console.log('HAS COLLECTION', userInfo.hasCollection);
+  // }, [userInfo.hasCollection]);
 
   const buttonHandler = async () => {
     const data = await fetchTokenIdList(collectionInfo.contractAddress);
