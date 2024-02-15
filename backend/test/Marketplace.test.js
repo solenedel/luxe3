@@ -53,23 +53,23 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
     expect(user.hasCollection).to.equal(true);
   });
 
-  it("Should revert with 'Name cannot be empty.' when name is empty", async () => {
+  it("Should revert with 'Missing name' when name is empty", async () => {
     await expect(
       marketplace.deployNewNFTCollection('', 'TC')
-    ).to.be.revertedWith('Name cannot be empty.');
+    ).to.be.revertedWith('Missing name');
   });
 
-  it("Should revert with 'Symbol cannot be empty.' when symbol is empty", async () => {
+  it("Should revert with 'Missing symbol' when symbol is empty", async () => {
     await expect(
       marketplace.deployNewNFTCollection('TestCollection', '')
-    ).to.be.revertedWith('Symbol cannot be empty.');
+    ).to.be.revertedWith('Missing symbol');
   });
 
-  it("Should revert with 'You have already created an NFT collection.' when trying to create a second collection", async () => {
+  it("Should revert with 'Collection already created' when trying to create a second collection", async () => {
     await marketplace.deployNewNFTCollection('FirstCollection', 'FC');
     await expect(
       marketplace.deployNewNFTCollection('SecondCollection', 'SC')
-    ).to.be.revertedWith('You have already created an NFT collection.');
+    ).to.be.revertedWith('Collection already created');
   });
 
   it('Should return correct collection info after creating a new collection', async () => {

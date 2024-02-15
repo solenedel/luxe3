@@ -61,6 +61,8 @@ contract NFTCollection is ERC721URIStorage, Ownable {
   /// @notice Collection owner mints (posts) a new NFT to the collection.
 
     function safeMint(string memory _URI) public onlyOwner {
+        // limit total number of NFTs minted per collection to 30
+        require(tokenIdCounter < 30, "Token limit exceeded");
         
         tokenIdCounter++;
         _safeMint(msg.sender, tokenIdCounter);

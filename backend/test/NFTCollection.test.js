@@ -83,6 +83,18 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(3);
     expect(await NFTCollection.getTokenIdList()).to.deep.equal([1, 2, 3]);
   });
+
+  it('Should fail when more than 30 tokens are minted per collection.', async function () {
+    // Mint  30 tokens
+    for (let tokenCounter = 1; tokenCounter <= 30; tokenCounter++) {
+      await NFTCollection.safeMint(`URI_${tokenCounter}`);
+    }
+
+    // Attempt to mint one more token
+    await expect(NFTCollection.safeMint('URI_31')).to.be.revertedWith(
+      'Token limit exceeded'
+    );
+  });
 });
 
 describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
@@ -111,6 +123,6 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
         user2.address,
         1
       )
-    ).to.be.revertedWith('Caller is not the owner');
+    ).to.be.revertedWith('Caller is not owner');
   });
 });
