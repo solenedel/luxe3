@@ -69,10 +69,7 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchMarketplaceOwner(); // get marketplace owner
-    // console.log('user info!!!', userInfo);
-    if (userInfo) {
-      // console.log('TEST2');
-      // console.log('get user collection');
+    if (userInfo.hasCollection) {
       getUserCollection(); // should trigger for admin too
     }
 
@@ -81,28 +78,9 @@ export const UserContextProvider = ({ children }) => {
     // }
   }, [address, isConnected, userInfo.hasCollection]);
 
-  // useEffect(async () => {
-  //   const temp = await fetchUserInfo();
-  //   console.log(' USER INFO +++++', temp);
-  // }, []);
-
   // useEffect(() => {
-  //   fetchMarketplaceOwner(); // get marketplace owner
-  //   // console.log('user info!!!', userInfo);
-  //   if (userInfo) {
-  //     // console.log('TEST2');
-  //     // console.log('get user collection');
-  //     getUserCollection(); // should trigger for admin too
-  //   }
-
-  //   if (ownerIsUser(marketplaceOwner, address)) {
-  //     console.log(' YOU ARE LOGGED IN AS THE MARKETPLACE ADMIN');
-  //   }
-  // }, [address, isConnected, userInfo.hasCollection]);
-
-  useEffect(() => {
-    // console.log(' collection info', collectionInfo);
-  }, [collectionInfo]);
+  //   // console.log(' collection info', collectionInfo);
+  // }, [collectionInfo]);
 
   return (
     <UserContext.Provider
