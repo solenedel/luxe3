@@ -2,34 +2,75 @@ import { createContext, useState, useEffect } from 'react';
 import { getMarketplaceOwner } from '@/utils/getMarketplaceOwner';
 import { useAccount } from 'wagmi';
 import { getUser } from '@/utils/getters/getUser';
+import { getCollection } from '@/utils/getters/getCollection';
+import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 
-// this context handles the states for the current logged in user and the marketplace admin/owner
 export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
   const { address, isConnected } = useAccount();
+  const [marketplaceOwner, setMarketplaceOwner] = useState('');
   const [userInfo, setUserInfo] = useState('');
-  const [marketplaceOwner, setMarketplaceOwner] = useState(''); // NOTE - maybe owner doesn't need to be a state var? should it be a constant?
+  const [collectionAddr, setCollectionAddr] = useState('');
+  const [collectionOwner, setCollectionOwner] = useState('');
+  const [collectionInfo, setCollectionInfo] = useState('');
   //const [user, setUser] = useState(''); // current logged in user of the app
 
   async function fetchUserInfo() {
     const _userInfo = await getUser(address);
     setUserInfo(_userInfo);
+    return _userInfo;
   }
 
-  useEffect(() => {
-    if (address) {
-      fetchUserInfo();
+  async function ownerIsUser(_owner, _user) {
+    if (_owner == _user) {
+      return true;
+    } else {
+      return false;
     }
-  }, [address, isConnected]);
+  }
 
+  // todo- rename marketplace owner to admin
   async function fetchMarketplaceOwner() {
     const _owner = await getMarketplaceOwner();
     setMarketplaceOwner(_owner);
+  }
+
+  // fetch user's collection
+  async function getUserCollection() {
+    if (isConnected && userInfo.hasCollection) {
+      const _collectionInfo = await getCollection(address);
+      setCollectionInfo(_collectionInfo);
+    }
+  }
+
+  // fetches the owner of a specific collection
+  // note this is not necessarily the marketplace admin
+  async function fetchCollectionOwner(_collectionAddr) {
+    const _owner = await getCollectionOwner(_collectionAddr);
+    setCollectionOwner(_owner);
     return _owner;
   }
 
-  fetchMarketplaceOwner();
+  // checks if current user is the owner of a collection
+  async function isCollectionOwner(_collectionOwner, _user) {
+    if (fetchCollectionOwner(_collectionOwner) == _user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    fetchMarketplaceOwner(); // get marketplace owner
+    if (address && fetchUserInfo().hasCollection == true) {
+      getUserCollection(); // should trigger for admin too
+    }
+
+    if (ownerIsUser(marketplaceOwner, address)) {
+      console.log(' YOU ARE LOGGED IN AS THE MARKETPLACE ADMIN');
+    }
+  }, [address, isConnected, userInfo.hasCollection]);
 
   return (
     <UserContext.Provider
@@ -37,6 +78,12 @@ export const UserContextProvider = ({ children }) => {
         marketplaceOwner,
         fetchUserInfo,
         userInfo,
+        collectionAddr,
+        setCollectionAddr,
+        collectionOwner,
+        setCollectionOwner,
+        collectionInfo,
+        setCollectionInfo,
       }}>
       {children}
     </UserContext.Provider>

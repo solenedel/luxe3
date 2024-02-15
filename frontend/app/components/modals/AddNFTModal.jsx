@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { NFTStorage, Token } from 'nft.storage';
 import { mintNFT } from '@/utils/mintNFT';
 import { useAccount, useContractEvent } from 'wagmi';
-import { UserCollectionContext } from '@/context/UserCollection.context';
 import { ABI } from '@/constants/NFTCollection';
 import { TokenListContext } from '@/context/TokenList.context';
 
@@ -12,9 +11,6 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [descriptionInput, setDescriptionInput] = useState('');
   const { address, isConnected } = useAccount();
   const [URIState, setURIState] = useState('');
-  const { collectionAddr, setCollectionAddr } = useContext(
-    UserCollectionContext
-  );
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
 

@@ -2,16 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 import { useContractEvent } from 'wagmi';
 import { contractAddress, ABI } from '@/constants/marketplace';
-import { UserCollectionContext } from '@/context/UserCollection.context';
 import { UserContext } from '@/context/User.context';
 // import { useAccount } from 'wagmi';
 
 function NewCollectionModal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
-  const { collectionAddr, setCollectionAddr } = useContext(
-    UserCollectionContext
-  );
+
   const { userInfo, fetchUserInfo } = useContext(UserContext);
   // const { account, isConnected } = useAccount();
 

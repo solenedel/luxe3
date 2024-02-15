@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from 'react';
 import NewCollectionModal from '../components/modals/NewCollectionModal';
 import AddNFTModal from '../components/modals/AddNFTModal';
 import { getAllCollections } from '@/utils/getters/getAllCollections';
-import { UserCollectionContext } from '@/context/UserCollection.context';
 import { getCollectionNFTs } from '@/utils/getters/getCollectionNFTs';
 import { useAccount, useContractEvent } from 'wagmi';
 import { UserContext } from '@/context/User.context';
@@ -14,9 +13,6 @@ import { TokenListContext } from '@/context/TokenList.context';
 import Image from 'next/image';
 
 function ProfilePage() {
-  const { collectionAddr, setCollectionAddr, collectionInfo } = useContext(
-    UserCollectionContext
-  );
   const { userInfo } = useContext(UserContext);
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);

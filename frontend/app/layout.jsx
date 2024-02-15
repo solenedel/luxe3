@@ -10,7 +10,6 @@ import { publicProvider } from 'wagmi/providers/public';
 import { UserContextProvider } from '@/context/User.context';
 import Footer from './components/Footer';
 import { WalletContextProvider } from '@/context/Wallet.context';
-import { UserCollectionContextProvider } from '@/context/UserCollection.context';
 import { TokenListContextProvider } from '@/context/TokenList.context';
 const inter = Inter({ subsets: ['latin'] });
 const dmSerifDisplay = DM_Serif_Display({
@@ -52,13 +51,11 @@ export default function RootLayout({ children }) {
           <RainbowKitProvider chains={chains}>
             <WalletContextProvider>
               <UserContextProvider>
-                <UserCollectionContextProvider>
-                  <TokenListContextProvider>
-                    <Header />
-                    {children}
-                    <Footer />
-                  </TokenListContextProvider>
-                </UserCollectionContextProvider>
+                <TokenListContextProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                </TokenListContextProvider>
               </UserContextProvider>
             </WalletContextProvider>
           </RainbowKitProvider>
