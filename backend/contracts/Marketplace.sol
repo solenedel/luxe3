@@ -14,7 +14,7 @@ import "./NFTCollection.sol";
 
 contract Marketplace is Ownable {
 
-   using Address for address payable;
+   using Address for address payable; // no need anymore for this?
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     
@@ -31,9 +31,6 @@ contract Marketplace is Ownable {
 
   // uint256 public NFTprice; // use same price for all NFTs
 
-
-
-
     struct Collection {
         address contractAddress;
         string name;
@@ -49,11 +46,7 @@ contract Marketplace is Ownable {
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-
   event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-    
-// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MODIFIERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
- 
     
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
@@ -81,9 +74,9 @@ contract Marketplace is Ownable {
     /// @param _name is the name of the new NFT collection, ex: "My Collection" and _symbol is the symbol, ex: "MC"
     function deployNewNFTCollection(string memory _name, string memory _symbol) public returns(Collection memory _newCollection) {   
        
-      require(users[msg.sender].hasCollection == false, "You have already created an NFT collection.");
-      require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Name cannot be empty.");
-      require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Symbol cannot be empty.");
+      require(users[msg.sender].hasCollection == false, "Collection already created");
+      require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Missing name");
+      require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Missing symbol");
 
       NFTCollection newCollection = new NFTCollection(_name, _symbol, msg.sender);
 
