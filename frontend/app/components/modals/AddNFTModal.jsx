@@ -47,14 +47,17 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-    const data = await mintNFT(address, URIState, collectionAddr);
+    console.log('COLLECTION ADDR===', collectionAddr);
+    if (URIState !== '') {
+      const data = await mintNFT(address, URIState, collectionAddr);
+    }
 
     // set the price of the NFT (+ mark as for sale) LATER
   };
 
-  useEffect(() => {
-    console.log('==== URI STATE in usefet ====', URIState);
-  }, [URIState]);
+  // useEffect(() => {
+  //   console.log('==== URI STATE in usefet ====', URIState);
+  // }, [URIState]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];

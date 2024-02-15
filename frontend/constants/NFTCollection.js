@@ -513,11 +513,6 @@ export const ABI = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_to',
-        type: 'address',
-      },
-      {
         internalType: 'string',
         name: '_URI',
         type: 'string',

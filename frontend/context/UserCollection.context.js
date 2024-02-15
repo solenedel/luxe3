@@ -13,8 +13,8 @@ export function UserCollectionContextProvider({ children }) {
   const [collectionInfo, setCollectionInfo] = useState('');
   const { userInfo } = useContext(UserContext);
 
-  async function fetchCollectionOwner() {
-    const _owner = await getCollectionOwner(collectionAddr);
+  async function fetchCollectionOwner(_collectionAddr) {
+    const _owner = await getCollectionOwner(_collectionAddr);
     setCollectionOwner(_owner);
     // console.log('COLLECTION OWNER: ', collectionOwner, _owner);
     return _owner;
@@ -30,6 +30,7 @@ export function UserCollectionContextProvider({ children }) {
 
   useEffect(() => {
     if (isConnected && userInfo.hasCollection) {
+      fetchCollectionOwner();
       getUserCollection();
       // also check for hasCollection
       // fetchCollectionOwner(); // todo- persist in statecheck

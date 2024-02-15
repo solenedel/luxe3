@@ -63,17 +63,14 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
-  /// @param _to is the address of the owner of the collection/contract, _URI is the metadata. 
 
- //todo- should the safemint not take a _to param at all?
-
-    function safeMint(address _to, string memory _URI) public onlyOwner {
+    function safeMint(string memory _URI) public onlyOwner {
         
         tokenIdCounter++;
-        _safeMint(_to, tokenIdCounter);
+        _safeMint(address(this), tokenIdCounter);
         _setTokenURI(tokenIdCounter, _URI);
          tokenIdList.push(tokenIdCounter);
-        NFTData[tokenIdCounter].currentOwner = _to;
+        NFTData[tokenIdCounter].currentOwner = msg.sender;
 
         emit MintedNFT(address(this), msg.sender, _URI); 
 
