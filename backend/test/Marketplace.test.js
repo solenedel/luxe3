@@ -94,23 +94,19 @@ describe('🔵 [Marketplace] Get NFT Info from NFTCollection Contract', function
     [admin, user1] = await ethers.getSigners();
     const contract = await ethers.getContractFactory('Marketplace');
     marketplace = await contract.deploy();
-
-    NFTCollection = await ethers.getContractFactory('NFTCollection');
-    // await NFTCollection.safeMint('ipfs://test3');
   });
 
-  it('Should emit NFTCollectionCreated event when user creates a collection', async () => {
-    const tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
+  it('TEST', async () => {
+    // NFTCollection = await ethers.getContractFactory('NFTCollection');
+    tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
 
-    // Get the contract instance of the deployed NFTCollection
-    nftCollectionInstance = await tx.wait();
+    const receipt = await tx.wait();
 
-    console.log(nftCollectionInstance);
-
-    // // Extract the address of the deployed contract from the instance
-    // const nftCollectionAddress = nftCollectionInstance.address;
-    // expect(nftCollectionAddress).to.not.be.undefined;
-
-    // console.log('CONTRACT ADDR ====', nftCollectionAddress);
+    // The receipt should contain the return value of the function call
+    const returnValue = receipt.returnValue;
+    console.log('RETURN VALUE---', returnValue);
+    // expect(collectionStruct)
+    //   .to.have.property('name')
+    //   .that.equals('My Collection');
   });
 });
