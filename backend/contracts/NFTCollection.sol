@@ -24,12 +24,11 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
     struct NFT {
      address currentOwner;
-     uint256 currentPrice;
      uint256 price;
     }
 
     // use for looking up data
-    mapping (uint256 => NFT) NFTData;
+    mapping (uint256 => NFT) public NFTData;
 
     
     event MintedNFT(address indexed collectionAddress, address indexed to, string URI); 
@@ -57,6 +56,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     }
 
     function getNFTInfo(uint256 _tokenId) public view returns(NFT memory) {
+    // require collection exists
         return(NFTData[_tokenId]);
     }
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️

@@ -95,20 +95,22 @@ describe('🔵 [Marketplace] Get NFT Info from NFTCollection Contract', function
     const contract = await ethers.getContractFactory('Marketplace');
     marketplace = await contract.deploy();
 
-    const tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
-    const receipt = await tx.wait();
-    const event = receipt.events?.find(
-      (event) => event.event === 'NFTCollectionCreated'
-    );
-    // Extract the deployed contract address from the event arguments
-    nftCollectionAddress = event.args.nftCollectionAddress;
-    console.log('NFT COLLECTION ADDRESS ======', nftCollectionAddress);
+    NFTCollection = await ethers.getContractFactory('NFTCollection');
     // await NFTCollection.safeMint('ipfs://test3');
   });
 
-  // it('Should emit NFTCollectionCreated event when user creates a collection', async () => {
-  //   expect(
-  //     await marketplace.deployNewNFTCollection('MyCollection', 'MC')
-  //   ).to.emit('NFTCollectionCreated');
-  // });
+  it('Should emit NFTCollectionCreated event when user creates a collection', async () => {
+    const tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
+
+    // Get the contract instance of the deployed NFTCollection
+    nftCollectionInstance = await tx.wait();
+
+    console.log(nftCollectionInstance);
+
+    // // Extract the address of the deployed contract from the instance
+    // const nftCollectionAddress = nftCollectionInstance.address;
+    // expect(nftCollectionAddress).to.not.be.undefined;
+
+    // console.log('CONTRACT ADDR ====', nftCollectionAddress);
+  });
 });

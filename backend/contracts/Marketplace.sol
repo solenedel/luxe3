@@ -8,17 +8,18 @@ import "./NFTCollection.sol";
 
 
 // // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ USE NFT COLLECTION CONTRACT  ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼◼️◼️
-interface INFTCollection {
+
 
   struct NFT {
      address currentOwner;
-     uint256 currentPrice;
      uint256 price;
     }
+interface INFTCollection {
+
 
     function ownerOf(uint256 _tokenId) external view returns (address _collectionOwner);
     function transferFrom(address _from, address _to, uint256 _tokenId) external;
-    function getNFTInfo(uint256 tokenId) public view returns (NFT memory);
+    function getNFTInfo(uint256 tokenId) external view returns (NFT memory);
     // does the safeMint func need to be here? and transfer ownership
   }
 
@@ -141,7 +142,7 @@ contract Marketplace is Ownable {
   }
 
   function getNFTDataFromCollection(address _collectionAddr, uint256 _tokenId) external view returns (NFT memory) {
-    // require(collectionsArray[_collectionAddr], "Invalid NFT Collection address.");
+    // require(collectionsArray[_collectionAddr] != "", "Invalid NFT Collection address.");
      INFTCollection collection = INFTCollection(_collectionAddr);
     return collection.getNFTInfo(_tokenId);
 }
