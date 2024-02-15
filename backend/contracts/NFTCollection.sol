@@ -24,12 +24,11 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
     struct NFT {
      address currentOwner;
-    //   bool isForSale; 
-      uint256 currentPrice;
-    
+     uint256 currentPrice;
+     uint256 price;
     }
 
-    // // use for looking up data
+    // use for looking up data
     mapping (uint256 => NFT) NFTData;
 
     

@@ -9,9 +9,17 @@ import "./NFTCollection.sol";
 
 // // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ USE NFT COLLECTION CONTRACT  ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼◼️◼️
 interface INFTCollection {
+
+  struct NFT {
+     address currentOwner;
+     uint256 currentPrice;
+     uint256 price;
+    }
+
     function ownerOf(uint256 _tokenId) external view returns (address _collectionOwner);
     function transferFrom(address _from, address _to, uint256 _tokenId) external;
-    // does the safeMint func need to be here?
+    function getNFTInfo(uint256 tokenId) public view returns (NFT memory);
+    // does the safeMint func need to be here? and transfer ownership
   }
 
 
@@ -23,6 +31,7 @@ contract Marketplace is Ownable {
 
    using Address for address payable;
 
+  // define interface to interact with NFT collection contract instances
   INFTCollection public nftCollectionInterface;
 
 
@@ -42,7 +51,15 @@ contract Marketplace is Ownable {
     struct User {
       bool hasCollection; 
     }
-    
+
+
+  struct NFT {
+     address currentOwner;
+     uint256 currentPrice;
+     uint256 price;
+    }
+
+
     mapping (address => User) users;
 
     struct Collection {
@@ -51,6 +68,7 @@ contract Marketplace is Ownable {
         string symbol;
     }
 
+ 
     // Mapping to keep track of all ERC721 contracts (collections) created with the marketplace
     // note that the address acting as the key to each collection is that of the collection creator, not the collection contract address itself
     mapping(address => Collection) public allCollections;
@@ -70,14 +88,14 @@ contract Marketplace is Ownable {
     mapping(uint256 => SaleInfo) public sales;
 
 // todo - use the NFT struct from the NFTcollection contract???
-     struct NFT {
-      bool isForSale; 
-      uint256 currentPrice;
-      address currentOwner;
-    }
+    //  struct NFT {
+    //   bool isForSale; 
+    //   uint256 currentPrice;
+    //   address currentOwner;
+    // }
 
       // use for looking up data
-    mapping (uint256 => NFT) nftData; // this already exists in the other contract
+   //  mapping (uint256 => NFT) nftData; // this already exists in the other contract
 
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
@@ -92,13 +110,13 @@ contract Marketplace is Ownable {
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ MODIFIERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
  
        modifier onlyForSale(uint256 _tokenId) {
-        require(nftData[_tokenId-1].isForSale == true, "This NFT is not currently for sale.");
+        // require(nftData[_tokenId-1].isForSale == true, "This NFT is not currently for sale.");
         _;
     }
 
     /// @notice note the distinction between the below modifier and the generic onlyOwner  
     modifier onlyCurrentNFTOwner(uint256 _tokenId) {
-        require(nftData[_tokenId-1].currentOwner == msg.sender, "You are not the current owner of this NFT.");
+        // require(nftData[_tokenId-1].currentOwner == msg.sender, "You are not the current owner of this NFT.");
         _;
     }
     
@@ -121,6 +139,12 @@ contract Marketplace is Ownable {
   function getUser(address _addr) public view returns (User memory) {
     return(users[_addr]);
   }
+
+  function getNFTDataFromCollection(address _collectionAddr, uint256 _tokenId) public view returns (NFT memory) {
+    require(collectionsArray[_collectionAddr], "Invalid NFT Collection address.");
+    return nftCollectionInterface.getNFTInfo(_tokenId);
+ 
+}
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
@@ -175,19 +199,19 @@ contract Marketplace is Ownable {
     /// @param _tokenId is the token ID of the NFT to listfor sale.
     /// @param _price is the price to list at.
     
-    function listForSale(uint256 _tokenId, uint256 _price) public {
-        // use the custom interface??
-        IERC721 nftContract = IERC721(msg.sender);
-        require(nftContract.ownerOf(_tokenId) == msg.sender, "You are not the owner.");
-        require(!sales[_tokenId].isForSale, "Already listed for sale.");
+    // function listForSale(uint256 _tokenId, uint256 _price) public {
+    //     // use the custom interface??
+    //     IERC721 nftContract = IERC721(msg.sender);
+    //     require(nftContract.ownerOf(_tokenId) == msg.sender, "You are not the owner.");
+    //     require(!sales[_tokenId].isForSale, "Already listed for sale.");
 
-        sales[_tokenId] = SaleInfo({
-            tokenId: _tokenId,
-            seller: payable(msg.sender),
-            price: _price,
-            isForSale: true 
-           });
-    }
+    //     sales[_tokenId] = SaleInfo({
+    //         tokenId: _tokenId,
+    //         seller: payable(msg.sender),
+    //         price: _price,
+    //         isForSale: true 
+    //        });
+    // }
 
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ BUY NFT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
