@@ -42,7 +42,7 @@ contract Marketplace is Ownable {
     mapping(address => Collection) public allCollections;
 
     // for iteration purposes
-    Collection[] public collectionsArray; 
+    Collection[] public collectionsArray; // is this array needed??
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
@@ -51,19 +51,20 @@ contract Marketplace is Ownable {
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
+// should these getters be public or external??
     /// @notice Gets all collections created by the Marketplace contract.
     /// @return An array of all the collections created. 
-  function getAllCollections() public view returns (Collection[] memory) {
+  function getAllCollections() external view returns (Collection[] memory) {
     return collectionsArray;
   }
 
     /// @notice Gets one collection, indexed by the creator (owner) of that collection.
     /// @return The single collection owned by the address provided.
-  function getCollection(address _address) public view returns (Collection memory) {
+  function getCollection(address _address) external view returns (Collection memory) {
     return allCollections[_address];
   }
 
-  function getUser(address _addr) public view returns (User memory) {
+  function getUser(address _addr) external view returns (User memory) {
     return(users[_addr]);
   }
 
@@ -75,9 +76,11 @@ contract Marketplace is Ownable {
     function deployNewNFTCollection(string memory _name, string memory _symbol) public returns(Collection memory _newCollection) {   
        
       require(users[msg.sender].hasCollection == false, "Collection already created");
+
       require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Missing name");
       require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Missing symbol");
 
+      // deploy new ERC721 contract for the collection
       NFTCollection newCollection = new NFTCollection(_name, _symbol, msg.sender);
 
       _newCollection = Collection({
@@ -91,7 +94,7 @@ contract Marketplace is Ownable {
 
       collectionsArray.push(_newCollection);
 
-      users[msg.sender].hasCollection = true; //todo - reentrancy here?
+      users[msg.sender].hasCollection = true;
 
       // todo- remove return value here, not doing anything
       
