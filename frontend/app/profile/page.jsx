@@ -33,6 +33,10 @@ function ProfilePage() {
   //   return data;
   // };
 
+  useEffect(() => {
+    console.log('COLLECTION INFO🔥🔥🔥🔥🔥🔥🔥', collectionInfo);
+  }, [collectionInfo]);
+
   const fetchMetadata = async (_tokenID) => {
     const metadata = await getMetadata(
       collectionInfo.contractAddress,
@@ -42,29 +46,6 @@ function ProfilePage() {
     setMetadataArray((prev) => [...prev, metadata]);
     return metadata;
   };
-
-  // useEffect(() => {
-  //   fetchUserInfo();
-  //   console.log(userInfo);
-  //   // console.log('collection INFO: ', collectionInfo);
-  // }, [address]);
-
-  // useEffect(() => {
-  //   console.log('USER INFO: ', userInfo);
-  //   // console.log('collection INFO: ', collectionInfo);
-  // }, [address]);
-
-  // useEffect(() => {
-  //   console.log('collection INFO: ', collectionInfo);
-  // }, [collectionInfo]);
-
-  // useEffect(() => {
-  //   console.log('METADTA ARRAY', metadataArray);
-  // }, [metadataArray]);
-
-  // useEffect(() => {
-  //   console.log('HAS COLLECTION', userInfo.hasCollection);
-  // }, [userInfo.hasCollection]);
 
   const buttonHandler = async () => {
     const data = await fetchTokenIdList(collectionInfo.contractAddress);

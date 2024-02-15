@@ -17,19 +17,24 @@ export const UserContextProvider = ({ children }) => {
   const [userAddr, setUserAddr] = useState(''); // no need since already have address from useAccount?
 
   async function fetchUserInfo() {
-    const _userInfo = await getUser(userAddr);
-
+    const _userInfo = await getUser(address);
     setUserInfo(_userInfo);
     return _userInfo;
   }
 
+  // problem; this is not getting triggered by login
   useEffect(() => {
+    console.log('kwejhfkwrfhlkwrjf');
     if (isConnected) {
+      console.log('is connected');
       setUserAddr(address);
+      fetchUserInfo();
+      fetchMarketplaceOwner();
+      getUserCollection();
     } else {
       setUserAddr('');
     }
-  }, []);
+  }, [isConnected]);
 
   async function ownerIsUser(_owner, _user) {
     if (_owner == _user) {
@@ -47,12 +52,10 @@ export const UserContextProvider = ({ children }) => {
 
   // fetch user's collection // ???
   async function getUserCollection() {
-    if (isConnected && userInfo.hasCollection) {
-      const _collectionInfo = await getCollection(userAddr);
-      console.log('collection info: ', _collectionInfo);
-      setCollectionAddr(_collectionInfo.contractAddress);
-      setCollectionInfo(_collectionInfo);
-    }
+    const _collectionInfo = await getCollection(address);
+    console.log('collection info: ', _collectionInfo);
+    setCollectionAddr(_collectionInfo.contractAddress);
+    setCollectionInfo(_collectionInfo);
   }
 
   // fetches the owner of a specific collection
