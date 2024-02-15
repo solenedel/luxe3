@@ -7,7 +7,6 @@ import { ABI } from '@/constants/NFTCollection';
 import { getAddress } from 'viem';
 export const mintNFT = async (_from, _URI, _contractAddr) => {
   // convert to ETH address
-  console.log('CONTRACT ADDR ===', _contractAddr);
   let _ethAddrFrom = getAddress(_from);
   try {
     const { request } = await prepareWriteContract({

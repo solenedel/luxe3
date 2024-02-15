@@ -4,6 +4,7 @@ import { mintNFT } from '@/utils/mintNFT';
 import { useAccount, useContractEvent } from 'wagmi';
 import { ABI } from '@/constants/NFTCollection';
 import { TokenListContext } from '@/context/TokenList.context';
+import { UserContext } from '@/context/User.context';
 
 function AddNFTModal({ showModalB, setShowModalB }) {
   const [titleInput, setTitleInput] = useState('');
@@ -13,13 +14,14 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [URIState, setURIState] = useState('');
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
+  const { collectionAddr, userAddr, setUserAddr } = useContext(UserContext);
 
-  const clientStatusFunc = async () => {
-    const status = await client.status(
-      'zdj7Wn9FQAURCP6MbwcWuzi7u65kAsXCdjNTkhbJcoaXBusq9'
-    );
-    console.log('Status ====', status);
-  };
+  // const clientStatusFunc = async () => {
+  //   const status = await client.status(
+  //     'zdj7Wn9FQAURCP6MbwcWuzi7u65kAsXCdjNTkhbJcoaXBusq9'
+  //   );
+  //   console.log('Status ====', status);
+  // };
 
   const eventName = 'MintedNFT';
 
@@ -43,9 +45,8 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-    console.log('COLLECTION ADDR===', collectionAddr);
     if (URIState !== '') {
-      const data = await mintNFT(address, URIState, collectionAddr);
+      const data = await mintNFT(userAddr, URIState, collectionAddr);
     }
 
     // set the price of the NFT (+ mark as for sale) LATER
@@ -97,20 +98,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
               className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
             />
           </div>
-          <button onClick={clientStatusFunc}>check status</button>
-          {/* <div className="flex flex-col gap-y-2">
-            <label htmlFor="price" className="font-semibold tracking-wide">
-              Price
-            </label>
-            <input
-              id="price"
-              value={priceInput}
-              onChange={(e) => setPriceInput(e.target.value)}
-              type="text"
-              placeholder="0.005 ETH"
-              className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
-            />
-          </div> */}
+
           <div className="flex flex-col gap-y-2">
             <label
               htmlFor="description"

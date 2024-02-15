@@ -14,17 +14,22 @@ export const UserContextProvider = ({ children }) => {
   const [collectionAddr, setCollectionAddr] = useState('');
   const [collectionOwner, setCollectionOwner] = useState('');
   const [collectionInfo, setCollectionInfo] = useState('');
-  //const [user, setUser] = useState(''); // no need since already have address from useAccount?
+  const [userAddr, setUserAddr] = useState(''); // no need since already have address from useAccount?
 
   async function fetchUserInfo() {
-    const _userInfo = await getUser(address);
+    const _userInfo = await getUser(userAddr);
+
     setUserInfo(_userInfo);
     return _userInfo;
   }
 
-  if (address) {
-    fetchUserInfo();
-  }
+  useEffect(() => {
+    if (isConnected) {
+      setUserAddr(address);
+    } else {
+      setUserAddr('');
+    }
+  }, []);
 
   async function ownerIsUser(_owner, _user) {
     if (_owner == _user) {
@@ -40,12 +45,12 @@ export const UserContextProvider = ({ children }) => {
     setMarketplaceOwner(_owner);
   }
 
-  // fetch user's collection
+  // fetch user's collection // ???
   async function getUserCollection() {
     if (isConnected && userInfo.hasCollection) {
-      console.log('addresso: ', address);
-      const _collectionInfo = await getCollection(address);
+      const _collectionInfo = await getCollection(userAddr);
       console.log('collection info: ', _collectionInfo);
+      setCollectionAddr(_collectionInfo.contractAddress);
       setCollectionInfo(_collectionInfo);
     }
   }
@@ -67,24 +72,19 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    fetchMarketplaceOwner(); // get marketplace owner
-    if (userInfo.hasCollection) {
-      getUserCollection(); // should trigger for admin too
-    }
-
-    // if (ownerIsUser(marketplaceOwner, address)) {
-    //   // console.log(' YOU ARE LOGGED IN AS THE MARKETPLACE ADMIN');
-    // }
-  }, [address, isConnected, userInfo.hasCollection]);
+  // useEffect(() => {
+  //   console.log('ddr', address);
+  // }, []);
 
   // useEffect(() => {
-  //   // console.log(' collection info', collectionInfo);
-  // }, [collectionInfo]);
+  //   fetchMarketplaceOwner(); // get marketplace owner
+  // }, [address, isConnected]);
 
   return (
     <UserContext.Provider
       value={{
+        userAddr,
+        setUserAddr,
         marketplaceOwner,
         setMarketplaceOwner,
         userInfo,

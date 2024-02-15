@@ -17,24 +17,8 @@ function ProfilePage() {
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
   const [metadataArray, setMetadataArray] = useState([]);
-  const {
-    marketplaceOwner,
-    setMarketplaceOwner,
-    userInfo,
-    setUserInfo,
-    collectionAddr,
-    setCollectionAddr,
-    collectionOwner,
-    setCollectionOwner,
-    collectionInfo,
-    setCollectionInfo,
-    fetchUserInfo,
-    ownerIsUser,
-    fetchMarketplaceOwner,
-    getUserCollection,
-    fetchCollectionOwner,
-    isCollectionOwner,
-  } = useContext(UserContext);
+  const { userInfo, collectionInfo, fetchUserInfo, userAddr, setUserAddr } =
+    useContext(UserContext);
 
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
@@ -59,18 +43,24 @@ function ProfilePage() {
     return metadata;
   };
 
-  useEffect(() => {
-    console.log('USER INFO: ', userInfo);
-    console.log('collection INFO: ', collectionInfo);
-  }, [address]);
+  // useEffect(() => {
+  //   fetchUserInfo();
+  //   console.log(userInfo);
+  //   // console.log('collection INFO: ', collectionInfo);
+  // }, [address]);
 
-  useEffect(() => {
-    console.log('collection INFO: ', collectionInfo);
-  }, [collectionInfo]);
+  // useEffect(() => {
+  //   console.log('USER INFO: ', userInfo);
+  //   // console.log('collection INFO: ', collectionInfo);
+  // }, [address]);
 
-  useEffect(() => {
-    console.log('METADTA ARRAY', metadataArray);
-  }, [metadataArray]);
+  // useEffect(() => {
+  //   console.log('collection INFO: ', collectionInfo);
+  // }, [collectionInfo]);
+
+  // useEffect(() => {
+  //   console.log('METADTA ARRAY', metadataArray);
+  // }, [metadataArray]);
 
   // useEffect(() => {
   //   console.log('HAS COLLECTION', userInfo.hasCollection);
@@ -175,7 +165,7 @@ function ProfilePage() {
   } else {
     return (
       <p className="flex flex-col text-xl items-center pt-10 min-h-screen">
-        You must log in to view your dashboard.
+        You must log in to view your dashboard.{address}
       </p>
     );
   }
