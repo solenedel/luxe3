@@ -46,7 +46,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
     if (URIState !== '') {
-      const data = await mintNFT(userAddr, URIState, collectionAddr);
+      const data = await mintNFT(address, URIState, collectionAddr);
     }
 
     // set the price of the NFT (+ mark as for sale) LATER

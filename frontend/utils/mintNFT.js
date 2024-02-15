@@ -10,7 +10,7 @@ export const mintNFT = async (_from, _URI, _contractAddr) => {
   let _ethAddrFrom = getAddress(_from);
   try {
     const { request } = await prepareWriteContract({
-      address: _contractAddr,
+      address: _contractAddr, // invalid receiver
       from: _ethAddrFrom,
       abi: ABI,
       functionName: 'safeMint',
