@@ -27,7 +27,6 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
   it('Should only allow the owner of the collection to mint an NFT', async function () {
     await expect(
       NFTCollection.connect(user1).safeMint(
-        user1.address,
         'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
       )
     ).to.be.revertedWithCustomError(
@@ -39,7 +38,6 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
   it('Should emit MintedNFT event when owner mints an NFT', async () => {
     expect(
       await NFTCollection.safeMint(
-        owner.address,
         'ipfs://bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy/metadata.json'
       )
     )
@@ -52,15 +50,15 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
   });
 
   it('Should allow the owner to mint several NFTs', async () => {
-    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
-    await NFTCollection.safeMint(owner.address, 'ipfs://test2');
-    expect(await NFTCollection.safeMint(owner.address, 'ipfs://test3'))
+    await NFTCollection.safeMint('ipfs://test1');
+    await NFTCollection.safeMint('ipfs://test2');
+    expect(await NFTCollection.safeMint('ipfs://test3'))
       .to.emit('MintedNFT')
       .withArgs(NFTCollection.address, owner.address, 'ipfs://test3');
   });
 
   it('Should set the correct NFT owner when minted', async function () {
-    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    await NFTCollection.safeMint('ipfs://test1');
 
     const tx = await NFTCollection.getNFTInfo(1);
     const currentOwner = tx[0];
@@ -73,14 +71,14 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
   });
 
   it('Should have tokenIdCounter = 1 when one NFT has been minted', async function () {
-    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    await NFTCollection.safeMint('ipfs://test1');
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(1);
   });
 
   it('Should have tokenIdCounter = 3 when 3 NFTs have been minted', async function () {
-    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
-    await NFTCollection.safeMint(owner.address, 'ipfs://test2');
-    await NFTCollection.safeMint(owner.address, 'ipfs://test3');
+    await NFTCollection.safeMint('ipfs://test1');
+    await NFTCollection.safeMint('ipfs://test2');
+    await NFTCollection.safeMint('ipfs://test3');
 
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(3);
     expect(await NFTCollection.getTokenIdList()).to.deep.equal([1, 2, 3]);
@@ -92,7 +90,7 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
     [owner, user1, user2] = await ethers.getSigners();
     const contract = await ethers.getContractFactory('NFTCollection');
     NFTCollection = await contract.deploy('NAME', 'SYMBOL', owner.address);
-    await NFTCollection.safeMint(owner.address, 'ipfs://test1');
+    await NFTCollection.safeMint('ipfs://test1');
   });
 
   it('should let the owner transfer ownership to user1', async function () {
