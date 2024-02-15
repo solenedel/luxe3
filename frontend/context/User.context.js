@@ -14,7 +14,7 @@ export const UserContextProvider = ({ children }) => {
   const [collectionAddr, setCollectionAddr] = useState('');
   const [collectionOwner, setCollectionOwner] = useState('');
   const [collectionInfo, setCollectionInfo] = useState('');
-  //const [user, setUser] = useState(''); // current logged in user of the app
+  //const [user, setUser] = useState(''); // no need since already have address from useAccount?
 
   async function fetchUserInfo() {
     const _userInfo = await getUser(address);
@@ -76,14 +76,21 @@ export const UserContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         marketplaceOwner,
-        fetchUserInfo,
+        setMarketplaceOwner,
         userInfo,
+        setUserInfo,
         collectionAddr,
         setCollectionAddr,
         collectionOwner,
         setCollectionOwner,
         collectionInfo,
         setCollectionInfo,
+        fetchUserInfo,
+        ownerIsUser,
+        fetchMarketplaceOwner,
+        getUserCollection,
+        fetchCollectionOwner,
+        isCollectionOwner,
       }}>
       {children}
     </UserContext.Provider>
