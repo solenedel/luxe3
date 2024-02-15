@@ -39,8 +39,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     constructor(string memory _name, string memory _symbol, address _owner)
         ERC721(_name, _symbol) Ownable(_owner) {}
 
-
-
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice Returns the latest token number (the total number of NFTs in the collection)
@@ -49,7 +47,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     function getLatestTokenNumber() public view returns(uint256) {
         return(tokenIdCounter);
     }
-
 
      function getTokenIdList() public view returns(uint256[] memory) {
         return(tokenIdList);

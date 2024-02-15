@@ -89,24 +89,28 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
   });
 });
 
-describe('🔵 [Marketplace] Get NFT Info from NFTCollection Contract', function () {
+describe('🔵 [Marketplace] GetAllCollections', function () {
   beforeEach(async function () {
-    [admin, user1] = await ethers.getSigners();
+    [admin, user1, user2] = await ethers.getSigners();
     const contract = await ethers.getContractFactory('Marketplace');
     marketplace = await contract.deploy();
   });
 
-  it('TEST', async () => {
-    // NFTCollection = await ethers.getContractFactory('NFTCollection');
-    tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
+  it('Should get the correct number of collections created', async () => {
+    await marketplace
+      .connect(user1)
+      .deployNewNFTCollection('Pain au chocolat', 'PC');
+    await marketplace
+      .connect(user2)
+      .deployNewNFTCollection('Chocolatine', 'CT');
+    await marketplace.deployNewNFTCollection('Admin collection', 'ADM');
 
-    const receipt = await tx.wait();
+    const collections = await marketplace.getAllCollections();
+    expect(collections.length).to.equal(3);
+  });
 
-    // The receipt should contain the return value of the function call
-    const returnValue = receipt.returnValue;
-    console.log('RETURN VALUE---', returnValue);
-    // expect(collectionStruct)
-    //   .to.have.property('name')
-    //   .that.equals('My Collection');
+  it('Should have no collections at first', async () => {
+    const collections = await marketplace.getAllCollections();
+    expect(collections.length).to.equal(0);
   });
 });
