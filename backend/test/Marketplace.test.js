@@ -88,3 +88,27 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
     expect(collection.symbol).to.equal('');
   });
 });
+
+describe('🔵 [Marketplace] Get NFT Info from NFTCollection Contract', function () {
+  beforeEach(async function () {
+    [admin, user1] = await ethers.getSigners();
+    const contract = await ethers.getContractFactory('Marketplace');
+    marketplace = await contract.deploy();
+
+    const tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
+    const receipt = await tx.wait();
+    const event = receipt.events?.find(
+      (event) => event.event === 'NFTCollectionCreated'
+    );
+    // Extract the deployed contract address from the event arguments
+    nftCollectionAddress = event.args.nftCollectionAddress;
+    console.log('NFT COLLECTION ADDRESS ======', nftCollectionAddress);
+    // await NFTCollection.safeMint('ipfs://test3');
+  });
+
+  // it('Should emit NFTCollectionCreated event when user creates a collection', async () => {
+  //   expect(
+  //     await marketplace.deployNewNFTCollection('MyCollection', 'MC')
+  //   ).to.emit('NFTCollectionCreated');
+  // });
+});

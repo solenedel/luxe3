@@ -53,11 +53,11 @@ contract Marketplace is Ownable {
     }
 
 
-  struct NFT {
-     address currentOwner;
-     uint256 currentPrice;
-     uint256 price;
-    }
+  // struct NFT {
+  //    address currentOwner;
+  //    uint256 currentPrice;
+  //    uint256 price;
+  //   }
 
 
     mapping (address => User) users;
@@ -140,10 +140,10 @@ contract Marketplace is Ownable {
     return(users[_addr]);
   }
 
-  function getNFTDataFromCollection(address _collectionAddr, uint256 _tokenId) public view returns (NFT memory) {
-    require(collectionsArray[_collectionAddr], "Invalid NFT Collection address.");
-    return nftCollectionInterface.getNFTInfo(_tokenId);
- 
+  function getNFTDataFromCollection(address _collectionAddr, uint256 _tokenId) external view returns (NFT memory) {
+    // require(collectionsArray[_collectionAddr], "Invalid NFT Collection address.");
+     INFTCollection collection = INFTCollection(_collectionAddr);
+    return collection.getNFTInfo(_tokenId);
 }
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
@@ -184,10 +184,10 @@ contract Marketplace is Ownable {
 
    function setNewPrice(uint256 _tokenId, uint256 _newPrice) public onlyForSale( _tokenId) onlyCurrentNFTOwner(_tokenId) {
    
-    uint256 _oldPrice = nftData[_tokenId].currentPrice;
-    require(_oldPrice != _newPrice, "The new price must be different from the current price.");
+    // uint256 _oldPrice = nftData[_tokenId].currentPrice;
+    // require(_oldPrice != _newPrice, "The new price must be different from the current price.");
 
-    nftData[_tokenId].currentPrice = _newPrice; // updates the price
+    // nftData[_tokenId].currentPrice = _newPrice; // updates the price
     
      // emit event
         //emit NFTPriceChanged(_oldPrice, _newPrice); // add addr to this?
@@ -195,9 +195,7 @@ contract Marketplace is Ownable {
 
    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ LIST FOR SALE ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-    /// @notice Current owner of the NFT lists it as for sale.
-    /// @param _tokenId is the token ID of the NFT to listfor sale.
-    /// @param _price is the price to list at.
+   
     
     // function listForSale(uint256 _tokenId, uint256 _price) public {
     //     // use the custom interface??
