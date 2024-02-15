@@ -10,22 +10,6 @@ export const ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'AddressInsufficientBalance',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'FailedInnerCall',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'owner',
         type: 'address',
       },
@@ -74,31 +58,6 @@ export const ABI = [
     inputs: [
       {
         indexed: true,
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'buyer',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'price',
-        type: 'uint256',
-      },
-    ],
-    name: 'NFTPurchased',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         internalType: 'address',
         name: 'previousOwner',
         type: 'address',
@@ -140,19 +99,6 @@ export const ABI = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
-      },
-    ],
-    name: 'buyNFT',
-    outputs: [],
-    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -318,37 +264,6 @@ export const ABI = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_price',
-        type: 'uint256',
-      },
-    ],
-    name: 'listForSale',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'nftCollectionInterface',
-    outputs: [
-      {
-        internalType: 'contract INFTCollection',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [],
     name: 'owner',
     outputs: [
@@ -364,58 +279,6 @@ export const ABI = [
   {
     inputs: [],
     name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'sales',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address payable',
-        name: 'seller',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'price',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: 'isForSale',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_newPrice',
-        type: 'uint256',
-      },
-    ],
-    name: 'setNewPrice',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

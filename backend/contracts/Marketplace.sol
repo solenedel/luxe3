@@ -80,6 +80,8 @@ contract Marketplace is Ownable {
       require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Missing name");
       require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Missing symbol");
 
+    
+      
       // deploy new ERC721 contract for the collection
       NFTCollection newCollection = new NFTCollection(_name, _symbol, msg.sender);
 
@@ -94,12 +96,14 @@ contract Marketplace is Ownable {
 
       collectionsArray.push(_newCollection);
 
-      users[msg.sender].hasCollection = true;
+      users[msg.sender].hasCollection = true; // should this go here
 
       // todo- remove return value here, not doing anything
       
         // emit event
       emit NFTCollectionCreated(address(newCollection), _name, _symbol);
+
+      // return (_newCollection); // todo- test that this works now in the tests/??
     }
 
 }

@@ -19,14 +19,18 @@ export const UserContextProvider = ({ children }) => {
   async function fetchUserInfo() {
     const _userInfo = await getUser(address);
     setUserInfo(_userInfo);
+
     return _userInfo;
   }
 
+  // NOTE - hasCollection not being updated
+  useEffect(() => {
+    console.log('user info has coll', userInfo);
+  }, [userInfo.hasCollection]);
+
   // problem; this is not getting triggered by login
   useEffect(() => {
-    console.log('kwejhfkwrfhlkwrjf');
     if (isConnected) {
-      console.log('is connected');
       setUserAddr(address);
       fetchUserInfo();
       fetchMarketplaceOwner();

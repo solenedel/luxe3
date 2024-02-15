@@ -46,15 +46,15 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     /// @notice Returns the latest token number (the total number of NFTs in the collection)
     /// @return tokenIdCounter A number that corresponds to the total number of NFTs in the collection.
 
-    function getLatestTokenNumber() public view returns(uint128) {
+    function getLatestTokenNumber() external view returns(uint128) {
         return(tokenIdCounter);
     }
 
-     function getTokenIdList() public view returns(uint8[] memory) {
+     function getTokenIdList() external view returns(uint8[] memory) {
         return(tokenIdList);
     }
 
-    function getNFTInfo(uint8 _tokenId) public view returns(NFT memory) {
+    function getNFTInfo(uint8 _tokenId) external view returns(NFT memory) {
     // require collection exists
         return(NFTData[_tokenId]);
     }
@@ -62,18 +62,15 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
   /// @notice Collection owner mints (posts) a new NFT to the collection.
 
-    function safeMint(string memory _URI) public onlyOwner {
-        // limit total number of NFTs minted per collection to 30
-        require(tokenIdCounter < 30, "Token limit exceeded");
+    function safeMint(string memory _URI) external onlyOwner {
+
+        require(tokenIdCounter < 30, "Token limit exceeded");   // limit total number of NFTs minted per collection to 30
         
         tokenIdCounter++;
-    
         tokenIdList.push(tokenIdCounter);
-
         NFTData[tokenIdCounter].currentOwner = msg.sender;
 
         _safeMint(msg.sender, tokenIdCounter);
-
         _setTokenURI(tokenIdCounter, _URI);
 
         emit MintedNFT(address(this), msg.sender, _URI); 
@@ -86,7 +83,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     /// @param _from: address of the current owner
     /// @param _from: address of the new owner
     /// @param _tokenId: token ID of the token to transfer
-    function transferOwnership(address _from, address _to, uint8 _tokenId) public {
+    function transferOwnership(address _from, address _to, uint8 _tokenId) external {
 
         require(NFTData[_tokenId].currentOwner == msg.sender, "Caller is not owner");
 

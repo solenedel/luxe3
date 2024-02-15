@@ -5,40 +5,43 @@ import { contractAddress, ABI } from '@/constants/marketplace';
 import { UserContext } from '@/context/User.context';
 // import { useAccount } from 'wagmi';
 
+// Listen for NFTCollection contract deployment event
+const eventName = 'NFTCollectionCreated';
+
 function NewCollectionModal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
 
-  const { userInfo, fetchUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo, fetchUserInfo } = useContext(UserContext);
   // const { account, isConnected } = useAccount();
 
-  const eventName = 'NFTCollectionCreated';
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    // call func from contract
+    const data = await deployNewNFTCollection(nameInput, symbolInput);
 
-  // useEffect(() => {
-  //   console.log('COLLECTION ADDR =====', collectionAddr);
-  // }, [collectionAddr]);
+    if (data.status == 'success') {
+      //close modal
+      setUserInfo({ hasCollection: true });
+      // fetch new collection to display on front
+    }
+  };
 
-  // Listen for NFTCollection contract deployment event
-  // todo - this contract address shouldbe associated with the user struct
   useContractEvent({
     address: contractAddress,
     abi: ABI,
     eventName,
     listener(log) {
       const { contractAddress, name, symbol } = log[0].args;
-      setCollectionAddr(contractAddress);
-      fetchUserInfo();
+
+      // fetchUserInfo(); // why is this here?
+      // Check if the transaction has been confirmed
       console.log(
         `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
       );
+      setCollectionAddr(contractAddress);
     },
   });
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    // call func from contract
-    const data = await deployNewNFTCollection(nameInput, symbolInput);
-  };
 
   return (
     <section className="flex flex-col items-center justify-center fixed inset-0 z-50 bg-black/[0.8] text-white w-full h-full overflow-auto">

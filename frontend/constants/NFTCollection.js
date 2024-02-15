@@ -324,6 +324,25 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    name: 'NFTData',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'currentOwner',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'to',
         type: 'address',
@@ -382,9 +401,9 @@ export const ABI = [
     name: 'getLatestTokenNumber',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint128',
         name: '',
-        type: 'uint256',
+        type: 'uint128',
       },
     ],
     stateMutability: 'view',
@@ -393,9 +412,9 @@ export const ABI = [
   {
     inputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '_tokenId',
-        type: 'uint256',
+        type: 'uint8',
       },
     ],
     name: 'getNFTInfo',
@@ -406,11 +425,6 @@ export const ABI = [
             internalType: 'address',
             name: 'currentOwner',
             type: 'address',
-          },
-          {
-            internalType: 'uint256',
-            name: 'currentPrice',
-            type: 'uint256',
           },
         ],
         internalType: 'struct NFTCollection.NFT',
@@ -426,9 +440,9 @@ export const ABI = [
     name: 'getTokenIdList',
     outputs: [
       {
-        internalType: 'uint256[]',
+        internalType: 'uint8[]',
         name: '',
-        type: 'uint256[]',
+        type: 'uint8[]',
       },
     ],
     stateMutability: 'view',
@@ -635,9 +649,9 @@ export const ABI = [
     name: 'tokenIdList',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '',
-        type: 'uint256',
+        type: 'uint8',
       },
     ],
     stateMutability: 'view',
@@ -689,18 +703,8 @@ export const ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: '_from',
+        name: 'newOwner',
         type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_tokenId',
-        type: 'uint256',
       },
     ],
     name: 'transferOwnership',
@@ -712,8 +716,18 @@ export const ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: 'newOwner',
+        name: '_from',
         type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
+      },
+      {
+        internalType: 'uint8',
+        name: '_tokenId',
+        type: 'uint8',
       },
     ],
     name: 'transferOwnership',
