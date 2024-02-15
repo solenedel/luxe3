@@ -1,5 +1,5 @@
-// export const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'; // hardhat dev addr
-export const contractAddress = '0xB8672B825244dfd06fdEA6aa73C6F4799f5E87c1';
+export const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'; // hardhat dev addr
+// export const contractAddress = '0xB8672B825244dfd06fdEA6aa73C6F4799f5E87c1';
 export const ABI = [
   {
     inputs: [],
@@ -73,25 +73,6 @@ export const ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldPrice',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newPrice',
-        type: 'uint256',
-      },
-    ],
-    name: 'NFTPriceChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         internalType: 'uint256',
         name: 'tokenId',
@@ -130,60 +111,6 @@ export const ABI = [
       },
     ],
     name: 'OwnershipTransferred',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'tokenId',
-            type: 'uint256',
-          },
-          {
-            internalType: 'address payable',
-            name: 'seller',
-            type: 'address',
-          },
-          {
-            internalType: 'uint256',
-            name: 'price',
-            type: 'uint256',
-          },
-          {
-            internalType: 'bool',
-            name: 'isForSale',
-            type: 'bool',
-          },
-        ],
-        indexed: false,
-        internalType: 'struct Marketplace.SaleInfo',
-        name: 'saleInfo',
-        type: 'tuple',
-      },
-    ],
-    name: 'SaleInitiated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'enum Marketplace.SaleStatus',
-        name: 'prevStatus',
-        type: 'uint8',
-      },
-      {
-        indexed: false,
-        internalType: 'enum Marketplace.SaleStatus',
-        name: 'newStatus',
-        type: 'uint8',
-      },
-    ],
-    name: 'SaleStatusChange',
     type: 'event',
   },
   {
@@ -439,19 +366,6 @@ export const ABI = [
     name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'saleStatus',
-    outputs: [
-      {
-        internalType: 'enum Marketplace.SaleStatus',
-        name: '',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
