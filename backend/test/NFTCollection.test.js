@@ -114,10 +114,5 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
         1
       )
     ).to.be.revertedWith('Caller is not the owner');
-
-    // const tx2 = await NFTCollection.getNFTInfo(1);
-    // const currentOwner = tx2[0];
-    // console.log('CURRENT OWNER=====', currentOwner);
-    // expect(tx).
   });
 });

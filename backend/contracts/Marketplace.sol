@@ -44,16 +44,6 @@ contract Marketplace is Ownable {
     }
     
     mapping (address => User) users;
-    
-    enum SaleStatus {
-      PaidByBuyer,
-      PendingItemReceipt, 
-      ItemReceived, 
-      FundsUnlocked, 
-      SaleComplete
-    }
-
-    SaleStatus public saleStatus;
 
     struct Collection {
         address contractAddress;
@@ -66,7 +56,7 @@ contract Marketplace is Ownable {
     mapping(address => Collection) public allCollections;
 
     // for iteration purposes
-    Collection[] public collectionsArray;
+    Collection[] public collectionsArray; 
 
      struct SaleInfo {
         uint256 tokenId;
@@ -79,6 +69,7 @@ contract Marketplace is Ownable {
 
     mapping(uint256 => SaleInfo) public sales;
 
+// todo - use the NFT struct from the NFTcollection contract???
      struct NFT {
       bool isForSale; 
       uint256 currentPrice;
@@ -86,15 +77,13 @@ contract Marketplace is Ownable {
     }
 
       // use for looking up data
-    mapping (uint256 => NFT) nftData;
+    mapping (uint256 => NFT) nftData; // this already exists in the other contract
 
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
       event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-      // event SaleStatusChange(SaleStatus prevStatus, SaleStatus newStatus); 
-      // event SaleInitiated(SaleInfo saleInfo);
       // event NFTPriceChanged(uint256 oldPrice, uint256 newPrice);
       event NFTPurchased(uint256 indexed tokenId, address indexed buyer, uint256 price);
 
