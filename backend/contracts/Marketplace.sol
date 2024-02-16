@@ -47,7 +47,7 @@ contract Marketplace is Ownable {
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-    
+  event NFTCollectionCreatedByAdmin(address indexed contractAddress, string name, string symbol);
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
@@ -99,9 +99,14 @@ contract Marketplace is Ownable {
       users[msg.sender].hasCollection = true; // should this go here
 
       // todo- remove return value here, not doing anything
-      
+      require(msg.sender != owner(), 'TEST REQUIRE');
         // emit event
-      emit NFTCollectionCreated(address(newCollection), _name, _symbol);
+        if (msg.sender == owner()) {
+          emit NFTCollectionCreatedByAdmin(address(newCollection), _name, _symbol);
+        } else {
+           emit NFTCollectionCreated(address(newCollection), _name, _symbol);
+        }
+      
 
       // return (_newCollection); // todo- test that this works now in the tests/??
     }

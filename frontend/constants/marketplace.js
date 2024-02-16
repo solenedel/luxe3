@@ -59,6 +59,31 @@ export const ABI = [
       {
         indexed: true,
         internalType: 'address',
+        name: 'contractAddress',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'name',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'symbol',
+        type: 'string',
+      },
+    ],
+    name: 'NFTCollectionCreatedByAdmin',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'previousOwner',
         type: 'address',
       },

@@ -50,19 +50,13 @@ function NewCollectionModal({ showModal, setShowModal }) {
     abi: ABI,
     eventName,
     listener(log) {
-      if (adminEventFired == false) {
-        console.log('HELLO????');
-        setAdminEventFired(true);
-        return;
-      } else {
-        const { contractAddress, name, symbol } = log[0].args;
-        setTemp({ contractAddress, name, symbol });
-        // fetchUserInfo(); // why is this here?
-        // Check if the transaction has been confirmed
-        console.log(
-          `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
-        );
-      }
+      const { contractAddress, name, symbol } = log[0].args;
+      setTemp({ contractAddress, name, symbol });
+      // fetchUserInfo(); // why is this here?
+      // Check if the transaction has been confirmed
+      console.log(
+        `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
+      );
     },
   });
 

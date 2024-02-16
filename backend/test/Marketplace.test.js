@@ -30,6 +30,14 @@ describe('🔵 [Marketplace] Deploy new NFT collection', function () {
     ).to.emit('NFTCollectionCreated');
   });
 
+  // it('Should emit NFTCollectionCreatedByAdmin when admin creates a collection', async () => {
+  //   expect(
+  //     await marketplace
+  //       .connect(user1)
+  //       .deployNewNFTCollection('Admin Collection', 'ADM')
+  //   ).to.emit('NFTCollectionCreatedByAdmin');
+  // });
+
   it('Should emit NFTCollectionCreated event when user creates a collection with args', async () => {
     const tx = await marketplace.deployNewNFTCollection('MyCollection', 'MC');
     const receipt = await tx.wait();
