@@ -3,17 +3,31 @@ import { deployNewNFTCollection } from '@/utils/deployNewNFTCollection';
 import { useContractEvent } from 'wagmi';
 import { contractAddress, ABI } from '@/constants/marketplace';
 import { UserContext } from '@/context/User.context';
-// import { useAccount } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 // Listen for NFTCollection contract deployment event
 const eventName = 'NFTCollectionCreated';
 
 function NewCollectionModal({ showModal, setShowModal }) {
+  const { address } = useAccount();
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
+  const [temp, setTemp] = useState({});
 
-  const { userInfo, setUserInfo, fetchUserInfo } = useContext(UserContext);
+  const {
+    userInfo,
+    setUserInfo,
+    fetchUserInfo,
+    collectionInfo,
+    setCollectionInfo,
+    setCollectionAddr,
+    marketplaceOwner,
+  } = useContext(UserContext);
   // const { account, isConnected } = useAccount();
+
+  useEffect(() => {
+    console.log('TEMP', temp);
+  }, [temp]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +36,10 @@ function NewCollectionModal({ showModal, setShowModal }) {
 
     if (data.status == 'success') {
       //close modal
+      console.log('ADMIN IS NOT USER');
+      setCollectionInfo(temp);
       setUserInfo({ hasCollection: true });
+      setCollectionAddr(contractAddress);
       // fetch new collection to display on front
     }
   };
@@ -32,14 +49,17 @@ function NewCollectionModal({ showModal, setShowModal }) {
     abi: ABI,
     eventName,
     listener(log) {
-      const { contractAddress, name, symbol } = log[0].args;
-
-      // fetchUserInfo(); // why is this here?
-      // Check if the transaction has been confirmed
-      console.log(
-        `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
-      );
-      setCollectionAddr(contractAddress);
+      if (address != marketplaceOwner) {
+        const { contractAddress, name, symbol } = log[0].args;
+        setTemp({ contractAddress, name, symbol });
+        // fetchUserInfo(); // why is this here?
+        // Check if the transaction has been confirmed
+        console.log(
+          `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
+        );
+      } else {
+        return;
+      }
     },
   });
 

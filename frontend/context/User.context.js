@@ -13,7 +13,7 @@ export const UserContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState('');
   const [collectionAddr, setCollectionAddr] = useState('');
   const [collectionOwner, setCollectionOwner] = useState('');
-  const [collectionInfo, setCollectionInfo] = useState('');
+  const [collectionInfo, setCollectionInfo] = useState({});
   const [userAddr, setUserAddr] = useState(''); // no need since already have address from useAccount?
 
   async function fetchUserInfo() {
@@ -79,9 +79,9 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log('ddr', address);
-  // }, []);
+  useEffect(() => {
+    console.log('COLLECTION INFO', address);
+  }, [collectionInfo]);
 
   // useEffect(() => {
   //   fetchMarketplaceOwner(); // get marketplace owner
