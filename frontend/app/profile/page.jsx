@@ -121,14 +121,14 @@ function ProfilePage() {
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 show tokens
               </button>
-              {metadataArray.length ? (
+              {/* {metadataArray.length ? (
                 <NFTList
                   metadataArray={metadataArray}
                   contractAddr={collectionInfo.contractAddress}
                 />
               ) : (
                 ''
-              )}
+              )} */}
             </div>
           </section>
         )}

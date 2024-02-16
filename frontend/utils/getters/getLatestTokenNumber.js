@@ -6,11 +6,10 @@ import { getAddress } from 'viem';
 export const getLatestTokenNumber = async (_contractAddr) => {
   try {
     const data = await readContract({
-      address: _contractAddr, // get contract addr here
+      address: _contractAddr,
       abi: ABI,
       functionName: 'getLatestTokenNumber',
     });
-    console.log('🔥🔥🔥🔥🔥🔥🔥🔥 get latest token number:  ', Number(data));
     return data;
   } catch (err) {
     console.log('🔴 Error in getLatestTokenNumber: ', err.message);

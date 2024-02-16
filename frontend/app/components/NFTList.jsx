@@ -12,19 +12,14 @@ function NFTList({ contractAddr }) {
     generateTokenNumberArray,
   } = useContext(TokenListContext);
 
-  useEffect(() => {
-    console.log('in useeeefect');
-    fetchLatestTokenNumber(contractAddr);
-    generateTokenNumberArray();
-  }, []);
-
-  useEffect(() => {
-    console.log('TOKEN ID ARRAY:', tokenIdArray);
-  }, [tokenIdArray]);
+  // useEffect(() => {
+  //   console.log('in useeeefect');
+  //   fetchLatestTokenNumber(contractAddr);
+  //   generateTokenNumberArray();
+  // }, []);
 
   return (
     <section>
-      {console.log()}
       <ul>
         <div>
           {tokenIdArray.map((nft) => (

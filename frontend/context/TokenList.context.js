@@ -12,10 +12,14 @@ export function TokenListContextProvider({ children }) {
   const [tokenIdArray, setTokenIdArray] = useState([]);
   const [metadataArray, setMetadataArray] = useState([]);
 
+  useEffect(() => {
+    console.log('TOKEN ID ARRAY:', tokenIdArray);
+    console.log('METADATA ARRAY:', metadataArray);
+  }, [tokenIdArray, metadataArray]);
+
   const fetchLatestTokenNumber = async (_collectionAddr) => {
     const data = await getLatestTokenNumber(_collectionAddr);
-    console.log('DATA ====', data);
-    setLatestTokenNumber(data);
+    setLatestTokenNumber(Number(data));
   };
 
   const generateTokenNumberArray = async (_collectionAddr) => {
@@ -23,7 +27,8 @@ export function TokenListContextProvider({ children }) {
       console.log(i);
       setTokenIdArray((prev) => [...prev, i]);
 
-      const metadata = await getMetadata(_collectionAddr, _tokenID);
+      console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
+      let metadata = await getMetadata(_collectionAddr, i);
 
       const imgLink = `https://gateway.pinata.cloud/ipfs/${
         metadata.image.split('ipfs://')[1]
