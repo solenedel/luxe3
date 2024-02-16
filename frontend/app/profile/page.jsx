@@ -113,9 +113,13 @@ function ProfilePage() {
             )}
           </section>
         )}
-        <section>
-          <h2 className="text-2xl">Browse collections</h2>
-          <button onClick={getCollections}>all collections</button>
+        <section className="mt-5 w-2/3">
+          <h3 className="text-xl font-semibold">Browse collections</h3>
+          <button
+            onClick={getCollections}
+            className="text-xl shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-blue-700 to-blue-400 w-fit rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+            Show collections
+          </button>
           {allCollections.length ? (
             <CollectionsList allCollections={allCollections} />
           ) : (

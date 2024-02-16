@@ -19,6 +19,7 @@
 body {
   background-image: url('/images/marble-bg-img.png');
   background-size: cover;
+  /* backdrop-filter: blur(2px); */
 }
 
 header h1,
