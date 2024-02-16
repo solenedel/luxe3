@@ -46,8 +46,8 @@ contract Marketplace is Ownable {
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-  event NFTCollectionCreated(address indexed contractAddress, address indexed sender, string name, string symbol); 
-  event NFTCollectionCreatedByAdmin(address indexed contractAddress, address indexed sender, string name, string symbol);
+  event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
+  // event NFTCollectionCreatedByAdmin(address indexed contractAddress, address indexed sender, string name, string symbol);
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
@@ -55,7 +55,7 @@ contract Marketplace is Ownable {
     /// @notice Gets all collections created by the Marketplace contract.
     /// @return An array of all the collections created. 
   function getAllCollections() external view returns (Collection[] memory) {
-    return collectionsArray;
+    return collectionsArray; // not needed?
   }
 
     /// @notice Gets one collection, indexed by the creator (owner) of that collection.
@@ -102,9 +102,8 @@ contract Marketplace is Ownable {
      
         // emit event
 
-        emit NFTCollectionCreated(address(newCollection), msg.sender, _name, _symbol);
-    
-      
+        emit NFTCollectionCreated(address(newCollection), _name, _symbol);   
+        //  emit NFTCollectionCreated(address(newCollection), msg.sender, _name, _symbol);         
 
       // return (_newCollection); // todo- test that this works now in the tests/??
     }

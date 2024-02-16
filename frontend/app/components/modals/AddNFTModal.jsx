@@ -121,9 +121,10 @@ function AddNFTModal({ showModalB, setShowModalB }) {
             className="text-green-400"
           />
           <button
+            disabled={!URIState}
             onClick={handleFormSubmit}
             type="submit"
-            className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-700 to-emerald-400 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+            className="text-xl disabled:bg-red-100 disabled:grayscale shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-700 to-emerald-400 rounded-lg p-2 shadow-lg text-gray-950 hover:cursor-pointer hover:translate-y-1">
             Mint
           </button>
         </form>

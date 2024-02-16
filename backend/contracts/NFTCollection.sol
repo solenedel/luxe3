@@ -16,10 +16,8 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
 
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-    uint8 private tokenIdCounter; // maybe not needed, can just use length of array
+    uint8 private tokenIdCounter; 
 
-    // for iteration purposes 
-    uint8[] public tokenIdList; // tokenId = i+1 // not needed, generate in front end
 
 
     struct NFT {
@@ -50,9 +48,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         return(tokenIdCounter);
     }
 
-     function getTokenIdList() external view returns(uint8[] memory) {
-        return(tokenIdList);
-    }
 
     function getNFTInfo(uint8 _tokenId) external view returns(NFT memory) {
     // require collection exists
@@ -67,7 +62,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         require(tokenIdCounter < 30, "Token limit exceeded");   // limit total number of NFTs minted per collection to 30
         
         tokenIdCounter++;
-        tokenIdList.push(tokenIdCounter);
         NFTData[tokenIdCounter].currentOwner = msg.sender;
 
         _safeMint(msg.sender, tokenIdCounter);
