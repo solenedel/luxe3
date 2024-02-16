@@ -99,7 +99,7 @@ contract Marketplace is Ownable {
       users[msg.sender].hasCollection = true; // should this go here
 
       // todo- remove return value here, not doing anything
-      require(msg.sender != owner(), 'TEST REQUIRE');
+     
         // emit event
         if (msg.sender == owner()) {
           emit NFTCollectionCreatedByAdmin(address(newCollection), _name, _symbol);

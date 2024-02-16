@@ -52,10 +52,11 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     // set the price of the NFT (+ mark as for sale) LATER
   };
 
-  // useEffect(() => {
-  //   console.log('==== URI STATE in usefet ====', URIState);
-  // }, [URIState]);
+  useEffect(() => {
+    console.log('==== URI STATE  ====', URIState);
+  }, [URIState]);
 
+  // upload to NFT storage
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;

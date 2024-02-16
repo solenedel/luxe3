@@ -38,11 +38,11 @@ function ProfilePage() {
   // }, [collectionInfo]);
 
   const fetchMetadata = async (_tokenID) => {
-    console.log(
-      'PARAMS=====🔥🔥🔥🔥🔥🔥🔥 ',
-      collectionInfo.contractAddress,
-      _tokenID
-    );
+    // console.log(
+    //   'PARAMS🔥🔥🔥🔥🔥🔥🔥 ',
+    //   collectionInfo.contractAddress,
+    //   _tokenID
+    // );
     const metadata = await getMetadata(
       collectionInfo.contractAddress,
       _tokenID

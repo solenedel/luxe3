@@ -17,13 +17,18 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
 
     // Construct full IPFS gateway URL
     const IPFSurl = `https://api.nft.storage/${CID}`;
+
     // const IPFSurl = `https://${CID}.ipfs.nft.storage.link/`;
 
-    console.log('URL ====', IPFSurl);
+    // console.log('URL ====', IPFSurl);
     try {
-      const response = await axios.get(IPFSurl);
+      const response = await axios.get(IPFSurl, {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN}`,
+        },
+      });
       const metadata = await response.data;
-      console.log('RESP ===', response);
+      console.log('RESPONSE DATA ===', response.data);
       return metadata;
     } catch (err) {
       console.log('ERROR getting metadata ===', err);
