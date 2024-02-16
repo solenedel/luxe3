@@ -18,40 +18,48 @@ function ProfilePage() {
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
-  const [metadataArray, setMetadataArray] = useState([]);
+
   const { userInfo, collectionInfo, fetchUserInfo, userAddr, setUserAddr } =
     useContext(UserContext);
 
-  const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
-    useContext(TokenListContext);
+  const {
+    tokenIdArray,
+    setTokenIdArray,
+    fetchLatestTokenNumber,
+    latestTokenNumber,
+    setLatestTokenNumber,
+    generateTokenNumberArray,
+    metadataArray,
+    setMetadataArray,
+  } = useContext(TokenListContext);
 
-  useEffect(() => {
-    console.log('METADATA RRAY===', metadataArray);
-  }, [metadataArray]);
+  // useEffect(() => {
+  //   console.log('METADATA RRAY===', metadataArray);
+  // }, [metadataArray]);
 
-  const fetchMetadata = async (_tokenID) => {
-    const metadata = await getMetadata(
-      collectionInfo.contractAddress,
-      _tokenID
-    );
+  // const fetchMetadata = async (_tokenID) => {
+  //   const metadata = await getMetadata(
+  //     collectionInfo.contractAddress,
+  //     _tokenID
+  //   );
 
-    const imgLink = `https://gateway.pinata.cloud/ipfs/${
-      metadata.image.split('ipfs://')[1]
-    }`;
+  //   const imgLink = `https://gateway.pinata.cloud/ipfs/${
+  //     metadata.image.split('ipfs://')[1]
+  //   }`;
 
-    setMetadataArray((prev) => [
-      ...prev,
-      {
-        imgLink: imgLink,
-        ...metadata,
-      },
-    ]);
-    return metadata;
-  };
+  //   setMetadataArray((prev) => [
+  //     ...prev,
+  //     {
+  //       imgLink: imgLink,
+  //       ...metadata,
+  //     },
+  //   ]);
+  //   return metadata;
+  // // };
 
-  const buttonHandler = async () => {
-    const data = await fetchTokenIdList(collectionInfo.contractAddress);
-    setTokenIdArray(data);
+  const showTokensHandler = async () => {
+    await fetchLatestTokenNumber(collectionInfo.contractAddress);
+    await generateTokenNumberArray(collectionInfo.contractAddress);
   };
 
   if (isConnected) {
@@ -108,7 +116,11 @@ function ProfilePage() {
             </span>
             <div className="mt-8 flex flex-col gap-x-5 font-semibold">
               <h3>NFTs in your collection:</h3>
-              {/* <button onClick={buttonHandler}>get token id list</button> */}
+              <button
+                onClick={showTokensHandler}
+                className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+                show tokens
+              </button>
               {metadataArray.length ? (
                 <NFTList
                   metadataArray={metadataArray}
