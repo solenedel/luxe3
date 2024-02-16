@@ -10,18 +10,9 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const [titleInput, setTitleInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const [URIState, setURIState] = useState('');
-  const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
-    useContext(TokenListContext);
-  const { collectionAddr, userAddr, setUserAddr } = useContext(UserContext);
-
-  // const clientStatusFunc = async () => {
-  //   const status = await client.status(
-  //     'zdj7Wn9FQAURCP6MbwcWuzi7u65kAsXCdjNTkhbJcoaXBusq9'
-  //   );
-  //   console.log('Status ====', status);
-  // };
+  const { collectionAddr } = useContext(UserContext);
 
   const eventName = 'MintedNFT';
 
@@ -46,10 +37,8 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
     if (URIState !== '') {
-      const data = await mintNFT(address, URIState, collectionAddr);
+      await mintNFT(address, URIState, collectionAddr);
     }
-
-    // set the price of the NFT (+ mark as for sale) LATER
   };
 
   useEffect(() => {

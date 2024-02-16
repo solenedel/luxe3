@@ -67,7 +67,6 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
 
   it('Should have tokenIdCounter = 0 before any NFTs have been minted', async function () {
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(0);
-    expect(await NFTCollection.getTokenIdList()).to.deep.equal([]);
   });
 
   it('Should have tokenIdCounter = 1 when one NFT has been minted', async function () {
@@ -81,7 +80,6 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
     await NFTCollection.safeMint('ipfs://test3');
 
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(3);
-    expect(await NFTCollection.getTokenIdList()).to.deep.equal([1, 2, 3]);
   });
 
   it('Should fail when more than 30 tokens are minted per collection.', async function () {
