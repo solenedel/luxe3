@@ -13,6 +13,7 @@ import { TokenListContext } from '@/context/TokenList.context';
 import Image from 'next/image';
 import NFTList from '../components/NFTList';
 import { v4 as uuidv4 } from 'uuid';
+import CollectionsList from '../components/CollectionsList';
 
 function ProfilePage() {
   const { address, isConnected } = useAccount();
@@ -31,7 +32,14 @@ function ProfilePage() {
     generateTokenNumberArray,
     metadataArray,
     setMetadataArray,
+    allCollections,
+    setAllCollections,
   } = useContext(TokenListContext);
+
+  const getCollections = async () => {
+    const data = await getAllCollections();
+    setAllCollections(data);
+  };
 
   const showTokensHandler = async () => {
     await fetchLatestTokenNumber(collectionInfo.contractAddress);
@@ -105,6 +113,15 @@ function ProfilePage() {
             )}
           </section>
         )}
+        <section>
+          <h2 className="text-2xl">Browse collections</h2>
+          <button onClick={getCollections}>all collections</button>
+          {allCollections.length ? (
+            <CollectionsList allCollections={allCollections} />
+          ) : (
+            ''
+          )}
+        </section>
       </main>
     );
   } else {

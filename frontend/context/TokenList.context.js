@@ -11,6 +11,7 @@ export function TokenListContextProvider({ children }) {
   const [latestTokenNumber, setLatestTokenNumber] = useState(0);
   const [tokenIdArray, setTokenIdArray] = useState([]);
   const [metadataArray, setMetadataArray] = useState([]);
+  const [allCollections, setAllCollections] = useState([]);
 
   useEffect(() => {
     console.log('TOKEN ID ARRAY:', tokenIdArray);
@@ -58,6 +59,8 @@ export function TokenListContextProvider({ children }) {
         generateTokenNumberArray,
         metadataArray,
         setMetadataArray,
+        allCollections,
+        setAllCollections,
       }}>
       {children}
     </TokenListContext.Provider>

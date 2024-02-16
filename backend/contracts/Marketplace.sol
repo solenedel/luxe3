@@ -3,12 +3,11 @@ pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
-
 import "./NFTCollection.sol";
 
 
 
-/// @title this contract handles marketplace actions, such as: creating a new collection (one per user), marking items as received, and more.
+/// @title this contract handles marketplace actions: Creating a new collection
 /// @author Solene D.
 /// @notice 
 
@@ -80,7 +79,6 @@ contract Marketplace is Ownable {
       require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Missing name");
       require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Missing symbol");
 
-    
       
       // deploy new ERC721 contract for the collection
       NFTCollection newCollection = new NFTCollection(_name, _symbol, msg.sender);
@@ -99,9 +97,7 @@ contract Marketplace is Ownable {
       users[msg.sender].hasCollection = true; // should this go here
 
       // todo- remove return value here, not doing anything
-     
-        // emit event
-
+      
         emit NFTCollectionCreated(address(newCollection), _name, _symbol);   
         //  emit NFTCollectionCreated(address(newCollection), msg.sender, _name, _symbol);         
 
