@@ -3,36 +3,37 @@ import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 import { getCollection } from '@/utils/getters/getCollection';
 import { useAccount } from 'wagmi';
 import { getTokenIdList } from '@/utils/getters/getTokenIdList';
-
+import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 export const TokenListContext = createContext();
 
 export function TokenListContextProvider({ children }) {
   const [tokenIdArray, setTokenIdArray] = useState([]);
-  const { address, isConnected } = useAccount();
+  const [latestTokenNumber, setLatestTokenNumber] = useState(0);
 
-  const fetchTokenIdList = async (_collectionAddr) => {
-    const data = await getTokenIdList(_collectionAddr);
-
-    // turn bigint array in to regular number array
-    const numberArray = Array.from(data, (n) => Number(n));
-    setTokenIdArray(numberArray);
-    return numberArray;
+  const fetchLatestTokenNumber = async (_collectionAddr) => {
+    const data = await getLatestTokenNumber(_collectionAddr);
+    console.log('DATA ====', data);
+    setLatestTokenNumber(data);
   };
 
-  // useEffect(() => {
-  //   if (isConnected) {
-  //     // fetchTokenIdList();
-  //     // console.log('TOKEN ID ARRAY ====', tokenIdArray);
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    console.log('TOKEN ID ARRAY:', tokenIdArray);
-  }, [tokenIdArray]);
+  const generateTokenNumberArray = () => {
+    for (let i = 0; i < latestTokenNumber; i++) {
+      console.log(i);
+      setTokenIdArray((prev) => [...prev, i]);
+    }
+    setLatestTokenNumber(data);
+  };
 
   return (
     <TokenListContext.Provider
-      value={{ tokenIdArray, setTokenIdArray, fetchTokenIdList }}>
+      value={{
+        tokenIdArray,
+        setTokenIdArray,
+        fetchLatestTokenNumber,
+        latestTokenNumber,
+        setLatestTokenNumber,
+        generateTokenNumberArray,
+      }}>
       {children}
     </TokenListContext.Provider>
   );

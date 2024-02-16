@@ -108,20 +108,15 @@ function ProfilePage() {
             </span>
             <div className="mt-8 flex flex-col gap-x-5 font-semibold">
               <h3>NFTs in your collection:</h3>
-              <button onClick={buttonHandler}>get token id list</button>
-              {tokenIdArray.map((id) => {
-                const nft = fetchMetadata(id);
-                return (
-                  <div key={uuidv4()}>
-                    <img src={`${nft.imgLink}`} />
-                  </div>
-                );
-              })}
-              {/* {metadataArray.length ? (
-                <NFTList metadataArray={metadataArray} />
+              {/* <button onClick={buttonHandler}>get token id list</button> */}
+              {metadataArray.length ? (
+                <NFTList
+                  metadataArray={metadataArray}
+                  contractAddr={collectionInfo.contractAddress}
+                />
               ) : (
                 ''
-              )} */}
+              )}
             </div>
           </section>
         )}

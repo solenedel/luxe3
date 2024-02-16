@@ -1,12 +1,33 @@
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useContext } from 'react';
+import { TokenListContext } from '@/context/TokenList.context';
 
-function NFTList({ metadataArray }) {
+function NFTList({ contractAddr }) {
+  const {
+    tokenIdArray,
+    setTokenIdArray,
+    fetchLatestTokenNumber,
+    latestTokenNumber,
+    setLatestTokenNumber,
+    generateTokenNumberArray,
+  } = useContext(TokenListContext);
+
+  useEffect(() => {
+    console.log('in useeeefect');
+    fetchLatestTokenNumber(contractAddr);
+    generateTokenNumberArray();
+  }, []);
+
+  useEffect(() => {
+    console.log('TOKEN ID ARRAY:', tokenIdArray);
+  }, [tokenIdArray]);
+
   return (
     <section>
-      {/* <h3>NFTs in your collection</h3> */}
+      {console.log()}
       <ul>
         <div>
-          {metadataArray.map((nft) => (
+          {tokenIdArray.map((nft) => (
             <div key={uuidv4()}>
               <img src={`${nft.imgLink}`} />
             </div>
