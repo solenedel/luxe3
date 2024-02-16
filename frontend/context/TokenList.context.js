@@ -25,22 +25,25 @@ export function TokenListContextProvider({ children }) {
   // todo- remove doubles from here (prevent showing same token twice)
   const generateTokenNumberArray = async (_collectionAddr) => {
     for (let i = 1; i < latestTokenNumber + 1; i++) {
-      setTokenIdArray((prev) => [...prev, i]);
+      if (!tokenIdArray.includes(i)) {
+        setTokenIdArray((prev) => [...prev, i]);
 
-      console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
-      let metadata = await getMetadata(_collectionAddr, i);
+        let metadata = await getMetadata(_collectionAddr, i);
 
-      const imgLink = `https://gateway.pinata.cloud/ipfs/${
-        metadata.image.split('ipfs://')[1]
-      }`;
+        const imgLink = `https://gateway.pinata.cloud/ipfs/${
+          metadata.image.split('ipfs://')[1]
+        }`;
 
-      setMetadataArray((prev) => [
-        ...prev,
-        {
-          imgLink: imgLink,
-          ...metadata,
-        },
-      ]);
+        setMetadataArray((prev) => [
+          ...prev,
+          {
+            imgLink: imgLink,
+            ...metadata,
+          },
+        ]);
+      }
+
+      // console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
     }
   };
 
