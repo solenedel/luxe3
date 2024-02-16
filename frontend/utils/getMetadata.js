@@ -26,7 +26,6 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
       if (response.status === 200) {
         const metadata = response.data;
 
-        // console.log('imgLINK =====', imgLink);
         return metadata;
         // Now you can use the metadata object
       } else {

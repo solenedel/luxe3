@@ -11,6 +11,8 @@ import { getMetadata } from '@/utils/getMetadata';
 import { getTokenIdList } from '@/utils/getters/getTokenIdList';
 import { TokenListContext } from '@/context/TokenList.context';
 import Image from 'next/image';
+import NFTList from '../components/NFTList';
+import { v4 as uuidv4 } from 'uuid';
 
 function ProfilePage() {
   const { address, isConnected } = useAccount();
@@ -103,41 +105,23 @@ function ProfilePage() {
                 className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 Add NFT
               </button>
-              {/* <button
-                onClick={getTokenNumber}
-                type="submit"
-                className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
-                list NFTs in my collection
-              </button> */}
-              {/* <button
-                type="submit"
-                className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
-                Edit NFTs
-              </button> */}
             </span>
-            <div className="mt-8 flex gap-x-5 font-semibold">
-              <h3>NFTs in my collection:</h3>
+            <div className="mt-8 flex flex-col gap-x-5 font-semibold">
+              <h3>NFTs in your collection:</h3>
               <button onClick={buttonHandler}>get token id list</button>
-              {tokenIdArray.map((id) => (
-                <p
-                  onClick={() => fetchMetadata(id)}
-                  className="text-xl hover:text-pink-600 font-semibold hover:cursor-pointer"
-                  key={id}>
-                  {id}
-                </p>
-              ))}
-              {metadataArray.length ? (
-                <div>
-                  helloooooo
-                  {metadataArray.map((nft) => (
-                    <div key={nft.name}>
-                      <img src={`${nft.imgLink}`} />
-                    </div>
-                  ))}
-                </div>
+              {tokenIdArray.map((id) => {
+                const nft = fetchMetadata(id);
+                return (
+                  <div key={uuidv4()}>
+                    <img src={`${nft.imgLink}`} />
+                  </div>
+                );
+              })}
+              {/* {metadataArray.length ? (
+                <NFTList metadataArray={metadataArray} />
               ) : (
                 ''
-              )}
+              )} */}
             </div>
           </section>
         )}
