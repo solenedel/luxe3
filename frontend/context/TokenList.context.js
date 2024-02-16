@@ -22,9 +22,9 @@ export function TokenListContextProvider({ children }) {
     setLatestTokenNumber(Number(data));
   };
 
+  // todo- remove doubles from here (prevent showing same token twice)
   const generateTokenNumberArray = async (_collectionAddr) => {
     for (let i = 1; i < latestTokenNumber + 1; i++) {
-      console.log(i);
       setTokenIdArray((prev) => [...prev, i]);
 
       console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
@@ -43,30 +43,6 @@ export function TokenListContextProvider({ children }) {
       ]);
     }
   };
-
-  // const fetchMetadata = async (_tokenID) => {
-  //   const metadata = await getMetadata(
-  //     collectionInfo.contractAddress,
-  //     _tokenID
-  //   );
-
-  //   const imgLink = `https://gateway.pinata.cloud/ipfs/${
-  //     metadata.image.split('ipfs://')[1]
-  //   }`;
-
-  //   setMetadataArray((prev) => [
-  //     ...prev,
-  //     {
-  //       imgLink: imgLink,
-  //       ...metadata,
-  //     },
-  //   ]);
-  //   return metadata;
-  // };
-
-  // const fetchMetadataForToken = async (_tokenId) => {
-  //   await getMetadata(_tokenId);
-  // };
 
   return (
     <TokenListContext.Provider

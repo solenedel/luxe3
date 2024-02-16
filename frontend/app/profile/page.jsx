@@ -33,30 +33,6 @@ function ProfilePage() {
     setMetadataArray,
   } = useContext(TokenListContext);
 
-  // useEffect(() => {
-  //   console.log('METADATA RRAY===', metadataArray);
-  // }, [metadataArray]);
-
-  // const fetchMetadata = async (_tokenID) => {
-  //   const metadata = await getMetadata(
-  //     collectionInfo.contractAddress,
-  //     _tokenID
-  //   );
-
-  //   const imgLink = `https://gateway.pinata.cloud/ipfs/${
-  //     metadata.image.split('ipfs://')[1]
-  //   }`;
-
-  //   setMetadataArray((prev) => [
-  //     ...prev,
-  //     {
-  //       imgLink: imgLink,
-  //       ...metadata,
-  //     },
-  //   ]);
-  //   return metadata;
-  // // };
-
   const showTokensHandler = async () => {
     await fetchLatestTokenNumber(collectionInfo.contractAddress);
     await generateTokenNumberArray(collectionInfo.contractAddress);
@@ -123,10 +99,7 @@ function ProfilePage() {
               </button>
             </div>
             {metadataArray.length ? (
-              <NFTList
-                metadataArray={metadataArray}
-                contractAddr={collectionInfo.contractAddress}
-              />
+              <NFTList metadataArray={metadataArray} />
             ) : (
               ''
             )}
