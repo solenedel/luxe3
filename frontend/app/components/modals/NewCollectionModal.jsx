@@ -13,6 +13,7 @@ function NewCollectionModal({ showModal, setShowModal }) {
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
   const [temp, setTemp] = useState({});
+  const [adminEventFired, setAdminEventFired] = useState(false);
 
   const {
     userInfo,
@@ -49,7 +50,11 @@ function NewCollectionModal({ showModal, setShowModal }) {
     abi: ABI,
     eventName,
     listener(log) {
-      if (address != marketplaceOwner) {
+      if (adminEventFired == false) {
+        console.log('HELLO????');
+        setAdminEventFired(true);
+        return;
+      } else {
         const { contractAddress, name, symbol } = log[0].args;
         setTemp({ contractAddress, name, symbol });
         // fetchUserInfo(); // why is this here?
@@ -57,8 +62,6 @@ function NewCollectionModal({ showModal, setShowModal }) {
         console.log(
           `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
         );
-      } else {
-        return;
       }
     },
   });

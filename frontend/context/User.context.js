@@ -79,9 +79,9 @@ export const UserContextProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    console.log('COLLECTION INFO', address);
-  }, [collectionInfo]);
+  // useEffect(() => {
+  //   console.log('COLLECTION INFO', address);
+  // }, [collectionInfo]);
 
   // useEffect(() => {
   //   fetchMarketplaceOwner(); // get marketplace owner
