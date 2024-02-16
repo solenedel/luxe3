@@ -114,22 +114,22 @@ function ProfilePage() {
                 Add NFT
               </button>
             </span>
-            <div className="mt-8 flex flex-col gap-x-5 font-semibold">
+            <div className="mt-8 flex items-center gap-x-5 font-semibold">
               <h3>NFTs in your collection:</h3>
               <button
                 onClick={showTokensHandler}
-                className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+                className="text-xl shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-blue-700 to-blue-400 w-fit rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
                 show tokens
               </button>
-              {/* {metadataArray.length ? (
-                <NFTList
-                  metadataArray={metadataArray}
-                  contractAddr={collectionInfo.contractAddress}
-                />
-              ) : (
-                ''
-              )} */}
             </div>
+            {metadataArray.length ? (
+              <NFTList
+                metadataArray={metadataArray}
+                contractAddr={collectionInfo.contractAddress}
+              />
+            ) : (
+              ''
+            )}
           </section>
         )}
       </main>
