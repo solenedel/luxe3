@@ -15,21 +15,23 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
     // Extract CID from the URI
     const CID = data.split('ipfs://')[1].slice(0, -14);
 
-    // Construct full IPFS gateway URL
-    const IPFSurl = `https://api.nft.storage/${CID}`;
-
+    const IPFSurl = `https://gateway.pinata.cloud/ipfs/${CID}/metadata.json`;
+    // const IPFSurl = `https://api.nft.storage/${CID}`;
+    // const IPFSurl = `https://ipfs.io/ipfs/${CID}`;
+    // const IPFSurl = `https://nftstorage.link/ipfs/${CID}`;
     // const IPFSurl = `https://${CID}.ipfs.nft.storage.link/`;
 
-    // console.log('URL ====', IPFSurl);
     try {
-      const response = await axios.get(IPFSurl, {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN}`,
-        },
-      });
-      const metadata = await response.data;
-      console.log('RESPONSE DATA ===', response.data);
-      return metadata;
+      const response = await axios.get(IPFSurl);
+      if (response.status === 200) {
+        const metadata = response.data;
+
+        // console.log('imgLINK =====', imgLink);
+        return metadata;
+        // Now you can use the metadata object
+      } else {
+        console.error('Failed to retrieve metadata:', response.statusText);
+      }
     } catch (err) {
       console.log('ERROR getting metadata ===', err);
     }

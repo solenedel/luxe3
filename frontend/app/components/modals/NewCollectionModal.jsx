@@ -50,8 +50,8 @@ function NewCollectionModal({ showModal, setShowModal }) {
     abi: ABI,
     eventName,
     listener(log) {
-      const { contractAddress, name, symbol } = log[0].args;
-      setTemp({ contractAddress, name, symbol });
+      const { contractAddress, sender, name, symbol } = log[0].args;
+      setTemp({ contractAddress, sender, name, symbol });
       // fetchUserInfo(); // why is this here?
       // Check if the transaction has been confirmed
       console.log(

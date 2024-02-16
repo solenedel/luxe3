@@ -46,8 +46,8 @@ contract Marketplace is Ownable {
 
   // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-  event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-  event NFTCollectionCreatedByAdmin(address indexed contractAddress, string name, string symbol);
+  event NFTCollectionCreated(address indexed contractAddress, address indexed sender, string name, string symbol); 
+  event NFTCollectionCreatedByAdmin(address indexed contractAddress, address indexed sender, string name, string symbol);
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
 
@@ -101,11 +101,9 @@ contract Marketplace is Ownable {
       // todo- remove return value here, not doing anything
      
         // emit event
-        if (msg.sender == owner()) {
-          emit NFTCollectionCreatedByAdmin(address(newCollection), _name, _symbol);
-        } else {
-           emit NFTCollectionCreated(address(newCollection), _name, _symbol);
-        }
+
+        emit NFTCollectionCreated(address(newCollection), msg.sender, _name, _symbol);
+    
       
 
       // return (_newCollection); // todo- test that this works now in the tests/??

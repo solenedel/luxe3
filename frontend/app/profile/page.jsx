@@ -23,32 +23,27 @@ function ProfilePage() {
   const { tokenIdArray, setTokenIdArray, fetchTokenIdList } =
     useContext(TokenListContext);
 
-  // const getCollection = async () => {
-  //   const data = await getCollectionNFTs(address);
-  //   // console.log('GET COLLECTION🔥🔥🔥🔥🔥🔥🔥', data);
-  // };
-
-  // const getTokenURIData = async (_tokenID) => {
-  //   const data = await getTokenURI(collectionInfo.contractAddress, _tokenID);
-  //   return data;
-  // };
-
-  // useEffect(() => {
-  //   console.log('COLLECTION INFO🔥🔥🔥🔥🔥🔥🔥', collectionInfo);
-  // }, [collectionInfo]);
+  useEffect(() => {
+    console.log('METADATA RRAY===', metadataArray);
+  }, [metadataArray]);
 
   const fetchMetadata = async (_tokenID) => {
-    // console.log(
-    //   'PARAMS🔥🔥🔥🔥🔥🔥🔥 ',
-    //   collectionInfo.contractAddress,
-    //   _tokenID
-    // );
     const metadata = await getMetadata(
       collectionInfo.contractAddress,
       _tokenID
     );
 
-    setMetadataArray((prev) => [...prev, metadata]);
+    const imgLink = `https://gateway.pinata.cloud/ipfs/${
+      metadata.image.split('ipfs://')[1]
+    }`;
+
+    setMetadataArray((prev) => [
+      ...prev,
+      {
+        imgLink: imgLink,
+        ...metadata,
+      },
+    ]);
     return metadata;
   };
 
@@ -131,18 +126,18 @@ function ProfilePage() {
                   {id}
                 </p>
               ))}
-              {/* {metadataArray.length ? (
+              {metadataArray.length ? (
                 <div>
+                  helloooooo
                   {metadataArray.map((nft) => (
-                    <div className="text-xl font-semibold h" key={nft.name}>
-                      <img src={nft.image} />
-                      <p>{nft.description}</p>
+                    <div key={nft.name}>
+                      <img src={`${nft.imgLink}`} />
                     </div>
                   ))}
                 </div>
               ) : (
                 ''
-              )} */}
+              )}
             </div>
           </section>
         )}
