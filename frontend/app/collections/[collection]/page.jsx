@@ -5,11 +5,16 @@ import { TokenListContext } from '@/context/TokenList.context';
 import { getContract } from '@wagmi/core';
 import { ABI } from '@/constants/NFTCollection';
 import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
+import { getNFTInfo } from '@/utils/getters/getNFTInfo';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
-  const { fetchLatestTokenNumber, generateTokenNumberArray } =
-    useContext(TokenListContext);
+  const [tokensArray, setTokensArray] = useState([]);
+  const {
+    fetchLatestTokenNumber,
+    latestTokenNumber,
+    generateTokenNumberArray,
+  } = useContext(TokenListContext);
 
   // get collection address from pathname
   const pathname = usePathname();
@@ -24,7 +29,22 @@ export default function CollectionPage() {
   useEffect(() => {
     getOwner();
     fetchLatestTokenNumber(collectionAddr);
-    generateTokenNumberArray(collectionAddr);
+    // generateTokenNumberArray(collectionAddr);
+
+    for (let i = 1; i < latestTokenNumber + 1; i++) {
+      if (!tokensArray.includes(i)) {
+        setTokensArray((prev) => [...prev, i]);
+
+        let CID = getNFTInfo(collectionAddr, i);
+        const IPFSurl = `https://gateway.pinata.cloud/ipfs/${CID}/metadata.json`;
+
+        // let { metadata } = await getMetadata(_collectionAddr, i);
+
+        // const imgLink = `https://gateway.pinata.cloud/ipfs/${
+        //   metadata.image.split('ipfs://')[1]
+        // }`;
+      }
+    }
   }, []);
 
   // get nft info:
@@ -38,6 +58,12 @@ export default function CollectionPage() {
       <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
       <p>Owned by: {owner}</p>
       <section>List NFTs here</section>
+      {tokensArray.length ? (
+        // {
+        //   tokensArray.forEach(token => {
+        //   getNFTInfo()
+        // })}
+      ): ''}
     </main>
   );
 }
