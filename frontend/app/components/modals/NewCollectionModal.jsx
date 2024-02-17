@@ -24,7 +24,6 @@ function NewCollectionModal({ showModal, setShowModal }) {
     setCollectionAddr,
     marketplaceOwner,
   } = useContext(UserContext);
-  // const { account, isConnected } = useAccount();
 
   useEffect(() => {
     console.log('TEMP', temp);

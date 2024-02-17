@@ -24,22 +24,9 @@ function BuyNFTModal({ showModal, setShowModal }) {
     setCollectionAddr,
     marketplaceOwner,
   } = useContext(UserContext);
-  // const { account, isConnected } = useAccount();
 
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // call func from contract
-  //   const data = await deployNewNFTCollection(nameInput, symbolInput);
-
-  //   if (data.status == 'success') {
-  //     //close modal
-  //     console.log('ADMIN IS NOT USER');
-  //     setCollectionInfo(temp);
-  //     setUserInfo({ hasCollection: true });
-  //     setCollectionAddr(contractAddress);
-  //     // fetch new collection to display on front
-  //   }
-  // };
+  // todo - listen for event
+  // todo- remove cid stuff
 
   return (
     <section className="flex flex-col items-center justify-center fixed inset-0 z-50 bg-black/[0.8] text-white w-full h-full overflow-auto">
