@@ -29,7 +29,7 @@ export function TokenListContextProvider({ children }) {
       if (!tokenIdArray.includes(i)) {
         setTokenIdArray((prev) => [...prev, i]);
 
-        let metadata = await getMetadata(_collectionAddr, i);
+        let { metadata } = await getMetadata(_collectionAddr, i);
 
         const imgLink = `https://gateway.pinata.cloud/ipfs/${
           metadata.image.split('ipfs://')[1]
@@ -43,8 +43,6 @@ export function TokenListContextProvider({ children }) {
           },
         ]);
       }
-
-      // console.log('⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
     }
   };
 

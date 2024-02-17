@@ -4,10 +4,15 @@ import {
   waitForTransaction,
 } from '@wagmi/core';
 import { ABI } from '@/constants/NFTCollection';
+import { useContext } from 'react';
 import { getAddress } from 'viem';
+import { getMetadata } from './getMetadata';
+import { TokenListContext } from '@/context/TokenList.context';
+import { getLatestTokenNumber } from './getters/getLatestTokenNumber';
 export const mintNFT = async (_from, _URI, _contractAddr) => {
   // convert to ETH address
   let _ethAddrFrom = getAddress(_from);
+
   try {
     const { request } = await prepareWriteContract({
       address: _contractAddr,
@@ -21,7 +26,14 @@ export const mintNFT = async (_from, _URI, _contractAddr) => {
     const data = await waitForTransaction({
       hash: hash,
     });
-    return data;
+
+    const latest = await getLatestTokenNumber(_contractAddr);
+
+    // get metadata
+    const { CID } = await getMetadata(_contractAddr, latest);
+
+    console.log('CID ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', CID);
+    return { data, CID };
   } catch (err) {
     console.log('🔴 Error in mintNFT: ', err.message);
   }

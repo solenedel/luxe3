@@ -21,13 +21,10 @@ export const getMetadata = async (_contractAddr, _tokenID) => {
       const response = await axios.get(IPFSurl);
       if (response.status === 200) {
         const metadata = response.data;
-
-        return metadata;
-      } else {
-        console.error('Failed to retrieve metadata:', response.statusText);
+        return { metadata, CID };
       }
     } catch (err) {
-      console.log('ERROR getting metadata ===', err);
+      console.log('🔴 Error fetching metadata from axios:', err);
     }
   } catch (err) {
     console.log('🔴 Error in getMetadata: ', err.message);
