@@ -6,6 +6,8 @@ import { getContract } from '@wagmi/core';
 import { ABI } from '@/constants/NFTCollection';
 import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 import { getNFTInfo } from '@/utils/getters/getNFTInfo';
+import { getMetadata } from '@/utils/getMetadata';
+import NFTList from '@/app/components/NFTList';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
@@ -27,10 +29,7 @@ export default function CollectionPage() {
     setOwner(owner);
   };
 
-  useEffect(() => {
-    getOwner();
-    fetchLatestTokenNumber(collectionAddr);
-
+  const temp = async () => {
     for (let i = 1; i < latestTokenNumber + 1; i++) {
       if (!tokensArray.includes(i)) {
         setTokensArray((prev) => [...prev, i]);
@@ -50,8 +49,21 @@ export default function CollectionPage() {
         ]);
       }
     }
+  };
+
+  const handler = async () => {
+    // await fetchLatestTokenNumber(collectionAddr);
+    await temp();
+  };
+
+  useEffect(() => {
+    getOwner();
+    fetchLatestTokenNumber(collectionAddr);
   }, []);
 
+  useEffect(() => {
+    console.log('METADATA =', metadata);
+  }, [metadata]);
   // get nft info:
   // loop thru tokenNumberArray
   // forEach, getNFTInfo (need to implement)
@@ -62,10 +74,10 @@ export default function CollectionPage() {
     <main className="flex min-h-screen flex-col p-24">
       <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
       <p>Owned by: {owner}</p>
-      <section>List NFTs here</section>
-      {metadataArray.map((token) => {
-        console.log(token)
-      })}
+      <button onClick={handler}>show tokens</button>
+      <section>
+        {metadata.length ? <NFTList metadataArray={metadata} /> : ''}
+      </section>
     </main>
   );
 }
