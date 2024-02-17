@@ -8,8 +8,10 @@ import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 import { getNFTInfo } from '@/utils/getters/getNFTInfo';
 import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
+import { useAccount } from 'wagmi';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
+  const { account, isConnected } = useAccount();
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
   const [metadata, setMetadata] = useState([]);
@@ -52,7 +54,6 @@ export default function CollectionPage() {
   };
 
   const handler = async () => {
-    // await fetchLatestTokenNumber(collectionAddr);
     await temp();
   };
 
@@ -64,19 +65,19 @@ export default function CollectionPage() {
   useEffect(() => {
     console.log('METADATA =', metadata);
   }, [metadata]);
-  // get nft info:
-  // loop thru tokenNumberArray
-  // forEach, getNFTInfo (need to implement)
-  // getMetadata from CID
 
-  // check if connected!!
+  // todo - check if connected!!
   return (
     <main className="flex min-h-screen flex-col p-24">
       <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
       <p>Owned by: {owner}</p>
       <button onClick={handler}>show tokens</button>
       <section>
-        {metadata.length ? <NFTList metadataArray={metadata} /> : ''}
+        {metadata.length ? (
+          <NFTList metadataArray={metadata} account={account} owner={owner} />
+        ) : (
+          ''
+        )}
       </section>
     </main>
   );

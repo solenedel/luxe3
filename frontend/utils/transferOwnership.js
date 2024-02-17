@@ -4,14 +4,23 @@ import {
   waitForTransaction,
 } from '@wagmi/core';
 import { ABI } from '@/constants/NFTCollection';
+import { getAddress } from 'viem';
 
-export const addCID = async (_CID, _tokenId, _contractAddr) => {
+export const transferOwnership = async (
+  _from,
+  _to,
+  _tokenId,
+  _contractAddr
+) => {
+  const _ethTo = getAddress(_to);
+  const _ethFrom = getAddress(_from);
+
   try {
     const { request } = await prepareWriteContract({
       address: _contractAddr,
       abi: ABI,
-      functionName: 'addCID',
-      args: [_CID, _tokenId],
+      functionName: 'transferOwnership',
+      args: [_ethFrom, _ethTo, _tokenId],
     });
 
     const { hash } = await writeContract(request);
