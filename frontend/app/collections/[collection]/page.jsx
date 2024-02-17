@@ -32,6 +32,8 @@ export default function CollectionPage() {
   };
 
   const temp = async () => {
+    await fetchLatestTokenNumber(collectionAddr);
+
     for (let i = 1; i < latestTokenNumber + 1; i++) {
       if (!tokensArray.includes(i)) {
         setTokensArray((prev) => [...prev, i]);
@@ -59,26 +61,29 @@ export default function CollectionPage() {
 
   useEffect(() => {
     getOwner();
-    fetchLatestTokenNumber(collectionAddr);
   }, []);
 
-  useEffect(() => {
-    console.log('METADATA =', metadata);
-  }, [metadata]);
+  // useEffect(() => {
+  //   console.log('METADATA =', metadata);
+  // }, [metadata]);
 
   // todo - check if connected!!
-  return (
-    <main className="flex min-h-screen flex-col p-24">
-      <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
-      <p>Owned by: {owner}</p>
-      <button onClick={handler}>show tokens</button>
-      <section>
-        {metadata.length ? (
-          <NFTList metadataArray={metadata} account={account} owner={owner} />
-        ) : (
-          ''
-        )}
-      </section>
-    </main>
-  );
+  if (isConnected) {
+    return (
+      <main className="flex min-h-screen flex-col p-24">
+        <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
+        <p>Owned by: {owner}</p>
+        <button onClick={handler}>show tokens</button>
+        <section>
+          {metadata.length ? (
+            <NFTList metadataArray={metadata} account={account} owner={owner} />
+          ) : (
+            ''
+          )}
+        </section>
+      </main>
+    );
+  } else {
+    <div>You must be connected to view this page</div>;
+  }
 }

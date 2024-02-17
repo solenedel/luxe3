@@ -86,7 +86,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     function transferOwnership(address _from, address _to, uint8 _tokenId) external {
         //This require is wrong because transferOwnership = buyNFT, done by user
         // require(NFTData[_tokenId].currentOwner == msg.sender, "Caller is not owner");
-
+        require(_from != _to, "No transfer to same addr"); //todo- add test here
         NFTData[_tokenId].currentOwner = _to;
 
         _transfer(_from, _to, _tokenId);

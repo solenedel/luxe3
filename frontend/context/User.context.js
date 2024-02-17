@@ -18,15 +18,16 @@ export const UserContextProvider = ({ children }) => {
 
   async function fetchUserInfo() {
     const _userInfo = await getUser(address);
+
     setUserInfo(_userInfo);
 
     return _userInfo;
   }
 
   // NOTE - hasCollection not being updated
-  useEffect(() => {
-    console.log('user info has coll', userInfo);
-  }, [userInfo.hasCollection]);
+  // useEffect(() => {
+  //   console.log('user info has coll', userInfo);
+  // }, [userInfo.hasCollection]);
 
   // problem; this is not getting triggered by login
   useEffect(() => {
@@ -38,6 +39,7 @@ export const UserContextProvider = ({ children }) => {
     } else {
       setUserAddr('');
     }
+    console.log('USER INFO: ', userInfo);
   }, [isConnected]);
 
   async function ownerIsUser(_owner, _user) {
