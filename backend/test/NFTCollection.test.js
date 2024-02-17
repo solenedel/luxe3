@@ -69,6 +69,18 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(0);
   });
 
+  it('Should initially have no CID after minting', async function () {
+    await NFTCollection.safeMint('ipfs://test1');
+    const data = await NFTCollection.getNFTInfo(1);
+    expect(await data.CID).to.equal('');
+  });
+
+  it('Should have the correct NFT owner after minting', async function () {
+    await NFTCollection.safeMint('ipfs://test1');
+    const data = await NFTCollection.getNFTInfo(1);
+    expect(data.currentOwner).to.equal(owner.address);
+  });
+
   it('Should have tokenIdCounter = 1 when one NFT has been minted', async function () {
     await NFTCollection.safeMint('ipfs://test1');
     expect(await NFTCollection.getLatestTokenNumber()).to.equal(1);
