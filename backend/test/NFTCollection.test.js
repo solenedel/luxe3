@@ -95,6 +95,44 @@ describe('🔵 [NFT Collection] Mint NFT', function () {
   });
 });
 
+describe('🔵 [NFT Collection] addCID', function () {
+  beforeEach(async function () {
+    [owner, user1, user2] = await ethers.getSigners();
+    const contract = await ethers.getContractFactory('NFTCollection');
+    NFTCollection = await contract.deploy('NAME', 'SYMBOL', owner.address);
+    await NFTCollection.safeMint('ipfs://test1');
+  });
+
+  it('should not let CID be added to a non-minted NFT', async function () {
+    const tx = await NFTCollection.addCID(
+      'bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy',
+      3
+    );
+    // console.log('TX =====', tx);
+    expect(tx).to.be.revertedWith('Not minted yet');
+  });
+
+  it('should emit the correct event when addNFT is not reverted', async function () {
+    const tx = await NFTCollection.addCID(
+      'bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy',
+      1
+    );
+    expect(tx).not.to.be.reverted;
+    expect(tx).to.emit('AddedCIDToNFT');
+  });
+
+  it('should add the correct CID to the correct NFT', async function () {
+    const tx = await NFTCollection.addCID(
+      'bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy',
+      1
+    );
+    const NFT = await NFTCollection.getNFTInfo(1);
+    expect(NFT.CID).to.equal(
+      'bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy'
+    );
+  });
+});
+
 describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
   beforeEach(async function () {
     [owner, user1, user2] = await ethers.getSigners();

@@ -27,19 +27,15 @@ export const mintNFT = async (_from, _URI, _contractAddr) => {
       hash: hash,
     });
 
-    const latest = await getLatestTokenNumber(_contractAddr);
+    // const latest = await getLatestTokenNumber(_contractAddr);
 
-    // get metadata
-    const { CID } = await getMetadata(_contractAddr, latest);
+    // // get metadata
+    // const { CID } = await getMetadata(_contractAddr, latest);
 
-    console.log('CID ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', CID);
+    // console.log('CID ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', CID);
     // now upload the CID to the smart contract
 
-
-
-
-    
-    return { data, CID };
+    return { data };
   } catch (err) {
     console.log('🔴 Error in mintNFT: ', err.message);
   }
