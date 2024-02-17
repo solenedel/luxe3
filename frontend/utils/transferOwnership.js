@@ -28,7 +28,7 @@ export const transferOwnership = async (
       hash: hash,
     });
 
-    // console.log('⭐⭐⭐⭐⭐ ADD CID ⭐⭐⭐⭐⭐', data);
+    console.log('⭐⭐⭐⭐⭐ TRANSFER OWNERSHIP ⭐⭐⭐⭐⭐', data);
 
     return data;
   } catch (err) {

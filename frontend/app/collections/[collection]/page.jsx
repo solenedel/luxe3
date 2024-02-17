@@ -9,9 +9,10 @@ import { getNFTInfo } from '@/utils/getters/getNFTInfo';
 import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
 import { useAccount } from 'wagmi';
+import { transferOwnership } from '@/utils/transferOwnership';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
-  const { account, isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
   const [metadata, setMetadata] = useState([]);
@@ -59,6 +60,12 @@ export default function CollectionPage() {
     await temp();
   };
 
+  // _from , _to, _tokenId, _contractAddr;
+  const test = async () => {
+    console.log(owner, address, 1, collectionAddr);
+    await transferOwnership(owner, address, 1, collectionAddr);
+  };
+
   useEffect(() => {
     getOwner();
   }, []);
@@ -76,11 +83,16 @@ export default function CollectionPage() {
         <button onClick={handler}>show tokens</button>
         <section>
           {metadata.length ? (
-            <NFTList metadataArray={metadata} account={account} owner={owner} />
+            <NFTList metadataArray={metadata} address={address} owner={owner} />
           ) : (
             ''
           )}
         </section>
+        <button
+          onClick={test}
+          className="text-xl w-fit mt-2 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
+          test transfer ownership (token 1)
+        </button>
       </main>
     );
   } else {
