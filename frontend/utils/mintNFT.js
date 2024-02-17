@@ -33,6 +33,12 @@ export const mintNFT = async (_from, _URI, _contractAddr) => {
     const { CID } = await getMetadata(_contractAddr, latest);
 
     console.log('CID ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', CID);
+    // now upload the CID to the smart contract
+
+
+
+
+    
     return { data, CID };
   } catch (err) {
     console.log('🔴 Error in mintNFT: ', err.message);
