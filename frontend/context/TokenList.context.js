@@ -13,10 +13,10 @@ export function TokenListContextProvider({ children }) {
   const [metadataArray, setMetadataArray] = useState([]);
   const [allCollections, setAllCollections] = useState([]);
 
-  useEffect(() => {
-    console.log('TOKEN ID ARRAY:', tokenIdArray);
-    console.log('METADATA ARRAY:', metadataArray);
-  }, [tokenIdArray, metadataArray]);
+  // useEffect(() => {
+  //   console.log('TOKEN ID ARRAY:', tokenIdArray);
+  //   console.log('METADATA ARRAY:', metadataArray);
+  // }, [tokenIdArray, metadataArray]);
 
   const fetchLatestTokenNumber = async (_collectionAddr) => {
     const data = await getLatestTokenNumber(_collectionAddr);
