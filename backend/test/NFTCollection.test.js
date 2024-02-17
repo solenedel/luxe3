@@ -104,12 +104,12 @@ describe('🔵 [NFT Collection] addCID', function () {
   });
 
   it('should not let CID be added to a non-minted NFT', async function () {
-    const tx = await NFTCollection.addCID(
-      'bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy',
-      3
-    );
-    // console.log('TX =====', tx);
-    expect(tx).to.be.revertedWith('Not minted yet');
+    await expect(
+      NFTCollection.addCID(
+        'bafyreiafdfccqzoeektnzlw4q4ib4ole2qu2ta2c6xyx4vs3nrys5cbsyy',
+        3
+      )
+    ).to.be.revertedWith('Not minted yet');
   });
 
   it('should emit the correct event when addNFT is not reverted', async function () {
