@@ -10,6 +10,7 @@ export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
+  const [metadata, setMetadata] = useState([]);
   const {
     fetchLatestTokenNumber,
     latestTokenNumber,
@@ -29,20 +30,24 @@ export default function CollectionPage() {
   useEffect(() => {
     getOwner();
     fetchLatestTokenNumber(collectionAddr);
-    // generateTokenNumberArray(collectionAddr);
 
     for (let i = 1; i < latestTokenNumber + 1; i++) {
       if (!tokensArray.includes(i)) {
         setTokensArray((prev) => [...prev, i]);
 
-        let CID = getNFTInfo(collectionAddr, i);
-        const IPFSurl = `https://gateway.pinata.cloud/ipfs/${CID}/metadata.json`;
+        let { metadata } = await getMetadata(collectionAddr, i);
 
-        // let { metadata } = await getMetadata(_collectionAddr, i);
+        const imgLink = `https://gateway.pinata.cloud/ipfs/${
+          metadata.image.split('ipfs://')[1]
+        }`;
 
-        // const imgLink = `https://gateway.pinata.cloud/ipfs/${
-        //   metadata.image.split('ipfs://')[1]
-        // }`;
+        setMetadata((prev) => [
+          ...prev,
+          {
+            imgLink: imgLink,
+            ...metadata,
+          },
+        ]);
       }
     }
   }, []);
@@ -58,12 +63,9 @@ export default function CollectionPage() {
       <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
       <p>Owned by: {owner}</p>
       <section>List NFTs here</section>
-      {tokensArray.length ? (
-        // {
-        //   tokensArray.forEach(token => {
-        //   getNFTInfo()
-        // })}
-      ): ''}
+      {metadataArray.map((token) => {
+        console.log(token)
+      })}
     </main>
   );
 }

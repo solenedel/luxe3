@@ -24,6 +24,7 @@ export function TokenListContextProvider({ children }) {
   };
 
   // todo- remove doubles from here (prevent showing same token twice)
+  // move this to a separate file not linked to global context
   const generateTokenNumberArray = async (_collectionAddr) => {
     for (let i = 1; i < latestTokenNumber + 1; i++) {
       if (!tokenIdArray.includes(i)) {
