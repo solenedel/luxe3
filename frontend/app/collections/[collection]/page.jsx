@@ -19,13 +19,11 @@ export default function CollectionPage() {
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
   const router = useRouter();
-
   const [latestTokenNum, setLatestTokenNum] = useState(0);
 
   const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
     metadataArray,
-    setMetadataArray,
-    latestTokenNum
+    setMetadataArray
   );
 
   // get collection address from pathname
@@ -42,6 +40,7 @@ export default function CollectionPage() {
       try {
         const data = await getLatestTokenNumber(collectionAddr);
         const latest = Number(data);
+        console.log('LATEST -----', latest);
         setLatestTokenNum(latest);
         // await newFetchMetadataForAllTokens(collectionAddr);
       } catch (error) {
