@@ -5,7 +5,6 @@ import { useAccount, useContractEvent } from 'wagmi';
 import { ABI } from '@/constants/NFTCollection';
 import { TokenListContext } from '@/context/TokenList.context';
 import { UserContext } from '@/context/User.context';
-import { addCID } from '@/utils/addCID';
 import { getMetadata } from '@/utils/getMetadata';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 
@@ -43,9 +42,6 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     if (URIState !== '') {
       await mintNFT(address, URIState, collectionAddr);
       const _tokenId = await getLatestTokenNumber(collectionAddr);
-      const { CID } = getMetadata(collectionAddr, _tokenId);
-      const data = await addCID(CID, _tokenId, collectionAddr);
-      // console.log('DATA ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', data);
     }
   };
 

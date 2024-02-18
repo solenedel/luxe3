@@ -20,7 +20,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
     struct NFT {
      address currentOwner;
-     string CID;
+    //  string CID;
     //  uint256 price;
     }
 
@@ -31,7 +31,6 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     
     event MintedNFT(address indexed collectionAddress, address indexed to, string URI); 
     event NFTOwnershipTransferred(address indexed from, address indexed to, uint8 tokenId);
-    event AddedCIDToNFT(address indexed collectionAddress, uint8 tokenId, string CID);
 
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
@@ -69,13 +68,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         emit MintedNFT(address(this), msg.sender, _URI); 
     }
 
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ ADD CID TO NFT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
-    function addCID(string memory _CID, uint8 _tokenId) external onlyOwner {
-        require(NFTData[_tokenId].currentOwner != address(0), "Not minted yet");
-        NFTData[_tokenId].CID = _CID;
-
-        emit AddedCIDToNFT(address(this), _tokenId, _CID);
-    }
+   
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ TRANSFER NFT OWNERSHIP ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 

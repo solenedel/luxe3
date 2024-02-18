@@ -25,23 +25,14 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
     },
   });
 
-  //  test transfer ownership
+  //  todo- remove the "buy" button once you own the NFT
   const buyNFTHandler = async (_tokenId) => {
-    console.log(owner, address, _tokenId, collectionAddr);
     const data = await transferOwnership(
       owner,
       address,
       _tokenId,
       collectionAddr
     );
-
-    // console.log('data: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', data);
-    // check for event
-
-    // if (data.status == 'success') {
-    //   console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
-    //   // check for event
-    // }
   };
 
   return (
