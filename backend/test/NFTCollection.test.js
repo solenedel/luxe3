@@ -1,4 +1,4 @@
-const { ethers } = require('hardhat');
+const { ethers, userConfig } = require('hardhat');
 const { expect, assert } = require('chai');
 
 // CONTRACT DEPLOYMENT
@@ -109,8 +109,8 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
     await NFTCollection.safeMint('ipfs://test1');
   });
 
-  it('should let the owner transfer ownership to user1', async function () {
-    const tx = await NFTCollection.transferOwnership(
+  it('should transfer NFT from owner to user1', async function () {
+    const tx = await NFTCollection.connect(user1).transferOwnership(
       owner.address,
       user1.address,
       1
@@ -120,13 +120,19 @@ describe('🔵 [NFT Collection] Transfer NFT ownership', function () {
       .withArgs(owner.address, user1.address, 1);
   });
 
-  it('should only let the owner transfer ownership', async function () {
+  it('should not allow transferring an NFT to a user who already owns it', async function () {
     await expect(
-      NFTCollection.connect(user1).transferOwnership(
+      NFTCollection.transferOwnership(user1, owner, 1)
+    ).to.be.revertedWith('You already own this NFT');
+  });
+
+  it('should not allow transferring to and from the same address', async function () {
+    await expect(
+      NFTCollection.connect(user2).transferOwnership(
         user1.address,
-        user2.address,
+        user1.address,
         1
       )
-    ).to.be.revertedWith('Caller is not owner');
+    ).to.be.revertedWith('No transfer to same addr');
   });
 });
