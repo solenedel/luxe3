@@ -9,7 +9,6 @@ import { getNFTInfo } from '@/utils/getters/getNFTInfo';
 import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
 import { useAccount, useContractEvent } from 'wagmi';
-import { transferOwnership } from '@/utils/transferOwnership';
 import { getTokenMetadata } from '@/utils/getTokenMetadata';
 import { useGetTokenMetadata } from '@/hooks/useGetTokenMetadata';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
@@ -31,23 +30,6 @@ export default function CollectionPage() {
   const pathname = usePathname();
   const lastIndex = pathname.lastIndexOf('/');
   const collectionAddr = pathname.slice(lastIndex + 1);
-
-  // --------------- EVENT LISTENER ------------------------
-
-  const eventName = 'NFTOwnershipTransferred';
-
-  useContractEvent({
-    address: collectionAddr,
-    abi: ABI,
-    eventName,
-    listener(log) {
-      const { from, to, tokenId } = log[0].args;
-      console.log('ARGS =====', log[0].args);
-      console.log(
-        `🔵 ${eventName} event received. Token ${tokenId} in transferred from ${from} to ${to}.`
-      );
-    },
-  });
 
   // --------------- USE EFFECT ----------------------
 
@@ -116,6 +98,7 @@ export default function CollectionPage() {
               metadataArray={metadataArray}
               address={address}
               owner={owner}
+              collectionAddr={collectionAddr}
             />
           ) : (
             ''
