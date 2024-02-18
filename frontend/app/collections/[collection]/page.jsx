@@ -65,7 +65,7 @@ export default function CollectionPage() {
     }
 
     fetchLatest();
-  }, []);
+  }, [latestTokenNum]);
 
   useEffect(() => {
     console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
@@ -101,21 +101,31 @@ export default function CollectionPage() {
   if (isConnected) {
     return (
       <main className="flex min-h-screen flex-col p-24">
-        <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
+        <h2 className="font-semibold text-xl">
+          COLLECTION: {collectionAddr} SHOW NAME HERE
+        </h2>
         <p>Owned by: {owner}</p>
-        <button onClick={showTokensHandler}>show tokens</button>
+        <button
+          onClick={showTokensHandler}
+          className="text-xl w-fit mt-5 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
+          show tokens
+        </button>
         <section>
-          {/* {metadata.length ? (
-            <NFTList metadataArray={metadata} address={address} owner={owner} />
+          {metadataArray.length ? (
+            <NFTList
+              metadataArray={metadataArray}
+              address={address}
+              owner={owner}
+            />
           ) : (
             ''
-          )} */}
+          )}
         </section>
-        <button
+        {/* <button
           // onClick={test}
           className="text-xl w-fit mt-2 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
           test transfer ownership (token 1)
-        </button>
+        </button> */}
       </main>
     );
   } else {
