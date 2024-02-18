@@ -10,8 +10,8 @@ export const getNFTInfo = async (_contractAddr, _tokenId) => {
       functionName: 'getNFTInfo',
       args: [_tokenId],
     });
-    const CID = data.CID;
-    return { CID };
+
+    return data;
   } catch (err) {
     console.log('🔴 Error in getNFTInfo: ', err.message);
   }
