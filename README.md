@@ -1,4 +1,18 @@
-# Luxe3: backend
+# Luxe3: NFT marketplace for luxury
+
+[Link to vercel app](https://luxe3.vercel.app/)
+
+Deployed on Sepolia.
+
+## Running the frontend
+
+This is a Next.js project.
+
+`cd frontend`
+`npm install`
+`npm run dev` to run the development server.
+
+## Running the backend
 
 This is a Hardhat project. Make sure to `cd backend` before running any of the commands below.
 

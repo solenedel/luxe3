@@ -8,7 +8,6 @@ export const getAllCollections = async () => {
       abi: ABI,
       functionName: 'getAllCollections',
     });
-    console.log('COLLECTIONS🔥🔥🔥🔥🔥🔥🔥🔥 ', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in getAllCollections: ', err.message);

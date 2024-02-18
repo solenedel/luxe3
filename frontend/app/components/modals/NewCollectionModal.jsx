@@ -35,6 +35,8 @@ function NewCollectionModal({ showModal, setShowModal }) {
       setUserInfo({ hasCollection: true });
       setCollectionAddr(contractAddress);
     }
+
+    setShowModal(false);
   };
 
   useContractEvent({

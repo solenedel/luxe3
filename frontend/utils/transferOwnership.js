@@ -28,8 +28,6 @@ export const transferOwnership = async (
       hash: hash,
     });
 
-    console.log('⭐⭐⭐⭐⭐ TRANSFER OWNERSHIP ⭐⭐⭐⭐⭐', data);
-
     return data;
   } catch (err) {
     console.log('🔴 Error in deployNewNFTCollection: ', err.message);

@@ -11,7 +11,6 @@ export const getCollectionNFTs = async (_ownerAddr) => {
       functionName: 'getCollection',
       args: [_ethAddr], // collection owner
     });
-    // console.log('🔥🔥🔥🔥🔥🔥🔥🔥 get one collection:  ', data);
     return data;
   } catch (err) {
     console.log('🔴 Error in getCollectionNFTs: ', err.message);
