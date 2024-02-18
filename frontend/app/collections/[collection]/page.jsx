@@ -8,7 +8,7 @@ import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
 import { getNFTInfo } from '@/utils/getters/getNFTInfo';
 import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
-import { useAccount } from 'wagmi';
+import { useAccount, useContractEvent } from 'wagmi';
 import { transferOwnership } from '@/utils/transferOwnership';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
@@ -26,6 +26,21 @@ export default function CollectionPage() {
   const pathname = usePathname();
   const lastIndex = pathname.lastIndexOf('/');
   const collectionAddr = pathname.slice(lastIndex + 1);
+
+  const eventName = 'NFTOwnershipTransferred';
+
+  useContractEvent({
+    address: collectionAddr,
+    abi: ABI,
+    eventName,
+    listener(log) {
+      const { from, to, tokenId } = log[0].args;
+      console.log('ARGS =====', log[0].args);
+      console.log(
+        `🔵 ${eventName} event received. Token ${tokenId} in transferred from ${from} to ${to}.`
+      );
+    },
+  });
 
   const getOwner = async () => {
     const owner = await getCollectionOwner(collectionAddr);
@@ -57,14 +72,17 @@ export default function CollectionPage() {
   };
 
   const handler = async () => {
-    console.log('pppppp');
+    // console.log('pppppp');
     await temp();
   };
 
-  // _from , _to, _tokenId, _contractAddr;
+  //  test transfer ownership
   const test = async () => {
-    console.log(owner, address, 1, collectionAddr);
-    await transferOwnership(owner, address, 1, collectionAddr);
+    const data = await transferOwnership(owner, address, 1, collectionAddr);
+    if (data.status == 'success') {
+      console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
+      // check for event
+    }
   };
 
   useEffect(() => {

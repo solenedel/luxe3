@@ -25,7 +25,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
     eventName,
     listener(log) {
       const { collectionAddress, to, URI } = log[0].args;
-      console.log(log[0].args);
+      // console.log(log[0].args);
       console.log(
         `🔵 ${eventName} event received. New NFT minted by ${to} in ${collectionAddress}. NFT URI: ${URI}`
       );
@@ -45,7 +45,7 @@ function AddNFTModal({ showModalB, setShowModalB }) {
       const _tokenId = await getLatestTokenNumber(collectionAddr);
       const { CID } = getMetadata(collectionAddr, _tokenId);
       const data = await addCID(CID, _tokenId, collectionAddr);
-      console.log('DATA ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', data);
+      // console.log('DATA ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', data);
     }
   };
 
