@@ -6,18 +6,20 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "./NFTCollection.sol";
 
 
+// todo should these getters be public or external??
+// todo- memory vs calldata
+// todo- indent everything properly
 
-/// @title this contract handles marketplace actions: Creating a new collection
+/// @title this contract handles the creation of new ERC721 NFT collections.
 /// @author Solene D.
-/// @notice 
 
 contract Marketplace is Ownable {
 
-   using Address for address payable; // no need anymore for this?
+   using Address for address payable; 
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     
-    /// @notice Owner corresponds to the admin of the marketplace, not of an NFT or collection. 
+    /// @notice Owner corresponds to the admin of the marketplace. 
     constructor() Ownable(msg.sender){}
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
@@ -28,41 +30,40 @@ contract Marketplace is Ownable {
 
     mapping (address => User) users;
 
-  // uint256 public NFTprice; // use same price for all NFTs
-
     struct Collection {
         address contractAddress;
         string name;
         string symbol;
     }
 
-    // Mapping to keep track of all ERC721 contracts (collections) created with the marketplace
-    // note that the address acting as the key to each collection is that of the collection creator, not the collection contract address itself
+    /// @notice Mapping to keep track of all ERC721 contracts (collections) created with the marketplace.
+    /// @notice The address acting as the key to each collection is that of the collection creator, not the collection contract address itself.
     mapping(address => Collection) public allCollections;
 
-    // for iteration purposes
-    Collection[] public collectionsArray; // is this array needed??
+    Collection[] public collectionsArray; 
 
-  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
   event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
-  // event NFTCollectionCreatedByAdmin(address indexed contractAddress, address indexed sender, string name, string symbol);
+
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-
-// should these getters be public or external??
     /// @notice Gets all collections created by the Marketplace contract.
     /// @return An array of all the collections created. 
   function getAllCollections() external view returns (Collection[] memory) {
-    return collectionsArray; // not needed?
+    return collectionsArray;
   }
 
     /// @notice Gets one collection, indexed by the creator (owner) of that collection.
+    /// @param _addr: address of the collection owner.
     /// @return The single collection owned by the address provided.
-  function getCollection(address _address) external view returns (Collection memory) {
-    return allCollections[_address];
+  function getCollection(address _addr) external view returns (Collection memory) {
+    return allCollections[_addr];
   }
 
+  /// @notice Gets one collection, indexed by the creator (owner) of that collection.
+  /// @param _addr: address of the user.
+  /// @return The single collection owned by the address provided.
   function getUser(address _addr) external view returns (User memory) {
     return(users[_addr]);
   }
@@ -70,8 +71,9 @@ contract Marketplace is Ownable {
 
     // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-    /// @notice This function deploys a new NFTCollection contract. Only one collection is allowed per user.
-    /// @param _name is the name of the new NFT collection, ex: "My Collection" and _symbol is the symbol, ex: "MC"
+    /// @notice This function deploys a new NFTCollection (ERC721) contract. Only one collection allowed per user.
+    /// @param _name: The name of the new NFT collection, ex: "My Collection"
+    /// @param _symbol: The symbol of the new collection, ex: "MC"
     function deployNewNFTCollection(string memory _name, string memory _symbol) public returns(Collection memory _newCollection) {   
        
       require(users[msg.sender].hasCollection == false, "Collection already created");
@@ -79,8 +81,7 @@ contract Marketplace is Ownable {
       require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Missing name");
       require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Missing symbol");
 
-      
-      // deploy new ERC721 contract for the collection
+      // deploy new ERC721 contract 
       NFTCollection newCollection = new NFTCollection(_name, _symbol, msg.sender);
 
       _newCollection = Collection({
@@ -94,14 +95,9 @@ contract Marketplace is Ownable {
 
       collectionsArray.push(_newCollection);
 
-      users[msg.sender].hasCollection = true; // should this go here
+      users[msg.sender].hasCollection = true; 
 
-      // todo- remove return value here, not doing anything
-      
-        emit NFTCollectionCreated(address(newCollection), _name, _symbol);   
-        //  emit NFTCollectionCreated(address(newCollection), msg.sender, _name, _symbol);         
-
-      // return (_newCollection); // todo- test that this works now in the tests/??
+      emit NFTCollectionCreated(address(newCollection), _name, _symbol);   
     }
 
 }
