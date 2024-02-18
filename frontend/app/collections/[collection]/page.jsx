@@ -51,9 +51,9 @@ export default function CollectionPage() {
     return Number(data);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     console.log('LATEST NUM', latestTokenNum);
-    await temp();
+    temp();
   }, [latestTokenNum]);
 
   const getOwner = async () => {
@@ -63,19 +63,21 @@ export default function CollectionPage() {
 
   const temp = async () => {
     for (let i = 1; i < latestTokenNum + 1; i++) {
-      let { metadata } = await getMetadata(collectionAddr, i);
+      console.log('TESTINGGGGGGG');
 
-      const imgLink = `https://gateway.pinata.cloud/ipfs/${
-        metadata.image.split('ipfs://')[1]
-      }`;
+      // let { metadata } = await getMetadata(collectionAddr, i);
 
-      setMetadata((prev) => [
-        ...prev,
-        {
-          imgLink: imgLink,
-          ...metadata,
-        },
-      ]);
+      // const imgLink = `https://gateway.pinata.cloud/ipfs/${
+      //   metadata.image.split('ipfs://')[1]
+      // }`;
+
+      // setMetadata((prev) => [
+      //   ...prev,
+      //   {
+      //     imgLink: imgLink,
+      //     ...metadata,
+      //   },
+      // ]);
       // if (!tokensArray.includes(i)) {
       //   setTokensArray((prev) => [...prev, i]);
 
