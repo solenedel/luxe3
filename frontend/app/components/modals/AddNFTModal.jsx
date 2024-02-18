@@ -48,6 +48,7 @@ function AddNFTModal({
       const _tokenId = await getLatestTokenNumber(collectionAddr);
       setLatestTokenNum(Number(_tokenId));
     }
+    setShowModalB(false);
   };
 
   useEffect(() => {

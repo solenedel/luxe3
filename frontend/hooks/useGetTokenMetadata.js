@@ -22,7 +22,6 @@ export const useGetTokenMetadata = (metadataArray, setMetadataArray) => {
 
   // gets metadata for all tokens in a collection
   const newFetchMetadataForAllTokens = async (_collectionAddr) => {
-    // setLatestTokenNum(Number(data));
     const data = await getLatestTokenNumber(_collectionAddr);
     const _latestTokenNumber = Number(data);
 
@@ -33,7 +32,7 @@ export const useGetTokenMetadata = (metadataArray, setMetadataArray) => {
         await newFetchMetadata(_collectionAddr, i);
       }
     }
-    return 'hello';
+    return metadataArray;
   };
   return { newFetchMetadataForAllTokens, newFetchMetadata };
 };
