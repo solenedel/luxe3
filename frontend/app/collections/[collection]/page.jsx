@@ -12,6 +12,7 @@ import { useAccount, useContractEvent } from 'wagmi';
 import { transferOwnership } from '@/utils/transferOwnership';
 import { getTokenMetadata } from '@/utils/getTokenMetadata';
 import { useGetTokenMetadata } from '@/hooks/useGetTokenMetadata';
+import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const { address, isConnected } = useAccount();
@@ -52,6 +53,18 @@ export default function CollectionPage() {
 
   useEffect(() => {
     getOwner();
+
+    async function fetchLatest() {
+      try {
+        const data = await getLatestTokenNumber(collectionAddr);
+        const latest = Number(data);
+        setLatestTokenNum(latest);
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+    }
+
+    fetchLatest();
   }, []);
 
   useEffect(() => {
@@ -67,50 +80,12 @@ export default function CollectionPage() {
   // -------------- HANDLERS ---------------
 
   const showTokensHandler = async () => {
-    await newFetchMetadataForAllTokens(collectionAddr);
+    if (latestTokenNum !== metadataArray.length) {
+      await newFetchMetadataForAllTokens(collectionAddr);
+    } else {
+      console.log('Already fetched latest data ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
+    }
   };
-
-  // // function OK
-  // const fetchLatestTokenNumber = async (_collectionAddr) => {
-  //   const data = await getLatestTokenNumber(_collectionAddr);
-  //   setLatestTokenNum(Number(data));
-  //   return Number(data);
-  // };
-
-  // useEffect(() => {
-  //   console.log('LATEST NUM', latestTokenNum);
-  //   temp();
-  // }, [latestTokenNum]);
-
-  // const temp = async () => {
-  //   for (let i = 1; i < latestTokenNum + 1; i++) {
-  //     console.log('TESTINGGGGGGG');
-
-  //     // let { metadata } = await getMetadata(collectionAddr, i);
-
-  // const imgLink = `https://gateway.pinata.cloud/ipfs/${
-  //   metadata.image.split('ipfs://')[1]
-  // }`;
-
-  //     // setMetadata((prev) => [
-  //     //   ...prev,
-  //     //   {
-  //     //     imgLink: imgLink,
-  //     //     ...metadata,
-  //     //   },
-  //     // ]);
-  //     // if (!tokensArray.includes(i)) {
-  //     //   setTokensArray((prev) => [...prev, i]);
-
-  //     // }
-  //   }
-  // };
-
-  // const handler = async () => {
-  //   // console.log('COLLECTION ADDR', collectionAddr);
-  //   const data = await fetchLatestTokenNumber(collectionAddr);
-  //   // console.log('AWAIT LATEST TOKEN NUMBER', data);
-  // };
 
   //  test transfer ownership
   // const test = async () => {
@@ -120,10 +95,6 @@ export default function CollectionPage() {
   //     // check for event
   //   }
   // };
-
-  // useEffect(() => {
-  //   console.log('METADATA =', metadata);
-  // }, [metadata]);
 
   // --------------- RENDER ------------------------
 
