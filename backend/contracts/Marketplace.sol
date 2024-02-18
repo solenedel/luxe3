@@ -70,7 +70,7 @@ contract Marketplace is Ownable {
     /// @notice This function deploys a new NFTCollection (ERC721) contract. Only one collection allowed per user.
     /// @param _name: The name of the new NFT collection, ex: "My Collection"
     /// @param _symbol: The symbol of the new collection, ex: "MC"
-    function deployNewNFTCollection(string memory _name, string memory _symbol) public returns(Collection memory _newCollection) {   
+    function deployNewNFTCollection(string calldata _name, string calldata _symbol) public returns(Collection memory _newCollection) {   
        
       require(users[msg.sender].hasCollection == false, "Collection already created");
 
