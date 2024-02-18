@@ -205,7 +205,7 @@ export const ABI = [
     inputs: [
       {
         internalType: 'address',
-        name: '_address',
+        name: '_addr',
         type: 'address',
       },
     ],

@@ -46,9 +46,9 @@ contract NFTCollection is ERC721URIStorage, Ownable {
     }
 // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ SAFE MINT ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-  /// @notice Collection owner mints (posts) a new NFT to the collection.
-  /// @param _URI: the URI data returned from IPFS.
-  /// @notice There is a limit of 30 NFTs that can be minted per collection.
+    /// @notice Collection owner mints (posts) a new NFT to the collection.
+    /// @param _URI: the URI data returned from IPFS.
+    /// @notice There is a limit of 30 NFTs that can be minted per collection.
     function safeMint(string memory _URI) external onlyOwner {
 
         require(tokenIdCounter < 30, "Token limit exceeded");   
@@ -62,7 +62,7 @@ contract NFTCollection is ERC721URIStorage, Ownable {
         emit MintedNFT(address(this), msg.sender, _URI); 
     }
 
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ TRANSFER NFT OWNERSHIP ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ TRANSFER NFT OWNERSHIP ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice Current owner of an NFT transfers ownership to a new owner.
     /// @param _from: address of the current owner
@@ -79,6 +79,5 @@ contract NFTCollection is ERC721URIStorage, Ownable {
 
         emit NFTOwnershipTransferred(_from, _to, _tokenId);
     }
-
 
 }

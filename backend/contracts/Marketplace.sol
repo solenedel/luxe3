@@ -6,10 +6,6 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "./NFTCollection.sol";
 
 
-// todo should these getters be public or external??
-// todo- memory vs calldata
-// todo- indent everything properly
-
 /// @title this contract handles the creation of new ERC721 NFT collections.
 /// @author Solene D.
 
@@ -17,12 +13,12 @@ contract Marketplace is Ownable {
 
    using Address for address payable; 
 
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ CONSTRUCTOR ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
     
     /// @notice Owner corresponds to the admin of the marketplace. 
     constructor() Ownable(msg.sender){}
 
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ VARIABLES ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     struct User {
       bool hasCollection; 
@@ -42,34 +38,34 @@ contract Marketplace is Ownable {
 
     Collection[] public collectionsArray; 
 
-// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ EVENTS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
-  event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
+    event NFTCollectionCreated(address indexed contractAddress, string name, string symbol); 
 
-// ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ GETTERS ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice Gets all collections created by the Marketplace contract.
     /// @return An array of all the collections created. 
-  function getAllCollections() external view returns (Collection[] memory) {
-    return collectionsArray;
-  }
+    function getAllCollections() external view returns (Collection[] memory) {
+      return collectionsArray;
+    }
 
     /// @notice Gets one collection, indexed by the creator (owner) of that collection.
     /// @param _addr: address of the collection owner.
     /// @return The single collection owned by the address provided.
-  function getCollection(address _addr) external view returns (Collection memory) {
-    return allCollections[_addr];
-  }
+    function getCollection(address _addr) external view returns (Collection memory) {
+      return allCollections[_addr];
+    }
 
-  /// @notice Gets one collection, indexed by the creator (owner) of that collection.
-  /// @param _addr: address of the user.
-  /// @return The single collection owned by the address provided.
-  function getUser(address _addr) external view returns (User memory) {
-    return(users[_addr]);
-  }
+    /// @notice Gets one collection, indexed by the creator (owner) of that collection.
+    /// @param _addr: address of the user.
+    /// @return The single collection owned by the address provided.
+    function getUser(address _addr) external view returns (User memory) {
+      return(users[_addr]);
+    }
 
 
-    // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
+  // ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️ DEPLOY NEW COLLECTION ◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️◼️
 
     /// @notice This function deploys a new NFTCollection (ERC721) contract. Only one collection allowed per user.
     /// @param _name: The name of the new NFT collection, ex: "My Collection"
