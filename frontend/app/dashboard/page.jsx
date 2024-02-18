@@ -28,7 +28,8 @@ function ProfilePage() {
 
   const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
     metadataArray,
-    setMetadataArray
+    setMetadataArray,
+    latestTokenNum
   );
 
   const { allCollections, setAllCollections } = useContext(TokenListContext);
@@ -47,12 +48,12 @@ function ProfilePage() {
     if (isConnected) {
       fetchLatest();
     }
-    // console.log('LATEST TOKEN NUM', latestTokenNum);
+    console.log('LATEST TOKEN NUM', latestTokenNum);
   }, [latestTokenNum]);
 
-  // useEffect(() => {
-  //   console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
-  // }, [metadataArray]);
+  useEffect(() => {
+    console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
+  }, [metadataArray]);
 
   const getCollections = async () => {
     const data = await getAllCollections();

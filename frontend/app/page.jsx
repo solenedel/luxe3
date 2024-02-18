@@ -16,52 +16,9 @@ export default function Home() {
       </div>
       <div className="relative flex gap-x-24 z-50 bottom-64 text-2xl ">
         <button className="border-2 rounded-sm px-4 py-2 border-gray-900 bg-rose-200 hover:translate-y-1">
-          <a href="/profile"> Sell</a>
+          <a href="/dashboard">Go to dashboard</a>
         </button>
-        <button className="border-2 rounded-sm px-4 py-2 border-gray-900 bg-rose-200 hover:translate-y-1">
-          <a href="/collections">Browse</a>
-        </button>
-        {/* <button className="text-3xl shadow-lg border-emerald-900 font-semibold mt-20 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-4 shadow-lg text-gray-950 hover:translate-y-1">
-          Sell
-        </button>
-        <button className="text-3xl shadow-lg border-emerald-900 font-semibold mt-20 bg-gradient-to-bl from-emerald-800 to-emerald-500 rounded-lg p-4 shadow-lg text-gray-950 hover:translate-y-1">
-          Browse
-        </button> */}
       </div>
-
-      {/* <section className="mt-20">
-        <h2 className="font-semibold text-2xl mb-5"> How does it work?</h2>
-        <p>
-          With Forever Luxe, you can buy or sell your pre-owned luxury items
-          (designer bags, clothing, jewelry, etc) as NFTs. To be precise, each
-          NFT on this website represents a RWA (Real-World Asset). When you
-          purchase a Digital Twin (NFT) of a specific item, that item will be
-          shipped to you.
-        </p>
-
-        <h2 className="font-semibold text-2xl mb-5 mt-8">
-          {' '}
-          What if I don&apos;t receive the item?
-        </h2>
-        <p>
-          When you purchase the digital twin of your desired item, the funds
-          will be temporarily held by us until you receive your item. The
-          previous owner will only receive the payment once you have confirmed
-          on your side that the physical item was received.
-        </p>
-
-        <h2 className="font-semibold text-2xl mb-5 mt-8">
-          How can you guarantee authenticity?
-        </h2>
-        <p>
-          All items added to our collections are authenticated by a THIRD PARTY,
-          before they are listed as NFTs. If you have any doubts about
-          authenticity after receiving the item, please contact us and we can
-          arrange the third party to authenticate the item you received. If the
-          item you received is revealed to be inauthentic, you will be refunded
-          in full.
-        </p>
-      </section> */}
     </main>
   );
 }

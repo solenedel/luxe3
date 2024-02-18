@@ -51,10 +51,6 @@ export default function CollectionPage() {
     }
   }, [latestTokenNum]);
 
-  useEffect(() => {
-    console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
-  }, [metadataArray]);
-
   // --------------- FUNCTIONS ------------------------
   const getOwner = async () => {
     const owner = await getCollectionOwner(collectionAddr);

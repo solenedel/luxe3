@@ -50,6 +50,10 @@ function AddNFTModal({
     }
   };
 
+  useEffect(() => {
+    console.log('ltest token num ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', latestTokenNum);
+  }, [latestTokenNum]);
+
   // upload to NFT storage
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];

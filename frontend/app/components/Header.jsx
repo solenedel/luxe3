@@ -14,7 +14,7 @@ function Header() {
     setUser(address);
   }, [address, isConnected]);
 
-  const links = ['collections', 'profile'];
+  const links = ['dashboard'];
 
   return (
     <header className="flex text-xl items-end justify-between px-20 py-4 border-b-4 border-double border-gray-900 pt-6 backdrop-blur-sm">
@@ -26,21 +26,10 @@ function Header() {
         {/* {console.log(address, isConnected, user)} */}
       </h1>
       <span className="flex self-center justify-between gap-x-20 text-xl text-gray-900 ">
-        {' '}
         <a
-          href={`/collections`}
+          href={`/dashboard`}
           className=" font-semibold hover:scale-105 hover:text-rose-800 ">
-          Collections
-        </a>
-        <a
-          href={`/profile`}
-          className=" font-semibold hover:scale-105 hover:text-rose-800 ">
-          Profile
-        </a>
-        <a
-          href={`/about`}
-          className=" font-semibold hover:scale-105 hover:text-rose-800 ">
-          About
+          Dashboard
         </a>
       </span>
       <div>
