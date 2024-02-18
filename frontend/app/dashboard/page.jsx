@@ -60,7 +60,7 @@ function ProfilePage() {
   };
 
   const showTokensHandler = async () => {
-    // await newFetchMetadata(collectionInfo.contractAddress);
+    await newFetchMetadata(collectionInfo.contractAddress, latestTokenNum);
     // await newFetchMetadataForAllTokens();
   };
 

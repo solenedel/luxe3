@@ -18,12 +18,14 @@ export default function CollectionPage() {
   const [metadataArray, setMetadataArray] = useState([]);
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
+  const router = useRouter();
 
   const [latestTokenNum, setLatestTokenNum] = useState(0);
 
   const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
     metadataArray,
-    setMetadataArray
+    setMetadataArray,
+    latestTokenNum
   );
 
   // get collection address from pathname
@@ -41,6 +43,7 @@ export default function CollectionPage() {
         const data = await getLatestTokenNumber(collectionAddr);
         const latest = Number(data);
         setLatestTokenNum(latest);
+        // await newFetchMetadataForAllTokens(collectionAddr);
       } catch (error) {
         console.log('ERROR: ', error);
       }
@@ -49,7 +52,7 @@ export default function CollectionPage() {
     if (isConnected) {
       fetchLatest();
     }
-  }, [latestTokenNum]);
+  }, [latestTokenNum, router]);
 
   // --------------- FUNCTIONS ------------------------
   const getOwner = async () => {
@@ -60,7 +63,8 @@ export default function CollectionPage() {
   // -------------- HANDLERS ---------------
 
   const showTokensHandler = async () => {
-    await newFetchMetadataForAllTokens(collectionAddr);
+    const temp = await newFetchMetadataForAllTokens(collectionAddr);
+    console.log('TEMP ....', temp);
   };
 
   // --------------- RENDER ------------------------
@@ -70,6 +74,7 @@ export default function CollectionPage() {
       <main className="flex min-h-screen flex-col p-24">
         <h2 className="font-semibold text-xl">
           COLLECTION: {collectionAddr} SHOW NAME HERE
+          {console.log('LATEST TOKEN NUM===', latestTokenNum)}
         </h2>
         <p>Owned by: {owner}</p>
         <button
@@ -89,11 +94,6 @@ export default function CollectionPage() {
             ''
           )}
         </section>
-        {/* <button
-          // onClick={test}
-          className="text-xl w-fit mt-2 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
-          test transfer ownership (token 1)
-        </button> */}
       </main>
     );
   } else {
