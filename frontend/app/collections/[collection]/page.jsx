@@ -64,11 +64,7 @@ export default function CollectionPage() {
   // -------------- HANDLERS ---------------
 
   const showTokensHandler = async () => {
-    if (latestTokenNum !== metadataArray.length) {
-      await newFetchMetadataForAllTokens(collectionAddr);
-    } else {
-      console.log('Already fetched latest data ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
-    }
+    await newFetchMetadataForAllTokens(collectionAddr);
   };
 
   // --------------- RENDER ------------------------

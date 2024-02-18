@@ -50,9 +50,9 @@ function ProfilePage() {
     // console.log('LATEST TOKEN NUM', latestTokenNum);
   }, [latestTokenNum]);
 
-  useEffect(() => {
-    console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
-  }, [metadataArray]);
+  // useEffect(() => {
+  //   console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
+  // }, [metadataArray]);
 
   const getCollections = async () => {
     const data = await getAllCollections();
@@ -60,7 +60,6 @@ function ProfilePage() {
   };
 
   const showTokensHandler = async () => {
-    // problem in this check
     await newFetchMetadataForAllTokens(collectionInfo.contractAddress);
   };
 
