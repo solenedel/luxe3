@@ -6,7 +6,7 @@ import axios from 'axios';
 export const getTokenMetadata = async (_collectionAddr, _tokenID) => {
   try {
     const data = await readContract({
-      address: _contractAddr,
+      address: _collectionAddr,
       abi: ABI,
       functionName: 'tokenURI',
       args: [_tokenID],

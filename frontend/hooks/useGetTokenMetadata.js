@@ -1,8 +1,11 @@
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
-export const useGetTokenMetadata = ({ metadataArray, setMetadataArray }) => {
+import { getTokenMetadata } from '@/utils/getTokenMetadata';
+export const useGetTokenMetadata = (metadataArray, setMetadataArray) => {
   // gets metadata for a single token and updates metadataArray for that collection
   const newFetchMetadata = async (_collectionAddr, _tokenId) => {
     const data = await getTokenMetadata(_collectionAddr, _tokenId);
+
+    console.log('DATA: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', data);
 
     const imgLink = `https://gateway.pinata.cloud/ipfs/${
       data.image.split('ipfs://')[1]
@@ -20,15 +23,17 @@ export const useGetTokenMetadata = ({ metadataArray, setMetadataArray }) => {
   };
 
   // gets metadata for all tokens in a collection
-  const newFetchMetadataForAllTokens = async (_collectionAddr, _tokenId) => {
+  const newFetchMetadataForAllTokens = async (_collectionAddr) => {
     // setLatestTokenNum(Number(data));
-    const _latestTokenNumber = await getLatestTokenNumber(_collectionAddr);
+    const data = await getLatestTokenNumber(_collectionAddr);
+    const _latestTokenNumber = Number(data);
 
     for (let i = 1; i < _latestTokenNumber + 1; i++) {
-      const data = await newFetchMetadata(_collectionAddr, _tokenId);
+      console.log('i: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', i);
+      const data = await newFetchMetadata(_collectionAddr, i);
       console.log('newFetchMetadataForAllTokens=========', data);
       // return data;
     }
   };
-  return { newFetchMetadataForAllTokens, newFetchMetadata };
+  return { newFetchMetadataForAllTokens };
 };

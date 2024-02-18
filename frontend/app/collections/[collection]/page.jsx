@@ -10,16 +10,21 @@ import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
 import { useAccount, useContractEvent } from 'wagmi';
 import { transferOwnership } from '@/utils/transferOwnership';
-import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 import { getTokenMetadata } from '@/utils/getTokenMetadata';
+import { useGetTokenMetadata } from '@/hooks/useGetTokenMetadata';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const { address, isConnected } = useAccount();
+  const [metadataArray, setMetadataArray] = useState([]);
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
-  const [metadataArray, setMetadataArray] = useState([]);
-  // const { generateTokenNumberArray } = useContext(TokenListContext);
+
   const [latestTokenNum, setLatestTokenNum] = useState(0);
+
+  const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
+    metadataArray,
+    setMetadataArray
+  );
 
   // get collection address from pathname
   const pathname = usePathname();
@@ -43,24 +48,39 @@ export default function CollectionPage() {
     },
   });
 
-  // --------------- FUNCTIONS ------------------------
-
-  // function OK
-  const fetchLatestTokenNumber = async (_collectionAddr) => {
-    const data = await getLatestTokenNumber(_collectionAddr);
-    setLatestTokenNum(Number(data));
-    return Number(data);
-  };
+  // --------------- USE EFFECT ----------------------
 
   useEffect(() => {
-    console.log('LATEST NUM', latestTokenNum);
-    temp();
-  }, [latestTokenNum]);
+    getOwner();
+  }, []);
 
+  useEffect(() => {
+    console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
+  }, [metadataArray]);
+
+  // --------------- FUNCTIONS ------------------------
   const getOwner = async () => {
     const owner = await getCollectionOwner(collectionAddr);
     setOwner(owner);
   };
+
+  // -------------- HANDLERS ---------------
+
+  const showTokensHandler = async () => {
+    await newFetchMetadataForAllTokens(collectionAddr);
+  };
+
+  // // function OK
+  // const fetchLatestTokenNumber = async (_collectionAddr) => {
+  //   const data = await getLatestTokenNumber(_collectionAddr);
+  //   setLatestTokenNum(Number(data));
+  //   return Number(data);
+  // };
+
+  // useEffect(() => {
+  //   console.log('LATEST NUM', latestTokenNum);
+  //   temp();
+  // }, [latestTokenNum]);
 
   // const temp = async () => {
   //   for (let i = 1; i < latestTokenNum + 1; i++) {
@@ -101,10 +121,6 @@ export default function CollectionPage() {
   //   }
   // };
 
-  useEffect(() => {
-    getOwner();
-  }, []);
-
   // useEffect(() => {
   //   console.log('METADATA =', metadata);
   // }, [metadata]);
@@ -116,7 +132,7 @@ export default function CollectionPage() {
       <main className="flex min-h-screen flex-col p-24">
         <h2 className="font-semibold text-xl">COLLECTION: {collectionAddr}</h2>
         <p>Owned by: {owner}</p>
-        <button onClick={handler}>show tokens</button>
+        <button onClick={showTokensHandler}>show tokens</button>
         <section>
           {/* {metadata.length ? (
             <NFTList metadataArray={metadata} address={address} owner={owner} />
@@ -125,7 +141,7 @@ export default function CollectionPage() {
           )} */}
         </section>
         <button
-          onClick={test}
+          // onClick={test}
           className="text-xl w-fit mt-2 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
           test transfer ownership (token 1)
         </button>
