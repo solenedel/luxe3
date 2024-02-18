@@ -10,22 +10,22 @@ import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
 import { useAccount, useContractEvent } from 'wagmi';
 import { transferOwnership } from '@/utils/transferOwnership';
+import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const { address, isConnected } = useAccount();
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
   const [metadata, setMetadata] = useState([]);
-  const {
-    fetchLatestTokenNumber,
-    latestTokenNumber,
-    generateTokenNumberArray,
-  } = useContext(TokenListContext);
+  // const { generateTokenNumberArray } = useContext(TokenListContext);
+  const [latestTokenNum, setLatestTokenNum] = useState(0);
 
   // get collection address from pathname
   const pathname = usePathname();
   const lastIndex = pathname.lastIndexOf('/');
   const collectionAddr = pathname.slice(lastIndex + 1);
+
+  // --------------- EVENT LISTENER ------------------------
 
   const eventName = 'NFTOwnershipTransferred';
 
@@ -42,45 +42,58 @@ export default function CollectionPage() {
     },
   });
 
+  // --------------- FUNCTIONS ------------------------
+
+  // function OK
+  const fetchLatestTokenNumber = async (_collectionAddr) => {
+    const data = await getLatestTokenNumber(_collectionAddr);
+    setLatestTokenNum(Number(data));
+    return Number(data);
+  };
+
+  useEffect(async () => {
+    console.log('LATEST NUM', latestTokenNum);
+    await temp();
+  }, [latestTokenNum]);
+
   const getOwner = async () => {
     const owner = await getCollectionOwner(collectionAddr);
     setOwner(owner);
   };
 
   const temp = async () => {
-    await fetchLatestTokenNumber(collectionAddr);
+    for (let i = 1; i < latestTokenNum + 1; i++) {
+      let { metadata } = await getMetadata(collectionAddr, i);
 
-    for (let i = 1; i < latestTokenNumber + 1; i++) {
-      if (!tokensArray.includes(i)) {
-        setTokensArray((prev) => [...prev, i]);
+      const imgLink = `https://gateway.pinata.cloud/ipfs/${
+        metadata.image.split('ipfs://')[1]
+      }`;
 
-        let { metadata } = await getMetadata(collectionAddr, i);
+      setMetadata((prev) => [
+        ...prev,
+        {
+          imgLink: imgLink,
+          ...metadata,
+        },
+      ]);
+      // if (!tokensArray.includes(i)) {
+      //   setTokensArray((prev) => [...prev, i]);
 
-        const imgLink = `https://gateway.pinata.cloud/ipfs/${
-          metadata.image.split('ipfs://')[1]
-        }`;
-
-        setMetadata((prev) => [
-          ...prev,
-          {
-            imgLink: imgLink,
-            ...metadata,
-          },
-        ]);
-      }
+      // }
     }
   };
 
   const handler = async () => {
-    // console.log('pppppp');
-    await temp();
+    // console.log('COLLECTION ADDR', collectionAddr);
+    const data = await fetchLatestTokenNumber(collectionAddr);
+    // console.log('AWAIT LATEST TOKEN NUMBER', data);
   };
 
   //  test transfer ownership
   const test = async () => {
     const data = await transferOwnership(owner, address, 1, collectionAddr);
     if (data.status == 'success') {
-      console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
+      // console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
       // check for event
     }
   };
@@ -93,7 +106,8 @@ export default function CollectionPage() {
   //   console.log('METADATA =', metadata);
   // }, [metadata]);
 
-  // todo - check if connected!!
+  // --------------- RENDER ------------------------
+
   if (isConnected) {
     return (
       <main className="flex min-h-screen flex-col p-24">
