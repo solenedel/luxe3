@@ -11,12 +11,13 @@ import NFTList from '@/app/components/NFTList';
 import { useAccount, useContractEvent } from 'wagmi';
 import { transferOwnership } from '@/utils/transferOwnership';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
+import { getTokenMetadata } from '@/utils/getTokenMetadata';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const { address, isConnected } = useAccount();
   const [currentCollectionData, setCurrentCollectionData] = useState([]);
   const [tokensArray, setTokensArray] = useState([]);
-  const [metadata, setMetadata] = useState([]);
+  const [metadataArray, setMetadataArray] = useState([]);
   // const { generateTokenNumberArray } = useContext(TokenListContext);
   const [latestTokenNum, setLatestTokenNum] = useState(0);
 
@@ -61,44 +62,44 @@ export default function CollectionPage() {
     setOwner(owner);
   };
 
-  const temp = async () => {
-    for (let i = 1; i < latestTokenNum + 1; i++) {
-      console.log('TESTINGGGGGGG');
+  // const temp = async () => {
+  //   for (let i = 1; i < latestTokenNum + 1; i++) {
+  //     console.log('TESTINGGGGGGG');
 
-      // let { metadata } = await getMetadata(collectionAddr, i);
+  //     // let { metadata } = await getMetadata(collectionAddr, i);
 
-      // const imgLink = `https://gateway.pinata.cloud/ipfs/${
-      //   metadata.image.split('ipfs://')[1]
-      // }`;
+  // const imgLink = `https://gateway.pinata.cloud/ipfs/${
+  //   metadata.image.split('ipfs://')[1]
+  // }`;
 
-      // setMetadata((prev) => [
-      //   ...prev,
-      //   {
-      //     imgLink: imgLink,
-      //     ...metadata,
-      //   },
-      // ]);
-      // if (!tokensArray.includes(i)) {
-      //   setTokensArray((prev) => [...prev, i]);
+  //     // setMetadata((prev) => [
+  //     //   ...prev,
+  //     //   {
+  //     //     imgLink: imgLink,
+  //     //     ...metadata,
+  //     //   },
+  //     // ]);
+  //     // if (!tokensArray.includes(i)) {
+  //     //   setTokensArray((prev) => [...prev, i]);
 
-      // }
-    }
-  };
+  //     // }
+  //   }
+  // };
 
-  const handler = async () => {
-    // console.log('COLLECTION ADDR', collectionAddr);
-    const data = await fetchLatestTokenNumber(collectionAddr);
-    // console.log('AWAIT LATEST TOKEN NUMBER', data);
-  };
+  // const handler = async () => {
+  //   // console.log('COLLECTION ADDR', collectionAddr);
+  //   const data = await fetchLatestTokenNumber(collectionAddr);
+  //   // console.log('AWAIT LATEST TOKEN NUMBER', data);
+  // };
 
   //  test transfer ownership
-  const test = async () => {
-    const data = await transferOwnership(owner, address, 1, collectionAddr);
-    if (data.status == 'success') {
-      // console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
-      // check for event
-    }
-  };
+  // const test = async () => {
+  //   const data = await transferOwnership(owner, address, 1, collectionAddr);
+  //   if (data.status == 'success') {
+  //     // console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
+  //     // check for event
+  //   }
+  // };
 
   useEffect(() => {
     getOwner();
@@ -117,11 +118,11 @@ export default function CollectionPage() {
         <p>Owned by: {owner}</p>
         <button onClick={handler}>show tokens</button>
         <section>
-          {metadata.length ? (
+          {/* {metadata.length ? (
             <NFTList metadataArray={metadata} address={address} owner={owner} />
           ) : (
             ''
-          )}
+          )} */}
         </section>
         <button
           onClick={test}
