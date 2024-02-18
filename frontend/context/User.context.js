@@ -24,12 +24,6 @@ export const UserContextProvider = ({ children }) => {
     return _userInfo;
   }
 
-  // NOTE - hasCollection not being updated
-  // useEffect(() => {
-  //   console.log('user info has coll', userInfo);
-  // }, [userInfo.hasCollection]);
-
-  // problem; this is not getting triggered by login
   useEffect(() => {
     if (isConnected) {
       setUserAddr(address);
@@ -39,7 +33,6 @@ export const UserContextProvider = ({ children }) => {
     } else {
       setUserAddr('');
     }
-    console.log('USER INFO: ', userInfo);
   }, [isConnected]);
 
   async function ownerIsUser(_owner, _user) {
@@ -56,10 +49,8 @@ export const UserContextProvider = ({ children }) => {
     setMarketplaceOwner(_owner);
   }
 
-  // fetch user's collection // ???
   async function getUserCollection() {
     const _collectionInfo = await getCollection(address);
-    console.log('collection info: ', _collectionInfo);
     setCollectionAddr(_collectionInfo.contractAddress);
     setCollectionInfo(_collectionInfo);
   }
@@ -80,14 +71,6 @@ export const UserContextProvider = ({ children }) => {
       return false;
     }
   }
-
-  // useEffect(() => {
-  //   console.log('COLLECTION INFO', address);
-  // }, [collectionInfo]);
-
-  // useEffect(() => {
-  //   fetchMarketplaceOwner(); // get marketplace owner
-  // }, [address, isConnected]);
 
   return (
     <UserContext.Provider

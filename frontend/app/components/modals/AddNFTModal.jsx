@@ -29,7 +29,6 @@ function AddNFTModal({
     eventName,
     listener(log) {
       const { collectionAddress, to, URI } = log[0].args;
-      // console.log(log[0].args);
       console.log(
         `🔵 ${eventName} event received. New NFT minted by ${to} in ${collectionAddress}. NFT URI: ${URI}`
       );
@@ -42,7 +41,7 @@ function AddNFTModal({
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // todo- prevent submit if file not uploaded
+
     if (URIState !== '') {
       await mintNFT(address, URIState, collectionAddr);
       const _tokenId = await getLatestTokenNumber(collectionAddr);
@@ -50,10 +49,6 @@ function AddNFTModal({
     }
     setShowModalB(false);
   };
-
-  useEffect(() => {
-    console.log('ltest token num ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', latestTokenNum);
-  }, [latestTokenNum]);
 
   // upload to NFT storage
   const handleFileUpload = async (e) => {

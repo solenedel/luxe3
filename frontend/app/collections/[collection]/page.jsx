@@ -40,9 +40,7 @@ export default function CollectionPage() {
       try {
         const data = await getLatestTokenNumber(collectionAddr);
         const latest = Number(data);
-        console.log('LATEST -----', latest);
         setLatestTokenNum(latest);
-        // await newFetchMetadataForAllTokens(collectionAddr);
       } catch (error) {
         console.log('ERROR: ', error);
       }
@@ -63,7 +61,6 @@ export default function CollectionPage() {
 
   const showTokensHandler = async () => {
     const temp = await newFetchMetadataForAllTokens(collectionAddr);
-    console.log('TEMP ....', temp);
   };
 
   // --------------- RENDER ------------------------
@@ -73,7 +70,6 @@ export default function CollectionPage() {
       <main className="flex min-h-screen flex-col p-24">
         <h2 className="font-semibold text-xl">
           COLLECTION: {collectionAddr} SHOW NAME HERE
-          {console.log('LATEST TOKEN NUM===', latestTokenNum)}
         </h2>
         <p>Owned by: {owner}</p>
         <button

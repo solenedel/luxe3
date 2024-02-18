@@ -25,10 +25,8 @@ export const useGetTokenMetadata = (metadataArray, setMetadataArray) => {
     const data = await getLatestTokenNumber(_collectionAddr);
     const _latestTokenNumber = Number(data);
 
-    console.log('kdhvdkvhdkvhd', _latestTokenNumber);
     if (metadataArray.length < _latestTokenNumber) {
       for (let i = 1; i < _latestTokenNumber + 1; i++) {
-        console.log(i);
         await newFetchMetadata(_collectionAddr, i);
       }
     }

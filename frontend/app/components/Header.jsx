@@ -23,7 +23,6 @@ function Header() {
         <a href="/" className="text-5xl text-black">
           Luxe²
         </a>
-        {/* {console.log(address, isConnected, user)} */}
       </h1>
       <span className="flex self-center justify-between gap-x-20 text-xl text-gray-900 ">
         <a

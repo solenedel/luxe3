@@ -12,7 +12,7 @@ function NewCollectionModal({ showModal, setShowModal }) {
   const { address } = useAccount();
   const [nameInput, setNameInput] = useState('');
   const [symbolInput, setSymbolInput] = useState('');
-  const [temp, setTemp] = useState({});
+  const [tempData, setTempData] = useState({});
   const [adminEventFired, setAdminEventFired] = useState(false);
 
   const {
@@ -25,22 +25,15 @@ function NewCollectionModal({ showModal, setShowModal }) {
     marketplaceOwner,
   } = useContext(UserContext);
 
-  useEffect(() => {
-    console.log('TEMP', temp);
-  }, [temp]);
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // call func from contract
     const data = await deployNewNFTCollection(nameInput, symbolInput);
 
     if (data.status == 'success') {
-      //close modal
-      console.log('ADMIN IS NOT USER');
-      setCollectionInfo(temp);
+      //todo close modal
+      setCollectionInfo(tempData);
       setUserInfo({ hasCollection: true });
       setCollectionAddr(contractAddress);
-      // fetch new collection to display on front
     }
   };
 
@@ -50,9 +43,7 @@ function NewCollectionModal({ showModal, setShowModal }) {
     eventName,
     listener(log) {
       const { contractAddress, sender, name, symbol } = log[0].args;
-      setTemp({ contractAddress, sender, name, symbol });
-      // fetchUserInfo(); // why is this here?
-      // Check if the transaction has been confirmed
+      setTempData({ contractAddress, sender, name, symbol });
       console.log(
         `🔵 ${eventName} event received. New collection ${name} (${symbol}) was deployed to contract address: ${contractAddress}`
       );

@@ -47,22 +47,12 @@ function ProfilePage() {
     if (isConnected) {
       fetchLatest();
     }
-    console.log('LATEST TOKEN NUM', latestTokenNum);
   }, [latestTokenNum]);
-
-  useEffect(() => {
-    console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
-  }, [metadataArray]);
 
   const getCollections = async () => {
     const data = await getAllCollections();
     setAllCollections(data);
   };
-
-  // const showTokensHandler = async () => {
-  //   await newFetchMetadata(collectionInfo.contractAddress);
-  //   // await newFetchMetadataForAllTokens();
-  // };
 
   if (isConnected) {
     return (

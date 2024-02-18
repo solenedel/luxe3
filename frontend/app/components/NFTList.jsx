@@ -25,16 +25,6 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
     },
   });
 
-  // const checkIfOwner = async (_tokenId) => {
-  //   const NFT = await getNFTInfo(collectionAddr, _tokenId);
-  //   if (NFT.currentOwner == address) {
-  //     // setOwnedByUser(true);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
   const buyNFTHandler = async (_tokenId) => {
     const data = await transferOwnership(
       owner,
@@ -42,7 +32,7 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
       _tokenId,
       collectionAddr
     );
-    // console.log(data);
+
     if (data.status == 'success') {
       setBoughtNFTs((prev) => [...prev, _tokenId]);
     }

@@ -13,18 +13,11 @@ export function TokenListContextProvider({ children }) {
   const [metadataArray, setMetadataArray] = useState([]);
   const [allCollections, setAllCollections] = useState([]);
 
-  // useEffect(() => {
-  //   console.log('TOKEN ID ARRAY:', tokenIdArray);
-  //   console.log('METADATA ARRAY:', metadataArray);
-  // }, [tokenIdArray, metadataArray]);
-
   const fetchLatestTokenNumber = async (_collectionAddr) => {
     const data = await getLatestTokenNumber(_collectionAddr);
     setLatestTokenNumber(Number(data));
   };
 
-  // todo- remove doubles from here (prevent showing same token twice)
-  // move this to a separate file not linked to global context
   const generateTokenNumberArray = async (_collectionAddr) => {
     for (let i = 1; i < latestTokenNumber + 1; i++) {
       if (!tokenIdArray.includes(i)) {
