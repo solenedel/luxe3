@@ -26,11 +26,8 @@ function ProfilePage() {
   const { userInfo, collectionInfo, fetchUserInfo, userAddr, setUserAddr } =
     useContext(UserContext);
 
-  const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
-    metadataArray,
-    setMetadataArray,
-    latestTokenNum
-  );
+  const { newFetchMetadataForAllTokens, newFetchMetadata } =
+    useGetTokenMetadata(metadataArray, setMetadataArray, latestTokenNum);
 
   const { allCollections, setAllCollections } = useContext(TokenListContext);
 
@@ -40,6 +37,8 @@ function ProfilePage() {
         const data = await getLatestTokenNumber(collectionInfo.contractAddress);
         const latest = Number(data);
         setLatestTokenNum(latest);
+
+        await newFetchMetadata(collectionInfo.contractAddress, latest);
       } catch (error) {
         console.log('ERROR: ', error);
       }
@@ -61,7 +60,8 @@ function ProfilePage() {
   };
 
   const showTokensHandler = async () => {
-    await newFetchMetadataForAllTokens(collectionInfo.contractAddress);
+    // await newFetchMetadata(collectionInfo.contractAddress);
+    // await newFetchMetadataForAllTokens();
   };
 
   if (isConnected) {

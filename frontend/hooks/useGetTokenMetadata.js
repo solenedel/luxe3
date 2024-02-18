@@ -34,5 +34,5 @@ export const useGetTokenMetadata = (
       await newFetchMetadata(_collectionAddr, i);
     }
   };
-  return { newFetchMetadataForAllTokens };
+  return { newFetchMetadataForAllTokens, newFetchMetadata };
 };
