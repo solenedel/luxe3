@@ -14,27 +14,45 @@ import Image from 'next/image';
 import NFTList from '../components/NFTList';
 import { v4 as uuidv4 } from 'uuid';
 import CollectionsList from '../components/CollectionsList';
+import { useGetTokenMetadata } from '@/hooks/useGetTokenMetadata';
 
 function ProfilePage() {
   const { address, isConnected } = useAccount();
   const [showModal, setShowModal] = useState(false);
   const [showModalB, setShowModalB] = useState(false);
+  const [metadataArray, setMetadataArray] = useState([]);
+  const [latestTokenNum, setLatestTokenNum] = useState(0);
 
   const { userInfo, collectionInfo, fetchUserInfo, userAddr, setUserAddr } =
     useContext(UserContext);
 
-  const {
-    tokenIdArray,
-    setTokenIdArray,
-    fetchLatestTokenNumber,
-    latestTokenNumber,
-    setLatestTokenNumber,
-    generateTokenNumberArray,
+  const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
     metadataArray,
-    setMetadataArray,
-    allCollections,
-    setAllCollections,
-  } = useContext(TokenListContext);
+    setMetadataArray
+  );
+
+  const { allCollections, setAllCollections } = useContext(TokenListContext);
+
+  useEffect(() => {
+    async function fetchLatest() {
+      try {
+        const data = await getLatestTokenNumber(collectionInfo.contractAddress);
+        const latest = Number(data);
+        setLatestTokenNum(latest);
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+    }
+
+    if (isConnected) {
+      fetchLatest();
+    }
+    // console.log('LATEST TOKEN NUM', latestTokenNum);
+  }, [latestTokenNum]);
+
+  useEffect(() => {
+    console.log('METADATA ARRAY: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐', metadataArray);
+  }, [metadataArray]);
 
   const getCollections = async () => {
     const data = await getAllCollections();
@@ -42,8 +60,8 @@ function ProfilePage() {
   };
 
   const showTokensHandler = async () => {
-    await fetchLatestTokenNumber(collectionInfo.contractAddress);
-    await generateTokenNumberArray(collectionInfo.contractAddress);
+    // problem in this check
+    await newFetchMetadataForAllTokens(collectionInfo.contractAddress);
   };
 
   if (isConnected) {
@@ -76,6 +94,8 @@ function ProfilePage() {
           <section className="mt-12 text-xl">
             {showModalB ? (
               <AddNFTModal
+                setLatestTokenNum={setLatestTokenNum}
+                latestTokenNum={latestTokenNum}
                 showModalB={showModalB}
                 setShowModalB={setShowModalB}
               />

@@ -151,31 +151,6 @@ export const ABI = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'collectionAddress',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint8',
-        name: 'tokenId',
-        type: 'uint8',
-      },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'CID',
-        type: 'string',
-      },
-    ],
-    name: 'AddedCIDToNFT',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
         name: 'owner',
         type: 'address',
       },
@@ -361,31 +336,8 @@ export const ABI = [
         name: 'currentOwner',
         type: 'address',
       },
-      {
-        internalType: 'string',
-        name: 'CID',
-        type: 'string',
-      },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_CID',
-        type: 'string',
-      },
-      {
-        internalType: 'uint8',
-        name: '_tokenId',
-        type: 'uint8',
-      },
-    ],
-    name: 'addCID',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -473,11 +425,6 @@ export const ABI = [
             internalType: 'address',
             name: 'currentOwner',
             type: 'address',
-          },
-          {
-            internalType: 'string',
-            name: 'CID',
-            type: 'string',
           },
         ],
         internalType: 'struct NFTCollection.NFT',

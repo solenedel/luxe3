@@ -8,7 +8,12 @@ import { UserContext } from '@/context/User.context';
 import { getMetadata } from '@/utils/getMetadata';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 
-function AddNFTModal({ showModalB, setShowModalB }) {
+function AddNFTModal({
+  showModalB,
+  setShowModalB,
+  latestTokenNum,
+  setLatestTokenNum,
+}) {
   const [titleInput, setTitleInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
@@ -38,16 +43,12 @@ function AddNFTModal({ showModalB, setShowModalB }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // todo- prevent submit if file not uploaded
-
     if (URIState !== '') {
       await mintNFT(address, URIState, collectionAddr);
       const _tokenId = await getLatestTokenNumber(collectionAddr);
+      setLatestTokenNum(Number(_tokenId));
     }
   };
-
-  useEffect(() => {
-    console.log('==== URI STATE  ====', URIState);
-  }, [URIState]);
 
   // upload to NFT storage
   const handleFileUpload = async (e) => {

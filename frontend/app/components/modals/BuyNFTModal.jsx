@@ -5,9 +5,6 @@ import { contractAddress, ABI } from '@/constants/marketplace';
 import { UserContext } from '@/context/User.context';
 import { useAccount } from 'wagmi';
 
-// Listen for NFTCollection contract deployment event
-const eventName = 'NFTCollectionCreated';
-
 function BuyNFTModal({ showModal, setShowModal }) {
   const { address } = useAccount();
   const [nameInput, setNameInput] = useState('');

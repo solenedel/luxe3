@@ -46,7 +46,9 @@ export default function CollectionPage() {
       }
     }
 
-    fetchLatest();
+    if (isConnected) {
+      fetchLatest();
+    }
   }, [latestTokenNum]);
 
   useEffect(() => {
@@ -68,15 +70,6 @@ export default function CollectionPage() {
       console.log('Already fetched latest data ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
     }
   };
-
-  //  test transfer ownership
-  // const test = async () => {
-  //   const data = await transferOwnership(owner, address, 1, collectionAddr);
-  //   if (data.status == 'success') {
-  //     // console.log('TRANSFER OWNERSHIP SUCCES: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐');
-  //     // check for event
-  //   }
-  // };
 
   // --------------- RENDER ------------------------
 

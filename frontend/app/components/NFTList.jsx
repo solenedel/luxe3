@@ -18,7 +18,6 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
     eventName,
     listener(log) {
       const { from, to, tokenId } = log[0].args;
-      console.log('ARGS =====', log[0].args);
       console.log(
         `🔵 ${eventName} event received. Token ${tokenId} transferred from ${from} to ${to}.`
       );
