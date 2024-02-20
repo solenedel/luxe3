@@ -17,34 +17,26 @@ function Header() {
   const links = ['dashboard'];
 
   return (
-    <header className="flex text-xl items-end justify-between px-20 py-4  bg-gray-900 pt-6">
+    <header className="flex text-xl items-end justify-between px-20 py-4 pt-6 mb-10 border-b-2 backdrop-blur-sm border-gray-900 ">
       <h1 className=" font-bold tracking-wider z-10 ">
         {' '}
-        <a href="/" className="text-5xl text-pink-200">
+        <a
+          href="/"
+          className="text-5xl text-transparent bg-clip-text bg-gradient-to-br from-pink-800 to-pink-300">
           Luxe³
         </a>
       </h1>
-      <span className="flex self-center justify-between gap-x-20 text-2xl ">
-        <a
-          href={`/dashboard`}
-          className=" font-semibold text-cyan-200 hover:text-cyan-500 ">
+      <span className=" justify-between gap-x-20 text-xl tracking-wider ">
+        <a href={`/dashboard`} className="text-gray-900 hover:text-pink-600 ">
           Dashboard
         </a>
       </span>
-      <div>
-        <ConnectButton />
-      </div>
-      {/* 
-      <nav className="w-full  tracking-wide  flex gap-x-20 text-2xl ">
-        {links.map((link) => (
-          <a
-            key={link}
-            href={`/${link.toLowerCase().replace(/\s/g, '')}`}
-            className="text-orange-200 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-br hover:from-blue-400 hover:to-pink-400 hover:scale-105 ">
-            {link}
-          </a>
-        ))}
-      </nav> */}
+      <span className=" justify-between gap-x-20 text-xl tracking-wider ">
+        <a href={`/`} className="text-gray-900 hover:text-pink-600 ">
+          About
+        </a>
+      </span>
+      <ConnectButton />
     </header>
   );
 }
