@@ -17,17 +17,17 @@ function Header() {
   const links = ['dashboard'];
 
   return (
-    <header className="flex text-xl items-end justify-between px-20 py-4 border-b-4 border-double border-gray-900 pt-6 backdrop-blur-sm">
-      <h1 className=" font-bold tracking-wider text-transparent z-10 ">
+    <header className="flex text-xl items-end justify-between px-20 py-4  bg-gray-900 pt-6">
+      <h1 className=" font-bold tracking-wider z-10 ">
         {' '}
-        <a href="/" className="text-5xl text-black">
-          Luxe²
+        <a href="/" className="text-5xl text-pink-200">
+          Luxe³
         </a>
       </h1>
-      <span className="flex self-center justify-between gap-x-20 text-xl text-gray-900 ">
+      <span className="flex self-center justify-between gap-x-20 text-2xl ">
         <a
           href={`/dashboard`}
-          className=" font-semibold hover:scale-105 hover:text-rose-800 ">
+          className=" font-semibold text-cyan-200 hover:text-cyan-500 ">
           Dashboard
         </a>
       </span>

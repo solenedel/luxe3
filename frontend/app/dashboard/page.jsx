@@ -57,7 +57,7 @@ function ProfilePage() {
   if (isConnected) {
     return (
       <main className="flex flex-col items-center pt-10  min-h-screen">
-        <h1 className="text-3xl w-full text-center tracking-wider py-3 text-pink-100 bg-gray-900/[0.7] font-semibold mb-10">
+        <h1 className="text-3xl w-full text-center tracking-wider py-3 text-gray-900  font-semibold mb-10">
           Your dashboard
         </h1>
         {userInfo.hasCollection == false ? (
@@ -81,7 +81,7 @@ function ProfilePage() {
             )}
           </section>
         ) : (
-          <section className="mt-12 text-xl">
+          <section className="mt-12 text-xl bg-gray-900/[0.8] p-8 px-10 mx-20 rounded-md text-pink-50">
             {showModalB ? (
               <AddNFTModal
                 setLatestTokenNum={setLatestTokenNum}
@@ -94,22 +94,46 @@ function ProfilePage() {
             )}
 
             <div>
-              <h2 className="text-xl font-semibold">
-                Your collection: {collectionInfo.name} ({collectionInfo.symbol}){' '}
-              </h2>
-              <p>Collection address: {collectionInfo.contractAddress}</p>
+              <div className="flex justify-between items-start">
+                <h2 className="text-xl ">
+                  Your collection: &nbsp;&nbsp;
+                  <span className="text-emerald-400 text-2xl font-semibold">
+                    {collectionInfo.name} ({collectionInfo.symbol})
+                  </span>{' '}
+                </h2>
+                <button
+                  onClick={() => setShowModalB(!showModalB)}
+                  type="submit"
+                  className="text-xl shadow-lg border-pink-900 font-semibold bg-gradient-to-br from-pink-700 to-pink-400 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+                  Add NFT
+                </button>
+              </div>
+
+              {/* {collectionInfo.contractAddress ? (
+                  {collectionInfo.contractAddress.slice(0, 4)…collectionInfo.contractAddress.slice(
+                  collectionInfo.contractAddress.length - 4
+                )}
+                ) : ''} */}
+              {collectionInfo.contractAddress ? (
+                <p className="tracking-wide">
+                  {collectionInfo.contractAddress.slice(0, 4)}…
+                  {collectionInfo.contractAddress.slice(
+                    collectionInfo.contractAddress.length - 4
+                  )}
+                </p>
+              ) : (
+                ''
+              )}
             </div>
 
-            <span className="flex gap-x-10">
-              <button
-                onClick={() => setShowModalB(!showModalB)}
-                type="submit"
-                className="text-xl shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
-                Add NFT
-              </button>
-            </span>
-            <div className="mt-8 flex items-center gap-x-5 font-semibold">
-              <h3>NFTs in your collection:</h3>
+            <div className="mt-8 flex items-center gap-x-5">
+              {metadataArray.length ? (
+                <h3 className="test-pink-900">NFTs in your collection:</h3>
+              ) : (
+                <h3 className="test-pink-900">
+                  No NFTs in this collection yet.
+                </h3>
+              )}
             </div>
             {metadataArray.length ? (
               <NFTList metadataArray={metadataArray} />

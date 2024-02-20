@@ -39,13 +39,18 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
   };
 
   return (
-    <section className="flex gap-x-20 mt-10">
+    <section className="flex gap-x-20 mt-8 flex-wrap">
       {metadataArray.map((nft, id) => (
         <div key={uuidv4()}>
-          <h4 className="text-xl font-semibold mb-2">
+          <h4 className="text-2xl text-emerald-400 tracking-wide mb-3">
             {nft.name.slice(0, -4)}
           </h4>
-          <img src={`${nft.imgLink}`} width="150" height="150" />
+          <img
+            src={`${nft.imgLink}`}
+            width="150"
+            height="150"
+            className="rounded-md"
+          />
           {address != owner ? (
             <>
               <button

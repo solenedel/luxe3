@@ -1,5 +1,5 @@
-export const contractAddress = '0x78CBb56384D8635269C65bc78a8ddbC82fa9c8fF';
-// export const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'; // hardhat dev addr
+//export const contractAddress = '0x78CBb56384D8635269C65bc78a8ddbC82fa9c8fF';
+export const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'; // hardhat dev addr
 export const ABI = [
   {
     inputs: [],

@@ -8,7 +8,7 @@ function Footer() {
         <h4>Contact us</h4>
         <p>contact@luxe2marketplace.io</p>
       </div>
-      <span className="text-lg">© {new Date().getFullYear()} Luxe², Inc.</span>
+      <span className="text-lg">© {new Date().getFullYear()} Luxe³, Inc.</span>
     </footer>
   );
 }
