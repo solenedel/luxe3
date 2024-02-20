@@ -64,14 +64,14 @@ function AddNFTModal({
 
   return (
     <section className="flex flex-col items-center justify-center fixed inset-0 z-50 bg-black/[0.8] text-white w-full h-full overflow-auto">
-      <div className=" rounded-sm  flex flex-col items-center bg-gray-100 text-gray-900 p-12 w-3/5">
+      <div className=" rounded-sm flex flex-col bg-pink-50 text-gray-900 p-12 w-5/12">
         {' '}
-        <header className="flex w-full px-10 justify-between">
-          <h3 className="font-semibold self-center text-2xl">
+        <header className="flex w-full justify-between">
+          <h3 className="font-semibold text-2xl">
             Add an NFT to your collection
           </h3>{' '}
           <button
-            className="text-3xl hover:text-emerald-700 hover:scale-110"
+            className="text-3xl hover:text-pink-700 hover:scale-105"
             onClick={() => setShowModalB(!showModalB)}>
             ⓧ
           </button>
@@ -80,45 +80,16 @@ function AddNFTModal({
           action="submit"
           className="mt-10 text-xl w-full"
           onSubmit={handleFormSubmit}>
-          {/* <div className="flex flex-col gap-y-2">
-            <label htmlFor="title" className="font-semibold tracking-wide">
-              Title
-            </label>
-            <input
-              id="title"
-              value={titleInput}
-              onChange={(e) => setTitleInput(e.target.value)}
-              type="text"
-              placeholder="A red bag"
-              className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-2/5"
-            />
-          </div>
-
-          <div className="flex flex-col gap-y-2">
-            <label
-              htmlFor="description"
-              className="font-semibold tracking-wide">
-              Description
-            </label>
-            <input
-              id="description"
-              value={descriptionInput}
-              onChange={(e) => setDescriptionInput(e.target.value)}
-              type="text"
-              placeholder="Black genuine leather crossbody bag"
-              className="mt-2 p-2 bg-pink-100 rounded-sm border-2 border-pink-300 w-4/5"
-            />
-          </div> */}
           <input
             type="file"
             onChange={handleFileUpload}
-            className="text-green-400"
+            className="text-pink-500"
           />
           <button
             disabled={!URIState}
             onClick={handleFormSubmit}
             type="submit"
-            className="text-xl disabled:bg-red-100 disabled:grayscale shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br from-emerald-700 to-emerald-400 rounded-lg p-2 shadow-lg text-gray-950 hover:cursor-pointer hover:translate-y-1">
+            className="text-xl disabled:grayscale shadow-lg border-emerald-900 font-semibold mt-10 bg-gradient-to-br tracking-wide from-emerald-600 to-emerald-300 rounded-lg p-2 shadow-lg text-gray-950 hover:cursor-pointer hover:translate-y-1">
             Mint
           </button>
         </form>

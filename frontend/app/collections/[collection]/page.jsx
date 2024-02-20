@@ -12,6 +12,8 @@ import { useAccount, useContractEvent } from 'wagmi';
 import { getTokenMetadata } from '@/utils/getTokenMetadata';
 import { useGetTokenMetadata } from '@/hooks/useGetTokenMetadata';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
+import { UserContext } from '@/context/User.context';
+import { contractAddress } from '@/constants/marketplace';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const { address, isConnected } = useAccount();
@@ -25,6 +27,8 @@ export default function CollectionPage() {
     metadataArray,
     setMetadataArray
   );
+
+  const { userInfo, collectionInfo } = useContext(UserContext);
 
   // get collection address from pathname
   const pathname = usePathname();
@@ -60,35 +64,62 @@ export default function CollectionPage() {
   // -------------- HANDLERS ---------------
 
   const showTokensHandler = async () => {
-    const temp = await newFetchMetadataForAllTokens(collectionAddr);
+    await newFetchMetadataForAllTokens(collectionAddr);
   };
 
   // --------------- RENDER ------------------------
 
   if (isConnected) {
     return (
-      <main className="flex min-h-screen flex-col p-24">
-        <h2 className="font-semibold text-xl">
-          COLLECTION: {collectionAddr} SHOW NAME HERE
-        </h2>
-        <p>Owned by: {owner}</p>
-        <button
-          onClick={showTokensHandler}
-          className="text-xl w-fit mt-5 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
-          show tokens
-        </button>
-        <section>
-          {metadataArray.length ? (
-            <NFTList
-              metadataArray={metadataArray}
-              address={address}
-              owner={owner}
-              collectionAddr={collectionAddr}
-            />
+      <main className="flex min-h-screen flex-col items-center p-24">
+        <section className="bg-gray-900/[0.8]  rounded-md p-8 px-10 mx-20 w-2/3 text-pink-50">
+          <h2 className="font-semibold text-2xl flex gap-x-5 mb-4 text-emerald-400 tracking-wide">
+            {collectionInfo.name}&nbsp;({collectionInfo.symbol})
+            {collectionInfo.contractAddress ? (
+              <p className="tracking-wide">
+                {' '}
+                {collectionInfo.contractAddress.slice(0, 4)}…
+                {collectionInfo.contractAddress.slice(
+                  collectionInfo.contractAddress.length - 4
+                )}
+              </p>
+            ) : (
+              ''
+            )}
+          </h2>
+          {owner != address ? (
+            <p className="text-lg">
+              Owned by: &nbsp;{owner.slice(0, 4)}…
+              {owner.slice(owner.length - 4)}
+            </p>
           ) : (
-            ''
+            <p className="text-lg">Owned by you</p>
           )}
+
+          <button
+            onClick={showTokensHandler}
+            className="text-xl hover:cursor-pointer shadow-lg mt-10
+           bg-gradient-to-br from-blue-600 to-blue-300 w-fit rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+            show tokens
+          </button>
+          <section>
+            {metadataArray.length ? (
+              <NFTList
+                metadataArray={metadataArray}
+                address={address}
+                owner={owner}
+                collectionAddr={collectionAddr}
+              />
+            ) : (
+              ''
+            )}
+          </section>
         </section>
+        <a
+          href="/dashboard"
+          className="mt-10 w-2/3 text-xl italic hover:underline hover:cursor-pointer">
+          ⬅ &nbsp;Back to your dashboard
+        </a>
       </main>
     );
   } else {

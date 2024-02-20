@@ -109,11 +109,6 @@ function ProfilePage() {
                 </button>
               </div>
 
-              {/* {collectionInfo.contractAddress ? (
-                  {collectionInfo.contractAddress.slice(0, 4)…collectionInfo.contractAddress.slice(
-                  collectionInfo.contractAddress.length - 4
-                )}
-                ) : ''} */}
               {collectionInfo.contractAddress ? (
                 <p className="tracking-wide">
                   {collectionInfo.contractAddress.slice(0, 4)}…
@@ -149,8 +144,8 @@ function ProfilePage() {
             </h3>
             <button
               onClick={getCollections}
-              className="text-xl font-semibold text-emerald-400 hover:text-pink-300">
-              Refresh <span className="text-3xl font-light">↻</span>
+              className="text-2xl tracking-wide text-emerald-400 hover:cursor-pointer italic hover:scale-105">
+              Refresh <span className="text-4xl font-light">⟳</span>
             </button>
           </div>
 
