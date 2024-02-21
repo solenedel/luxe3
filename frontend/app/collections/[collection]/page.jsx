@@ -15,6 +15,7 @@ export default function CollectionPage() {
   const [metadataArray, setMetadataArray] = useState([]);
   const router = useRouter();
   const [latestTokenNum, setLatestTokenNum] = useState(0);
+  const [collection, setCollection] = useState({});
 
   const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
     metadataArray,
@@ -32,9 +33,12 @@ export default function CollectionPage() {
 
   useEffect(() => {
     getOwner();
-    // getUserCollection();
+
     async function fetchLatest() {
       try {
+        const collection = await getCollection(owner);
+        setCollection(collection);
+
         const data = await getLatestTokenNumber(collectionAddr);
         const latest = Number(data);
         setLatestTokenNum(latest);
@@ -43,25 +47,16 @@ export default function CollectionPage() {
       }
     }
 
-    if (isConnected) {
+    if (isConnected && owner && collectionAddr) {
       fetchLatest();
     }
-  }, [latestTokenNum, router]);
+  }, [latestTokenNum, router, owner, isConnected]);
 
   // --------------- FUNCTIONS ------------------------
   const getOwner = async () => {
     const owner = await getCollectionOwner(collectionAddr);
     setOwner(owner);
   };
-
-  // const getUserCollection = async () => {
-  //   if (isConnected) {
-  //     const collection = await getCollection(address);
-  //     console.log(collection);
-  //   }
-
-  // setOwner(owner);
-  // };
 
   // -------------- HANDLERS ---------------
 
@@ -76,13 +71,13 @@ export default function CollectionPage() {
       <main className="flex min-h-screen flex-col items-center p-24">
         <section className="bg-gray-900/[0.8]  rounded-md p-8 px-10 mx-20 w-2/3 text-pink-50">
           <h2 className="font-semibold text-2xl flex gap-x-5 mb-4 text-emerald-400 tracking-wide">
-            {collectionInfo.name}&nbsp;({collectionInfo.symbol})
-            {collectionInfo.contractAddress ? (
+            {collection.name}&nbsp;({collection.symbol})
+            {collection.contractAddress ? (
               <p className="tracking-wide">
                 {' '}
-                {collectionInfo.contractAddress.slice(0, 4)}…
-                {collectionInfo.contractAddress.slice(
-                  collectionInfo.contractAddress.length - 4
+                {collection.contractAddress.slice(0, 4)}…
+                {collection.contractAddress.slice(
+                  collection.contractAddress.length - 4
                 )}
               </p>
             ) : (
