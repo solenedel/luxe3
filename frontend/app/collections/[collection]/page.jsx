@@ -16,6 +16,7 @@ export default function CollectionPage() {
   const router = useRouter();
   const [latestTokenNum, setLatestTokenNum] = useState(0);
   const [collection, setCollection] = useState({});
+  const [showTokensButton, setShowTokensButton] = useState(true);
 
   const { newFetchMetadataForAllTokens } = useGetTokenMetadata(
     metadataArray,
@@ -62,6 +63,7 @@ export default function CollectionPage() {
 
   const showTokensHandler = async () => {
     await newFetchMetadataForAllTokens(collectionAddr);
+    setShowTokensButton(false);
   };
 
   // --------------- RENDER ------------------------
@@ -93,12 +95,17 @@ export default function CollectionPage() {
             <p className="text-lg">Owned by you</p>
           )}
 
-          <button
-            onClick={showTokensHandler}
-            className="text-xl hover:cursor-pointer shadow-lg mt-10
+          {showTokensButton ? (
+            <button
+              onClick={showTokensHandler}
+              className="text-xl hover:cursor-pointer shadow-lg mt-10
            bg-gradient-to-br from-blue-600 to-blue-300 w-fit rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
-            show tokens
-          </button>
+              show tokens
+            </button>
+          ) : (
+            ''
+          )}
+
           <section>
             {metadataArray.length ? (
               <NFTList

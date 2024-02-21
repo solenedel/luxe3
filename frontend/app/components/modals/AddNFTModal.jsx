@@ -64,7 +64,7 @@ function AddNFTModal({
 
   return (
     <section className="flex flex-col items-center justify-center fixed inset-0 z-50 bg-black/[0.8] text-white w-full h-full overflow-auto">
-      <div className=" rounded-sm flex flex-col bg-pink-50 text-gray-900 p-12 w-5/12">
+      <div className=" rounded-sm flex flex-col bg-gray-100 text-gray-900 p-12 w-5/12">
         {' '}
         <header className="flex w-full justify-between">
           <h3 className="font-semibold text-2xl">
