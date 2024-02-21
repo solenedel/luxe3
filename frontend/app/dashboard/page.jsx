@@ -72,7 +72,13 @@ function ProfilePage() {
     if (isConnected) {
       fetchCollection();
     }
-  }, [showModal]);
+  }, [showModal, isConnected]);
+
+  useEffect(() => {
+    if (isConnected) {
+      setMetadataArray([]);
+    }
+  }, [address, isConnected]);
 
   if (isConnected) {
     return (
