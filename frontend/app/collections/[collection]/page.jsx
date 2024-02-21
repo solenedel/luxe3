@@ -1,25 +1,18 @@
 'use client';
 import { useState, useEffect, useContext } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { TokenListContext } from '@/context/TokenList.context';
-import { getContract } from '@wagmi/core';
-import { ABI } from '@/constants/NFTCollection';
 import { getCollectionOwner } from '@/utils/getters/getCollectionOwner';
-import { getNFTInfo } from '@/utils/getters/getNFTInfo';
-import { getMetadata } from '@/utils/getMetadata';
 import NFTList from '@/app/components/NFTList';
-import { useAccount, useContractEvent } from 'wagmi';
-import { getTokenMetadata } from '@/utils/getTokenMetadata';
+import { useAccount } from 'wagmi';
 import { useGetTokenMetadata } from '@/hooks/useGetTokenMetadata';
 import { getLatestTokenNumber } from '@/utils/getters/getLatestTokenNumber';
 import { UserContext } from '@/context/User.context';
+import { getCollection } from '@/utils/getters/getCollection';
 import { contractAddress } from '@/constants/marketplace';
 export default function CollectionPage() {
   const [owner, setOwner] = useState('');
   const { address, isConnected } = useAccount();
   const [metadataArray, setMetadataArray] = useState([]);
-  const [currentCollectionData, setCurrentCollectionData] = useState([]);
-  const [tokensArray, setTokensArray] = useState([]);
   const router = useRouter();
   const [latestTokenNum, setLatestTokenNum] = useState(0);
 
@@ -39,7 +32,7 @@ export default function CollectionPage() {
 
   useEffect(() => {
     getOwner();
-
+    // getUserCollection();
     async function fetchLatest() {
       try {
         const data = await getLatestTokenNumber(collectionAddr);
@@ -60,6 +53,15 @@ export default function CollectionPage() {
     const owner = await getCollectionOwner(collectionAddr);
     setOwner(owner);
   };
+
+  // const getUserCollection = async () => {
+  //   if (isConnected) {
+  //     const collection = await getCollection(address);
+  //     console.log(collection);
+  //   }
+
+  // setOwner(owner);
+  // };
 
   // -------------- HANDLERS ---------------
 

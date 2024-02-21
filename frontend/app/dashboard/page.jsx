@@ -23,8 +23,14 @@ function ProfilePage() {
   const [metadataArray, setMetadataArray] = useState([]);
   const [latestTokenNum, setLatestTokenNum] = useState(0);
 
-  const { userInfo, collectionInfo, fetchUserInfo, userAddr, setUserAddr } =
-    useContext(UserContext);
+  const {
+    userInfo,
+    collectionInfo,
+    getUserCollection,
+    fetchUserInfo,
+    userAddr,
+    setUserAddr,
+  } = useContext(UserContext);
 
   const { newFetchMetadataForAllTokens, newFetchMetadata } =
     useGetTokenMetadata(metadataArray, setMetadataArray, latestTokenNum);
@@ -53,6 +59,20 @@ function ProfilePage() {
     const data = await getAllCollections();
     setAllCollections(data);
   };
+
+  useEffect(() => {
+    async function fetchCollection() {
+      try {
+        await getUserCollection(address);
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+    }
+
+    if (isConnected) {
+      fetchCollection();
+    }
+  }, [showModal]);
 
   if (isConnected) {
     return (
