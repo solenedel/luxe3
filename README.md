@@ -1,5 +1,6 @@
 # Luxe3: NFT marketplace for luxury
 
+[Demo video](https://www.loom.com/share/47207bd390764d9f818810b31317882e?sid=c3152b69-3026-4294-9fea-20f0977020c5)
 [Link to vercel app](https://luxe3.vercel.app/)
 
 Deployed on Sepolia.
