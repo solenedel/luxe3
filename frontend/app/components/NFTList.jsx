@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-import BuyNFTModal from './modals/BuyNFTModal';
 import { useState } from 'react';
 import { transferOwnership } from '@/utils/transferOwnership';
 import { useAccount, useContractEvent } from 'wagmi';
@@ -52,14 +51,15 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
             className="rounded-md"
           />
           {address != owner ? (
-            <>
+            <div className="flex gap-x-4 items-end mt-4">
+              <span className="text-lg">0.25 ETH</span>
               <button
                 onClick={() => buyNFTHandler(id + 1)}
-                className="text-xl mt-2 shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
-                {boughtNFTs.includes(id + 1) ? 'bought' : 'buy'}
+                className="text-xl mt-2 shadow-lg border-pink-800 bg-gradient-to-br from-pink-700 to-pink-400 rounded-lg p-1 shadow-lg text-gray-950 hover:translate-y-1">
+                {boughtNFTs.includes(id + 1) ? 'yours' : 'buy'}
               </button>
               {/* <button onClick={() => checkIfOwner(id + 1)}>yours?</button> */}
-            </>
+            </div>
           ) : (
             ''
           )}

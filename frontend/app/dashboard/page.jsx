@@ -67,7 +67,7 @@ function ProfilePage() {
             </aside>
             <button
               onClick={() => setShowModal(!showModal)}
-              className="text-2xl shadow-lg border-emerald-900 font-semibold bg-gradient-to-br from-emerald-800 to-emerald-500 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
+              className="text-xl tracking-wide shadow-lg border-pink-900 font-semibold bg-gradient-to-br from-pink-700 to-pink-400 rounded-lg p-2 shadow-lg text-gray-950 hover:translate-y-1">
               Start collection
             </button>
 
