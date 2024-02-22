@@ -41,6 +41,7 @@ function ProfilePage() {
     async function fetchLatest() {
       try {
         const data = await getLatestTokenNumber(collectionInfo.contractAddress);
+        console.log('DATA ====', data);
         const latest = Number(data);
         setLatestTokenNum(latest);
 
@@ -75,10 +76,25 @@ function ProfilePage() {
   }, [showModal, isConnected]);
 
   useEffect(() => {
+    async function fetch() {
+      try {
+        const temp = await newFetchMetadataForAllTokens(
+          collectionInfo.contractAddress
+        );
+        console.log('advvdvd', temp);
+      } catch (error) {
+        console.log('ERROR: ', error);
+      }
+    }
+
     if (isConnected) {
-      setMetadataArray([]);
+      fetch();
     }
   }, [address, isConnected]);
+
+  // useEffect(() => {
+  //   console.log('===== latest ', latestTokenNum);
+  // }, [latestTokenNum]);
 
   if (isConnected) {
     return (

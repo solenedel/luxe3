@@ -23,7 +23,7 @@ function Header() {
         <a
           href="/"
           className="text-5xl px-1 tracking-wide text-transparent bg-clip-text bg-gradient-to-b from-pink-300 to-pink-800">
-          𝓛𝓾𝔁𝓮³
+          𝕃𝕦𝕩𝕖³
         </a>
       </h1>
       <span className=" justify-between gap-x-20 text-xl tracking-wider ">

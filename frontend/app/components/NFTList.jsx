@@ -48,7 +48,7 @@ function NFTList({ metadataArray, address, owner, collectionAddr }) {
             src={`${nft.imgLink}`}
             width="150"
             height="150"
-            className="rounded-md"
+            className="rounded-md border-2 border-gray-100/[0.7]"
           />
           {address != owner ? (
             <div className="flex gap-x-4 items-end justify-center mt-4">
