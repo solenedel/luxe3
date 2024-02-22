@@ -8,6 +8,8 @@ Deployed on Sepolia.
 
 ## Running the frontend
 
+⚠️ Note: If you want to run the project locally, make sure that the `contractAddress` variable in `frontend/constants/marketplace.js` is the one marked `// hardhat dev address`
+
 This is a Next.js project.
 
 `cd frontend`
